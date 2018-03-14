@@ -13,6 +13,10 @@ module.exports = {
 	  { rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons'}
     ]
   },
+  modules: [
+	  'semantic-ui-vue/nuxt',
+	  ['semantic-ui-vue/nuxt', {css: false}]
+  ],
   loading: { color: '#3B8070' },
   build: {
     extend (config, { isDev, isClient }) {

@@ -1,18 +1,15 @@
 <template>
-	<section class="container">
-		<div>
-			<h1 class="title">app</h1>
-			<Button/>
-		</div>
+	<section>
+		<Header title="Building 1.0.0" sub="Manage your building" icon="settings"/>
 	</section>
 </template>
 
 <script>
-	import Button from '~/components/Button';
-
+	import Menu from '~/components/Menu';
+	import Header from '~/components/Header';
 
 	export default {
-		components: {Button}
+		components: {Menu, Header}
 	}
 
 

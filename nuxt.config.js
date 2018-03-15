@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
   srcDir: './app/',
   mode: 'spa',
@@ -17,17 +19,28 @@ module.exports = {
 	  'semantic-ui-vue/nuxt',
 	  ['semantic-ui-vue/nuxt', {css: false}]
   ],
+  plugins: ['~/plugins/semantic-ui.js'],
   loading: { color: '#3B8070' },
   build: {
-    extend (config, { isDev, isClient }) {
-      if (isDev && isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
-      }
+	vendor: [
+	  'jquery', 'semantic-ui-css'
+	],
+	plugins: [
+		new webpack.ProvidePlugin({
+			$: 'jquery',
+			jQuery: 'jquery',
+			'window.jQuery': 'jquery'
+		})
+	],
+	extend (config, { isDev, isClient }) {
+	  if (isDev && isClient) {
+	    config.module.rules.push({
+	      enforce: 'pre',
+	      test: /\.(js|vue)$/,
+	      loader: 'eslint-loader',
+	      exclude: /(node_modules)/
+	    })
+	  }
     }
   }
 }

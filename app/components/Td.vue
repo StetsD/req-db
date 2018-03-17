@@ -1,13 +1,11 @@
 <template lang="html" >
-
-	<td :class="[item.classList ? item.classList : '']">{{item.content}}</td>
-
-
+	<td v-if="type == 'td'" :class="[classList ? classList : '']" v-html="content"></td>
+	<th v-else :class="[classList ? classList : '']" v-html="content"></th>
 </template>
 
 <script>
 	export default {
-		props: ['items', 'type']
+		props: ['content', 'classList', 'type']
 	}
 </script>
 

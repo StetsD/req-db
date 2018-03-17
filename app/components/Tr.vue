@@ -1,7 +1,14 @@
 <template lang="html">
 
-	<tr :class="[item.list ? item.list : '']">
-		<Td v-for="item in items" :key="item.content" items="item.tds" type="item.type"/>
+	<tr :class="[classList ? classList : '']">
+
+		<Td v-for="(item, i) in items"
+			:key="i"
+			:classList="item.classList"
+			:content="item.content"
+			:type="type"
+		/>
+
 	</tr>
 
 
@@ -9,13 +16,11 @@
 </template>
 
 <script>
-
-	//TODO https://stackoverflow.com/questions/40029856/nested-loop-in-vue
-
 	import Td from '~/components/Td';
 
 	export default {
-		props: ['items']
+		props: ['items', 'classList', 'type'],
+		components: {Td}
 	}
 </script>
 

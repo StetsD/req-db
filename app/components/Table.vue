@@ -1,10 +1,18 @@
 <template lang="html">
 	<table class="ui celled table">
 	  <thead>
-	  	<Tr v-for="item in itemsHead" :key="item.id" items="item.tds"/>
+	  	<Tr v-for="(item, i) in itemsHead"
+			:key="i"
+			type="th"
+			:items="item.items"
+			:classList="item.classList"/>
 	  </thead>
 	  <tbody>
-	  	<Tr v-for="item in itemsBody" :key="item.id" items="item.tds"/> 
+	  	<Tr v-for="(item, i) in itemsBody"
+			:key="i"
+			type="td"
+			:items="item.items"
+			:classList="item.classList"/>
 	  </tbody>
 	</table>
 </template>

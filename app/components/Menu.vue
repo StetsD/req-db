@@ -10,6 +10,12 @@
 		<nuxt-link to="/deal" class="item">
 			Сделки
 		</nuxt-link>
+		<nuxt-link to="/building" class="item">
+			Строения
+		</nuxt-link>
+		<nuxt-link to="/customer-company" class="item">
+			Застройщики
+		</nuxt-link>
 
 	  <div class="right menu">
 	    <div class="item">

@@ -17,30 +17,14 @@ const thead = [
 
 const tbody = [
 	{
-		items: [
-			{
-				content: '0'
-			},
-			{
-				content: 'Boris'
-			},
-			{
-				content: '20'
-			}
-		]
+		id: 0,
+		name: 'Boris',
+		age: 25
 	},
 	{
-		items: [
-			{
-				content: '1'
-			},
-			{
-				content: 'Semen'
-			},
-			{
-				content: '31'
-			}
-		]
+		id: 1,
+		name: 'Semen',
+		age: 43
 	}
 ]
 

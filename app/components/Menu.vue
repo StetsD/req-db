@@ -16,6 +16,9 @@
 		<nuxt-link to="/customer-company" class="item">
 			Застройщики
 		</nuxt-link>
+		<nuxt-link to="/building-company" class="item">
+			Подрядчики
+		</nuxt-link>
 
 	  <div class="right menu">
 	    <div class="item">

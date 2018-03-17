@@ -1,22 +1,28 @@
 <template lang="html">
 	<div class="">
 		<Header title="Компания" sub="" icon="cog"/>
-		<h3>Адрес</h3>
-		<TableClients :clients="clients"/>
+		<h4>Адрес</h4>
+		<h2>Начальник</h2>
+		<TableBosses :bosses="bosses"/>
+		<h2>Рабочие</h2>
+		<TableWorkers :workers="workers"/>
 	</div>
 </template>
 
 <script>
 	import Header from '~/components/Header';
-	import TableClients from '~/components/tables/TableClients';
+	import TableBosses from '~/components/tables/TableBosses';
+	import TableWorkers from '~/components/tables/TableWorkers';
 
-	const {thead, tbody} = require('~/assets/table-schemas/users');
+	const {tbody} = require('~/assets/table-schemas/bosses');
+	const {tbodyW} = require('~/assets/table-schemas/workers');
 
 	export default {
-		components: {Header, TableClients},
-		data(){
+		components: {Header, TableBosses, TableWorkers},
+		data(){ 
 			return {
-				clients: tbody
+				bosses: tbody,
+				workers: tbodyW
 			}
 		}
 	}

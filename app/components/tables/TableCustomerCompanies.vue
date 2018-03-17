@@ -10,7 +10,9 @@
 		<tbody>
 			<tr v-for="(item, i) in customer_companies" :key="i">
 				<td>{{item.id}}</td>
-				<td>{{item.name}}</td>
+				<td>
+					<nuxt-link :to="{path: `/customer-company/${item.id}`}">{{item.name}}</nuxt-link>
+				</td>
 				<td>{{item.stuff}}</td>
 			</tr>
 		</tbody>

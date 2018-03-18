@@ -3,6 +3,9 @@ const webpack = require('webpack');
 module.exports = {
   srcDir: './app/',
   mode: 'spa',
+  options: {
+	  dest: 'public'
+  },
   head: {
     title: 'app',
     meta: [

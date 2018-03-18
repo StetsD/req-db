@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('postgres', 'postgres', '987654321Qq', {
 	host: 'localhost',
-	port: 5433,
+	port: 5432,
 	dialect: 'postgres',
 	operatorsAlizses: false,
 
@@ -13,14 +13,15 @@ const sequelize = new Sequelize('postgres', 'postgres', '987654321Qq', {
 	}
 });
 
+module.exports = sequelize.authenticate;
 
-sequelize
-	.authenticate()
-	.then(()=>{
-
-		
-
-	})
-	.catch(err => {
-		console.error(err);
-	});
+// sequelize
+// 	.authenticate()
+// 	.then(()=>{
+//
+//
+//
+// 	})
+// 	.catch(err => {
+// 		console.error(err);
+// 	});

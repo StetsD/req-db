@@ -4,12 +4,13 @@
 	    <img src="/img/clients/default.png">
 	  </div>
 	  <div class="content">
-	    <a class="header">{{name}}</a>
+	    <a class="header">{{client.name}}</a>
 	    <div class="meta">
-	      <span class="date"><strong>Возраст:</strong> {{age}}</span>
+	      <span class="date"><strong>Возраст:</strong> {{client.age}}</span>
 	    </div>
 	    <div class="description">
-	      ID {{id}} (No Info)
+	      ID: {{client.id}}<br>
+		  Created: {{client.createdAt}}
 	    </div>
 	  </div>
 	  <div class="extra content">
@@ -23,7 +24,7 @@
 
 <script>
 	export default {
-		props: ['name', 'age', 'id']
+		props: ['client']
 	}
 </script>
 

@@ -20,13 +20,14 @@ module.exports = {
   },
   modules: [
 	  'semantic-ui-vue/nuxt',
-	  ['semantic-ui-vue/nuxt', {css: false}]
+	  ['semantic-ui-vue/nuxt', {css: false}],
+	  '@nuxtjs/axios'
   ],
   plugins: ['~/plugins/semantic-ui.js'],
   loading: { color: '#3B8070' },
   build: {
 	vendor: [
-	  'jquery', 'semantic-ui-css'
+	  'jquery', 'semantic-ui-css', 'axios'
 	],
 	plugins: [
 		new webpack.ProvidePlugin({

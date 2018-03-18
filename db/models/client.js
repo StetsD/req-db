@@ -11,6 +11,10 @@ const Client = db.define('client', {
 
 exports.client = Client;
 
-exports.getClient = async () => {
+exports.getClients = async () => {
 	return await Client.findAll();
+}
+
+exports.getClient = async (id) => {
+	return await Client.findById(id);
 }

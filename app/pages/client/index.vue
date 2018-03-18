@@ -10,12 +10,20 @@
 	import TableClients from '~/components/tables/TableClients';
 
 	const {thead, tbody} = require('~/assets/table-schemas/users');
+	const axios = require('axios');
 
 	export default {
 		components: {Header, TableClients},
-		data(){
+		async asyncData(){
+
+			try{
+				var {data} = await axios('/client');
+			}catch(err){
+				console.error(err);
+			}
+
 			return {
-				clients: tbody
+				clients: data || []
 			}
 		}
 	}

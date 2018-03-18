@@ -10,6 +10,11 @@
 <script type="text/javascript">
 import Menu from '~/components/Menu';
 
+const axios = require('axios');
+const {port, api} = require('~/app-config');
+
+axios.defaults.baseURL = `http://127.0.0.1:${port}/${api.name}/${api.version}`;
+
 export default {
 	components: {Menu}
 }

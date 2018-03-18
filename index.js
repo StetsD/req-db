@@ -2,7 +2,7 @@ const Koa = require('koa');
 const app = new Koa();
 const fs = require('fs');
 const db = require('./db');
-const router = require('./router');
+const {router} = require('./router');
 
 const {port} = require('./config');
 

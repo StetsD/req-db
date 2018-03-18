@@ -1,7 +1,7 @@
 const Koa = require('koa');
 const app = new Koa();
 const fs = require('fs');
-const db = require('./db')();
+const db = require('./db');
 const router = require('./router');
 
 const {port} = require('./config');
@@ -13,4 +13,8 @@ middlewares.forEach(handler => {
 
 app.use(router.routes());
 
-app.listen(port);
+db.init().then(()=>{
+	app.listen(port);
+}).catch(err => {
+	throw err;
+});

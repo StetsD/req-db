@@ -3,8 +3,8 @@ const webpack = require('webpack');
 module.exports = {
   srcDir: './app/',
   mode: 'spa',
-  options: {
-	  dest: 'public'
+  generate: {
+	  dir: 'public'
   },
   head: {
     title: 'app',

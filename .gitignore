@@ -53,5 +53,6 @@ YoutubeTutorial-win32-x64/
 /bower_components
 /.nuxt
 /dist
+/public
 
 package-lock.json

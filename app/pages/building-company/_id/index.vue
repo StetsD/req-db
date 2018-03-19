@@ -14,8 +14,6 @@
 	import TableBosses from '~/components/tables/TableBosses';
 	import TableWorkers from '~/components/tables/TableWorkers';
 
-	const {tbody} = require('~/assets/table-schemas/bosses');
-	const {tbodyW} = require('~/assets/table-schemas/workers');
 	const axios = require('axios');
 
 	export default {

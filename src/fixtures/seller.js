@@ -20,49 +20,29 @@ const thead = [
 
 const tbody = [
 	{
-		id: 0,
 		name: 'Екатерина',
 		age: 24,
-		customer_company: {
-			id: 0,
-			name: 'Строительная компания НОРД'
-		}
+		customer_company: 0
 	},
 	{
-		id: 1,
 		name: 'Светлана',
 		age: 32,
-		customer_company: {
-			id: 0,
-			name: 'Строительная компания НОРД'
-		}
+		customer_company: 0
 	},
 	{
-		id: 2,
 		name: 'Юлия',
 		age: 28,
-		customer_company: {
-			id: 1,
-			name: 'Инвестиционная компания Развитие'
-		}
+		customer_company: 1
 	},
 	{
-		id: 3,
 		name: 'Анна',
 		age: 21,
-		customer_company: {
-			id: 0,
-			name: 'Строительная компания НОРД'
-		}
+		customer_company: 0
 	},
 	{
-		id: 4,
 		name: 'Роман',
 		age: 24,
-		customer_company: {
-			id: 1,
-			name: 'Инвестиционная компания Развитие'
-		}
+		customer_company: 1
 	}
 ]
 

@@ -9,13 +9,20 @@
 	import Header from '~/components/Header';
 	import TableDeals from '~/components/tables/TableDeals';
 
-	const {tbody} = require('~/assets/table-schemas/deals');
+	const axios = require('axios');
 
 	export default {
 		components: {Header, TableDeals},
-		data(){
+		async asyncData(){
+
+			try{
+				var {data} = axios('/deal');
+			}catch(err){
+				console.error(err);
+			}
+
 			return {
-				deals: tbody
+				deals: data
 			}
 		}
 	}

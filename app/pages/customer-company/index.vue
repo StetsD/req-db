@@ -9,7 +9,6 @@
 	import Header from '~/components/Header';
 	import TableCustomerCompanies from '~/components/tables/TableCustomerCompanies';
 
-	const {tbody} = require('~/assets/table-schemas/customer-companies');
 	const axios = require('axios');
 
 	export default {

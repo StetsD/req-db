@@ -8,8 +8,7 @@
 <script>
 	import Header from '~/components/Header';
 	import TableBuildingCompanies from '~/components/tables/TableBuildingCompanies';
-
-	const {tbody} = require('~/assets/table-schemas/building-companies');
+	
 	const axios = require('axios');
 
 	export default {

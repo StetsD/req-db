@@ -11,7 +11,6 @@
 	import Header from '~/components/Header';
 	import TableSellers from '~/components/tables/TableSellers';
 
-	const {tbody} = require('~/assets/table-schemas/sellers');
 	const axios = require('axios');
 
 	export default {

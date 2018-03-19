@@ -9,7 +9,6 @@
 	import Header from '~/components/Header';
 	import TableClients from '~/components/tables/TableClients';
 
-	const {thead, tbody} = require('~/assets/table-schemas/users');
 	const axios = require('axios');
 
 	export default {

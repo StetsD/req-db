@@ -13,3 +13,7 @@ exports.buildingCompany = BuildingCompany;
 exports.getBuildingCompanies = async () => {
 	return await BuildingCompany.findAll();
 }
+
+exports.getBuildingCompany = async (id) => {
+	return await BuildingCompany.findById(id);
+}

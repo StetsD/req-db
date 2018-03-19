@@ -9,7 +9,6 @@
 	import Header from '~/components/Header';
 	import TableBuildings from '~/components/tables/TableBuildings';
 
-	const {tbody} = require('~/assets/table-schemas/buildings');
 	const axios = require('axios');
 
 	export default {

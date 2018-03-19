@@ -12,3 +12,7 @@ exports.customerCompany = CustomerCompany;
 exports.getCustomerCompanies = async () => {
 	return await CustomerCompany.findAll();
 }
+
+exports.getCustomerCompany = async (id) => {
+	return await CustomerCompany.findById(id);
+}

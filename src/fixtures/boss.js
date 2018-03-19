@@ -20,16 +20,16 @@ const thead = [
 
 const tbody = [
 	{
-		id: 0,
 		name: 'Борис Бритва',
 		age: 49,
-		experience: 32
+		experience: 32,
+		building_company: 1
 	},
 	{
-		id: 1,
 		name: 'Аркадий Северный',
 		age: 57,
-		experience: 29
+		experience: 29,
+		building_company: 0
 	}
 ]
 

@@ -8,7 +8,7 @@
 <script>
 	import Header from '~/components/Header';
 	import TableBuildingCompanies from '~/components/tables/TableBuildingCompanies';
-	
+
 	const axios = require('axios');
 
 	export default {
@@ -16,7 +16,7 @@
 		async asyncData(){
 
 			try{
-				var {data} = axios('/building-company');
+				var {data} = await axios('/building-company');
 			}catch(err){
 				console.error(err);
 			}

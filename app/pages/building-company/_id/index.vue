@@ -21,7 +21,7 @@
 		async asyncData(ctx){
 
 			try{
-				var {data} = axios(`/building-company/${ctx.params.id}`);
+				var {data} = await axios(`/building-company/${ctx.params.id}`);
 			}catch(err){
 				console.error(err);
 			}

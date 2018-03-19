@@ -17,13 +17,13 @@ const thead = [
 
 const tbody = [
 	{
-		client: 0,
-		building: 0
+		client_id: 1,
+		building_id: 1
 
 	},
 	{
-		client: 1,
-		building: 1
+		client_id: 2,
+		building_id: 2
 	}
 ]
 

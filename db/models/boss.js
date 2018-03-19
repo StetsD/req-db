@@ -6,7 +6,7 @@ const Boss = db.define('boss', {
 	name: {type: Sequelize.STRING, allowNull: false},
 	age: {type: Sequelize.INTEGER},
 	experience: {type: Sequelize.INTEGER, allowNull: false},
-	building_company: {type: Sequelize.INTEGER, allowNull: false}
+	building_company_id: {type: Sequelize.INTEGER, allowNull: false}
 });
 
 

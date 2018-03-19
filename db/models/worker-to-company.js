@@ -3,7 +3,7 @@ const db = require('../index.js').instance;
 
 const WorkerToCompany = db.define('worker-to-company', {
 	worker_id: {type: Sequelize.INTEGER},
-	company_id: {type: Sequelize.INTEGER}
+	building_company_id: {type: Sequelize.INTEGER}
 });
 
 exports.worker_to_company = WorkerToCompany;

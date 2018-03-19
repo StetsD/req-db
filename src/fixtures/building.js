@@ -25,14 +25,14 @@ const tbody = [
 	{
 		name: 'Проект Высота',
 		price: 25000,
-		customer_company: 0,
-		building_company: 1
+		customer_company_id: 1,
+		building_company_id: 2
 	},
 	{
 		name: 'Проект Лофт',
 		price: 18000,
-		customer_company: 1,
-		building_company: 0
+		customer_company_id: 2,
+		building_company_id: 1
 	}
 ]
 

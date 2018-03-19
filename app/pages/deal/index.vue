@@ -16,7 +16,7 @@
 		async asyncData(){
 
 			try{
-				var {data} = axios('/deal');
+				var {data} = await axios('/deal');
 			}catch(err){
 				console.error(err);
 			}

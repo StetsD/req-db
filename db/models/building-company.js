@@ -5,7 +5,7 @@ const BuildingCompany = db.define('building_company', {
 	id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
 	name: {type: Sequelize.STRING, allowNull: false},
 	address: {type: Sequelize.STRING},
-	boss: {type: Sequelize.STRING, allowNull: false}
+	boss_id: {type: Sequelize.STRING, allowNull: false}
 });
 
 exports.buildingCompany = BuildingCompany;

@@ -5,7 +5,7 @@ const Seller = db.define('seller', {
 	id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
 	name: {type: Sequelize.STRING, allowNull: false},
 	age: {type: Sequelize.INTEGER},
-	customer_company: {type: Sequelize.INTEGER, allowNull: false}
+	customer_company_id: {type: Sequelize.INTEGER, allowNull: false}
 });
 
 

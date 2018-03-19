@@ -16,7 +16,7 @@
 		async asyncData(){
 
 			try{
-				var {data} = axios('/building');
+				var {data} = await axios('/building');
 			}catch(err){
 				console.error(err);
 			}

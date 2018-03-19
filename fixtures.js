@@ -21,58 +21,57 @@ const {seller} = require('./db/models/seller');
 const {worker} = require('./db/models/worker');
 
 DB.init()
-.then(()=> {
+.then(async ()=> {
 
-	client.sync({force: true}).then(()=>{
+	await client.sync({force: true}).then(()=>{
 		clientFixtures.forEach(fix => {
 			let {name, age} = fix;
 			client.create(fix);
 		});
 	});
 
-	deal.sync({force: true}).then(()=>{
-		dealFixtures.forEach(fix => {
-			let {client, building} = fix;
-			deal.create(fix);
-		});
-	});
-
-	building.sync({force: true}).then(()=>{
+	await building.sync({force: true}).then(()=>{
 		buildingFixtures.forEach(fix => {
 			let {name, price, customer_company, building_company} = fix;
 			building.create(fix);
 		});
 	});
 
-	buildingCompany.sync({force: true}).then(()=>{
+	await deal.sync({force: true}).then(()=>{
+		dealFixtures.forEach(fix => {
+			deal.create(fix);
+		});
+	});
+
+	await buildingCompany.sync({force: true}).then(()=>{
 		buildingCompanyFixtures.forEach(fix => {
 			let {name, address, boss} = fix;
 			buildingCompany.create(fix);
 		});
 	});
 
-	customerCompany.sync({force: true}).then(()=>{
+	await customerCompany.sync({force: true}).then(()=>{
 		customerCompanyFixtures.forEach(fix => {
 			let {name, stuff} = fix;
 			customerCompany.create(fix);
 		});
 	});
 
-	boss.sync({force: true}).then(()=>{
+	await boss.sync({force: true}).then(()=>{
 		bossFixtures.forEach(fix => {
 			let {name, experience, age, building_company} = fix;
 			boss.create(fix);
 		});
 	});
 
-	seller.sync({force: true}).then(()=>{
+	await seller.sync({force: true}).then(()=>{
 		sellerFixtures.forEach(fix => {
 			let {name, customer_company, age} = fix;
 			seller.create(fix);
 		});
 	});
 
-	worker.sync({force: true}).then(()=>{
+	await worker.sync({force: true}).then(()=>{
 		workerFixtures.forEach(fix => {
 			let {name, experience, age} = fix;
 			worker.create(fix);

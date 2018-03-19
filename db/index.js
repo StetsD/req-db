@@ -1,10 +1,11 @@
+const {name, user, password, host, port, dialect} = require('../config').database;
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('building', 'postgres', '987654321Qq', {
-	host: 'localhost',
-	port: 5432,
-	dialect: 'postgres',
+const sequelize = new Sequelize(name, user, password, {
+	host,
+	port,
+	dialect,
 
 	pool: {
 		max: 5,

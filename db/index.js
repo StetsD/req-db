@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('building', 'postgres', '987654321Qq', {
 	host: 'localhost',
@@ -19,5 +20,6 @@ module.exports = {
 	instance: sequelize
 };
 
-//Models
-const client = require('./models/client');
+//Models init
+fs.readdirSync('./models', err=>throw new Error(err))
+.forEach(model => require(`./models/${model}`));

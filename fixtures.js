@@ -10,6 +10,7 @@ const customerCompanyFixtures = require('./src/fixtures/customer-company').tbody
 const dealFixtures = require('./src/fixtures/deal').tbody;
 const sellerFixtures = require('./src/fixtures/seller').tbody;
 const workerFixtures = require('./src/fixtures/worker').tbody;
+const workerToCompanyFixtures = require('./src/fixtures/worker-to-company').tbody;
 
 const {client} = require('./db/models/client');
 const {deal} = require('./db/models/deal');
@@ -19,6 +20,7 @@ const {customerCompany} = require('./db/models/customer-company');
 const {boss} = require('./db/models/boss');
 const {seller} = require('./db/models/seller');
 const {worker} = require('./db/models/worker');
+const {workerToCompany} = require('./db/models/worker-to-company');
 
 DB.init()
 .then(async ()=> {
@@ -71,8 +73,11 @@ DB.init()
 		});
 	});
 
-
-
+	await workerToCompany.sync({force: true}).then(()=>{
+		workerToCompanyFixtures.forEach(fix => {
+			workerToCompany.create(fix);
+		});
+	});
 
 }).catch(err => {
 	console.error(err);

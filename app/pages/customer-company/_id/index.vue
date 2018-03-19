@@ -12,12 +12,20 @@
 	import TableSellers from '~/components/tables/TableSellers';
 
 	const {tbody} = require('~/assets/table-schemas/sellers');
+	const axios = require('axios');
 
 	export default {
 		components: {Header, TableSellers},
-		data(){
+		async asyncData(ctx){
+
+			try{
+				var {data} = axios(`/customer-company/${ctx.params.id}`);
+			}catch(err){
+				console.error(err);
+			}
+
 			return {
-				sellers: tbody
+				sellers: data
 			}
 		}
 	}

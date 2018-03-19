@@ -10,12 +10,20 @@
 	import TableCustomerCompanies from '~/components/tables/TableCustomerCompanies';
 
 	const {tbody} = require('~/assets/table-schemas/customer-companies');
+	const axios = require('axios');
 
 	export default {
 		components: {Header, TableCustomerCompanies},
-		data(){
+		async asyncData(){
+
+			try{
+				var {data} = axios('/customer-company');
+			}catch(err){
+				console.error(err);
+			}
+
 			return {
-				customer_companies: tbody
+				customer_companies: data
 			}
 		}
 	}

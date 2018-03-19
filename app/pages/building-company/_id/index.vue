@@ -16,13 +16,21 @@
 
 	const {tbody} = require('~/assets/table-schemas/bosses');
 	const {tbodyW} = require('~/assets/table-schemas/workers');
+	const axios = require('axios');
 
 	export default {
 		components: {Header, TableBosses, TableWorkers},
-		data(){ 
+		async asyncData(ctx){
+
+			try{
+				var {data} = axios(`/building-company/${ctx.params.id}`);
+			}catch(err){
+				console.error(err);
+			}
+
 			return {
-				bosses: tbody,
-				workers: tbodyW
+				bosses: data,
+				workers: data
 			}
 		}
 	}

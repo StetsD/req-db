@@ -10,12 +10,20 @@
 	import TableBuildingCompanies from '~/components/tables/TableBuildingCompanies';
 
 	const {tbody} = require('~/assets/table-schemas/building-companies');
+	const axios = require('axios');
 
 	export default {
 		components: {Header, TableBuildingCompanies},
-		data(){
+		async asyncData(){
+
+			try{
+				var {data} = axios('/building-company');
+			}catch(err){
+				console.error(err);
+			}
+
 			return {
-				building_companies: tbody
+				building_companies: data
 			}
 		}
 	}

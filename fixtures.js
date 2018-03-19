@@ -13,25 +13,33 @@ const workerFixtures = require('./src/fixtures/worker').tbody;
 
 const {client} = require('./db/models/client');
 const {deal} = require('./db/models/deal');
+const {building} = require('./db/models/building');
 
 DB.init()
 .then(()=> {
 
 	client.sync({force: true}).then(()=>{
-		client.create({name: 'Борис Генадич', age: 54});
-		client.create({name: 'Пётр Иваныч', age: 43});
-		client.create({name: 'Иван Степаныч', age: 36});
-		client.create({name: 'Дмитрий Валерич', age: 29});
-		client.create({name: 'Владимир Борисыч', age: 62});
-		client.create({name: 'Анна Иванна', age: 31});
+		clientFixtures.forEach(fix => {
+			let {name, age} = fix;
+			client.create({name, age});
+		});
 	});
 
-	deal.sync().then(()=>{
+	deal.sync({force: true}).then(()=>{
 		dealFixtures.forEach(fix => {
 			let {client, building} = fix;
 			deal.create({client, building});
 		});
 	});
+
+	building.sync({force: true}).then(()=>{
+		buildingFixtures.forEach(fix => {
+			let {name, price, customer_company, building_company} = fix;
+			building.create({name, price, customer_company, building_company});
+		});
+	});
+
+
 
 
 }).catch(err => {

@@ -17,14 +17,28 @@ const thead = [
 
 const tbody = [
 	{
-		id: 0,
-		name: 'Boris',
-		age: 25
+		name: 'Борис Генадич',
+		age: 54
 	},
 	{
-		id: 1,
-		name: 'Semen',
+		name: 'Пётр Иваныч',
 		age: 43
+	},
+	{
+		name: 'Иван Степаныч',
+		age: 36
+	},
+	{
+		name: 'Дмитрий Валерич',
+		age: 29
+	},
+	{
+		name: 'Владимир Борисыч',
+		age: 62
+	},
+	{
+		name: 'Анна Иванна',
+		age: 31
 	}
 ]
 

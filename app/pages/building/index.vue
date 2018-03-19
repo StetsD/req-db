@@ -10,12 +10,20 @@
 	import TableBuildings from '~/components/tables/TableBuildings';
 
 	const {tbody} = require('~/assets/table-schemas/buildings');
+	const axios = require('axios');
 
 	export default {
 		components: {Header, TableBuildings},
-		data(){
+		async asyncData(){
+
+			try{
+				var {data} = axios('/building');
+			}catch(err){
+				console.error(err);
+			}
+
 			return {
-				buildings: tbody
+				buildings: data
 			}
 		}
 	}

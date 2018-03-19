@@ -25,14 +25,12 @@ DB.init()
 
 	await client.sync({force: true}).then(()=>{
 		clientFixtures.forEach(fix => {
-			let {name, age} = fix;
 			client.create(fix);
 		});
 	});
 
 	await building.sync({force: true}).then(()=>{
 		buildingFixtures.forEach(fix => {
-			let {name, price, customer_company, building_company} = fix;
 			building.create(fix);
 		});
 	});
@@ -45,35 +43,30 @@ DB.init()
 
 	await buildingCompany.sync({force: true}).then(()=>{
 		buildingCompanyFixtures.forEach(fix => {
-			let {name, address, boss} = fix;
 			buildingCompany.create(fix);
 		});
 	});
 
 	await customerCompany.sync({force: true}).then(()=>{
 		customerCompanyFixtures.forEach(fix => {
-			let {name, stuff} = fix;
 			customerCompany.create(fix);
 		});
 	});
 
 	await boss.sync({force: true}).then(()=>{
 		bossFixtures.forEach(fix => {
-			let {name, experience, age, building_company} = fix;
 			boss.create(fix);
 		});
 	});
 
 	await seller.sync({force: true}).then(()=>{
 		sellerFixtures.forEach(fix => {
-			let {name, customer_company, age} = fix;
 			seller.create(fix);
 		});
 	});
 
 	await worker.sync({force: true}).then(()=>{
 		workerFixtures.forEach(fix => {
-			let {name, experience, age} = fix;
 			worker.create(fix);
 		});
 	});

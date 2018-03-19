@@ -15,10 +15,10 @@
 				<td>{{item.name}}</td>
 				<td>{{item.price}}</td>
 				<td>
-					<nuxt-link :to="{path: `/customer-company/${item.customer_company.id}`}">{{item.customer_company.name}}</nuxt-link>
+					<nuxt-link :to="{path: `/customer-company/${item.customer_company_id}`}">{{item.customer_company.name}}</nuxt-link>
 				</td>
 				<td>
-					<nuxt-link :to="{path: `building-company/${item.building_company.id}`}">{{item.building_company.name}}</nuxt-link>
+					<nuxt-link :to="{path: `building-company/${item.building_company_id}`}">{{item.building_company.name}}</nuxt-link>
 				</td>
 			</tr>
 		</tbody>

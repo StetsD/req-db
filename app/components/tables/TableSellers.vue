@@ -14,7 +14,7 @@
 				<td>{{item.name}}</td>
 				<td>{{item.age}}</td>
 				<td>
-					<nuxt-link :to="{path: `/customer-company/${item.customer_company.id}`}">{{item.customer_company.name}}</nuxt-link>
+					<nuxt-link :to="{path: `/customer-company/${item.customer_company_id}`}">{{item.company}}</nuxt-link>
 				</td>
 			</tr>
 		</tbody>

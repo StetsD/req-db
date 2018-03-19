@@ -1,6 +1,9 @@
 const Sequelize = require('Sequelize');
 const db = require('../index.js').instance;
 
+const {buildingCompany} = require('./building-company');
+const {customerCompany} = require('./customer-company');
+
 const Building = db.define('building', {
 	id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
 	name: {type: Sequelize.STRING, allowNull: false},
@@ -9,8 +12,16 @@ const Building = db.define('building', {
 	building_company_id: {type: Sequelize.INTEGER, allowNull: false}
 });
 
+Building.belongsTo(buildingCompany, {foreignKey: 'building_company_id'});
+Building.belongsTo(customerCompany, {foreignKey: 'customer_company_id'});
+
 exports.building = Building;
 
 exports.getBuildings = async () => {
-	return await Building.findAll();
+	return await Building.findAll({include:
+		[
+			{model: buildingCompany, required: true},
+			{model: customerCompany, required: true}
+		]
+	});
 }

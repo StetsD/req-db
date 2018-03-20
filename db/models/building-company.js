@@ -26,19 +26,17 @@ exports.getBuildingCompany = async (id) => {
 		building_companies where building_companies.id = ${id});`, {
 			type: db.QueryTypes.SELECT
 		});
-	let workers = await worker.findAll({
-		where: {
-			building_company_id: id
-		}
-	});
+	let workers = await db.query(`select w.id, w.name, w.experience, w.age
+			from worker_to_companies wtc, workers w
+			where wtc.building_company_id = ${id} and w.id = wtc.worker_id;`);
 
 	if(boss[0]){
 		bCompany.dataValues.boss = boss[0];
 	}
-	if(workers){
-		bCompany.dataValues.workers = workers
+	if(workers[0]){
+		bCompany.dataValues.workers = workers[0];
 	}
-	
+
 	return bCompany;
 
 }

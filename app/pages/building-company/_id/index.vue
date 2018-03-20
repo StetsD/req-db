@@ -5,7 +5,7 @@
 		<h2>Начальник</h2>
 		<TableBosses :boss="boss"/>
 		<h2>Рабочие</h2>
-		<!-- <TableWorkers :workers="workers"/> -->
+		<TableWorkers :workers="workers"/>
 	</div>
 </template>
 
@@ -29,7 +29,7 @@
 			return {
 				company: data,
 				boss: data.boss,
-				workers: data
+				workers: data.workers
 			}
 		}
 	}

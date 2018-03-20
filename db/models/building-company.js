@@ -19,5 +19,17 @@ exports.getBuildingCompanies = async () => {
 }
 
 exports.getBuildingCompany = async (id) => {
-	return await BuildingCompany.findById(id);
+	let bCompany = await BuildingCompany.findById(id);
+	let boss = await db.query(`select * from bosses
+		where bosses.id = (select building_companies.boss_id from
+		building_companies where building_companies.id = ${id});`, {
+			type: db.QueryTypes.SELECT
+		});
+	if(boss[0]){
+		bCompany.dataValues.boss = boss[0];
+	}
+	
+	console.log(bCompany);
+	return bCompany;
+
 }

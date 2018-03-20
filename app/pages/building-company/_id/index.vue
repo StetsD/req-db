@@ -1,11 +1,11 @@
 <template lang="html">
 	<div class="">
-		<Header title="Компания" sub="" icon="cog"/>
+		<Header title="Компания" :sub="company.name" icon="cog"/>
 		<h4>Адрес</h4>
 		<h2>Начальник</h2>
-		<TableBosses :bosses="bosses"/>
+		<TableBosses :boss="boss"/>
 		<h2>Рабочие</h2>
-		<TableWorkers :workers="workers"/>
+		<!-- <TableWorkers :workers="workers"/> -->
 	</div>
 </template>
 
@@ -27,7 +27,8 @@
 			}
 
 			return {
-				bosses: data,
+				company: data,
+				boss: data.boss,
 				workers: data
 			}
 		}

@@ -9,11 +9,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="(item, i) in bosses" :key="i">
-				<td>{{item.id}}</td>
-				<td>{{item.name}}</td>
-				<td>{{item.age}}</td>
-				<td>{{item.experience}}</td>
+			<tr>
+				<td>{{boss.id}}</td>
+				<td>{{boss.name}}</td>
+				<td>{{boss.age}}</td>
+				<td>{{boss.experience}} лет</td>
 			</tr>
 		</tbody>
 	</table>
@@ -22,7 +22,7 @@
 <script>
 
 	export default {
-		props: ['bosses']
+		props: ['boss']
 	}
 
 </script>

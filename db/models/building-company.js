@@ -2,6 +2,7 @@ const Sequelize = require('Sequelize');
 const db = require('../index.js').instance;
 
 const {boss} = require('./boss');
+const {worker} = require('./worker');
 
 const BuildingCompany = db.define('building_company', {
 	id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
@@ -25,11 +26,19 @@ exports.getBuildingCompany = async (id) => {
 		building_companies where building_companies.id = ${id});`, {
 			type: db.QueryTypes.SELECT
 		});
+	let workers = await worker.findAll({
+		where: {
+			building_company_id: id
+		}
+	});
+
 	if(boss[0]){
 		bCompany.dataValues.boss = boss[0];
 	}
+	if(workers){
+		bCompany.dataValues.workers = workers
+	}
 	
-	console.log(bCompany);
 	return bCompany;
 
 }

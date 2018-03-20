@@ -16,12 +16,20 @@ const tbody = [
 		building_company_id: 2
 	},
 	{
+		worker_id: 4,
+		building_company_id: 1
+	},
+	{
 		worker_id: 5,
 		building_company_id: 1
 	},
 	{
 		worker_id: 6,
 		building_company_id: 1
+	},
+	{
+		worker_id: 6,
+		building_company_id: 2
 	},
 	{
 		worker_id: 7,

@@ -17,4 +17,9 @@ p, a, h1, h2, h3, h4, h5, h6, textarea, input, option, li, div{
   margin: 0;
 }
 
+.ui.modal.active{
+	z-index: 1001;
+	position: relative;
+}
+
 @import './style-components/tables';

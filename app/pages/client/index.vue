@@ -7,7 +7,7 @@
 		<TableClients :clients="clients"/>
 
 		<ModalDefault :visible="visibleMClients" @close="togglePopup"  header="Добавить клиента">
-			<FormClient slot="content" @close="togglePopup" ok="ok" cancel="Отмена"/>
+			<FormClient slot="content" @close="togglePopup" ok="Добавить" cancel="Отмена"/>
 		</ModalDefault>
 		<ModalDimmer :visible="visibleDimmer" @close="togglePopup"/>
 	</div>

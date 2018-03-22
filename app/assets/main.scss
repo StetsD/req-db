@@ -22,4 +22,9 @@ p, a, h1, h2, h3, h4, h5, h6, textarea, input, option, li, div{
 	position: relative;
 }
 
+.ui .field__msg{
+	margin: 10px 0 0 0;
+	color: #9f3a38;
+}
+
 @import './style-components/tables';

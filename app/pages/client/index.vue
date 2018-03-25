@@ -2,7 +2,7 @@
 	<div class="">
 		<Header title="Клиенты" sub="" icon="users"/>
 		<button class="ui button green mini" @click="togglePopup">Добавить</button>
-		<TableClients :clients="clients"/>
+		<TableClients @delete="deleteClient" :clients="clients"/>
 
 		<ModalDefault :visible="visibleMClients" @close="togglePopup"  header="Добавить клиента">
 			<FormClient
@@ -55,11 +55,14 @@
 				await this.getClients();
 				this.togglePopup();
 			},
+			async deleteClient(client){
+				await api.deleteClient(client.id);
+				await this.getClients();
+			},
 			async getClients(){
 				let {data} = await api.getClients();
 				this.clients = data;
 			}
-
 		}
 	}
 

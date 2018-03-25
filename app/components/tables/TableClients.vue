@@ -5,6 +5,7 @@
 				<th>id</th>
 				<th>Имя</th>
 				<th>Возраст</th>
+				<th>Действия</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -14,6 +15,15 @@
 					<nuxt-link :to="{path: `${client.id}`}" append>{{client.name}}</nuxt-link>
 				</td>
 				<td>{{client.age}}</td>
+				<td>
+					<button class="ui orange mini icon button">
+						<i class="cog icon"></i>
+					</button>
+					<button @click="$emit('delete', client)" class="ui red mini icon button">
+						<i class="trash icon"></i>
+					</button>
+				</td>
+
 			</tr>
 		</tbody>
 	</table>

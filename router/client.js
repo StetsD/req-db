@@ -1,19 +1,22 @@
 const {router, apiPath} = require('./index');
-const {getClients, getClient, addClient} = require('../db/models/client');
+const {getClients, getClient, addClient, deleteClient} = require('../db/models/client');
 const univalid = require('univalid')();
 
+//get clients
 router.get(apiPath('client'), async (ctx, next) => {
 	ctx.type = "application/json";
 	ctx.body = await getClients();
 	next();
 });
 
+//get client
 router.get(apiPath('client/:id'), async (ctx, next) => {
 	ctx.type = "application/json";
 	ctx.body = await getClient(ctx.params.id);
 	next();
 });
 
+//add client
 router.post(apiPath('client'), async (ctx, next) => {
 	univalid.check([
 		{
@@ -37,5 +40,13 @@ router.post(apiPath('client'), async (ctx, next) => {
 		ctx.body = univalid.getState;
 	}
 
+	next();
+});
+
+//delete client
+router.delete(apiPath('client/:id'), async (ctx, next) => {
+	await deleteClient(ctx.params.id);
+	ctx.status = 200;
+	ctx.body = ctx.params;
 	next();
 });

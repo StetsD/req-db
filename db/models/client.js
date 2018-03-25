@@ -22,3 +22,11 @@ exports.getClient = async (id) => {
 exports.addClient = async (data) => {
 	return await Client.create(data);
 }
+
+exports.deleteClient = async (id) => {
+	return await Client.destroy({
+		where: {
+			id
+		}
+	})
+}

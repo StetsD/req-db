@@ -22,6 +22,12 @@ const api = {
 			endpoint: '/client',
 			data
 		});
+	},
+	async deleteClient(id){
+		return await _rq({
+			method: 'delete',
+			endpoint: `/client/${id}`
+		});
 	}
 }
 

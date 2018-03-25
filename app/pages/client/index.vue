@@ -2,12 +2,15 @@
 	<div class="">
 		<Header title="Клиенты" sub="" icon="users"/>
 		<button class="ui button green mini" @click="togglePopup">Добавить</button>
-		<button class="ui button orange mini">Редактировать</button>
-		<button class="ui button red mini">Удалить</button>
 		<TableClients :clients="clients"/>
 
 		<ModalDefault :visible="visibleMClients" @close="togglePopup"  header="Добавить клиента">
-			<FormClient slot="content" @close="togglePopup" ok="Добавить" cancel="Отмена"/>
+			<FormClient
+				@add="addClient"
+				slot="content"
+				@close="togglePopup"
+				ok="Добавить"
+				cancel="Отмена"/>
 		</ModalDefault>
 		<ModalDimmer :visible="visibleDimmer" @close="togglePopup"/>
 	</div>
@@ -21,6 +24,7 @@
 	import ModalDimmer from '~/components/modals/ModalDimmer';
 
 	const axios = require('axios');
+	const api = require('~/assets/modules/api').default;
 
 	export default {
 		components: {Header, TableClients, ModalDefault, FormClient, ModalDimmer},
@@ -45,6 +49,15 @@
 			},
 			toggleDimmer(){
 				this.visibleDimmer = !this.visibleDimmer;
+			},
+			async addClient(formData){
+				await api.addClient(formData);
+				await this.getClients();
+				this.togglePopup();
+			},
+			async getClients(){
+				let {data} = await api.getClients();
+				this.clients = data;
 			}
 
 		}

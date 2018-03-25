@@ -3,6 +3,7 @@
 	  <div class="field">
 	    <label>Имя</label>
 	    <input type="text" name="name" placeholder="Иван Иванов"
+			v-model="formData.name"
 			data-validation="required"
 			data-f="oC"
 			data-msg='{"filter": "Разрешены только символы кириллицы"}'>
@@ -11,6 +12,7 @@
 	  <div class="field">
 	    <label>Возраст</label>
 	    <input type="text" name="age" placeholder="34"
+			v-model="formData.age"
 			data-validation="required"
 			data-f="oN"
 			data-msg='{"filter": "Разрешены только цифры"}'>
@@ -19,9 +21,9 @@
 	  <div class="actions">
 	    <div class="ui black deny button" @click="$emit('close')">{{cancel}}
 	    </div>
-	    <button type="submit" class="ui positive right labeled icon button" @click="validate">{{ok}}
+	    <div class="ui positive right labeled icon button" @click="validate">{{ok}}
 	      <i class="checkmark icon"></i>
-	  </button>
+	  </div>
 	  </div>
 	</form>
 </template>
@@ -33,6 +35,14 @@
 
 	export default {
 		props: ['cancel', 'ok'],
+		data(){
+			return {
+				formData:{
+					name: '',
+					age: ''
+				}
+			}
+		},
 		mounted(){
 			univalid.setStrategy(
 				USF({
@@ -57,8 +67,11 @@
 		},
 		methods: {
 			validate(){
-				// univalid.get('check');
-				console.log(univalid.getState);
+				univalid.get('check');
+				if(univalid.getCommonState === 'success'){
+					this.$emit('add', this.formData);
+				}
+
 			}
 		}
 	}

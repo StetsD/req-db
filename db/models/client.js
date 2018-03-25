@@ -18,3 +18,7 @@ exports.getClients = async () => {
 exports.getClient = async (id) => {
 	return await Client.findById(id);
 }
+
+exports.addClient = async (data) => {
+	return await Client.create(data);
+}

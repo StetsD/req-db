@@ -2,7 +2,7 @@
 	<div class="">
 		<Header title="Клиенты" sub="" icon="users"/>
 		<button class="ui button green mini" @click="togglePopup('add')">Добавить</button>
-		<TableClients @delete="deleteClient" @edit="togglePopup('edit')" :clients="clients"/>
+		<TableClients @delete="deleteClient" @edit="togglePopup" :clients="clients"/>
 
 		<ModalDefault :visible="visibleMClients" @close="togglePopup"  header="Клиент">
 			<FormClientAdd
@@ -15,6 +15,7 @@
 			<FormClientEdit
 				:visible="vFClientsEdit"
 				@add="editClient"
+				:client="editingClient"
 				slot="content"
 				@close="togglePopup"
 				ok="Изменить"
@@ -59,11 +60,12 @@
 				vFClientsAdd: false,
 				vFClientsEdit: false,
 				//data
-				clients: data || []
+				clients: data || [],
+				editingClient: {name: '', age: ''}
 			}
 		},
 		methods: {
-			togglePopup(type){
+			togglePopup(type, client){
 				this.visibleMClients = !this.visibleMClients;
 				this.toggleDimmer();
 
@@ -72,6 +74,7 @@
 						this.vFClientsAdd = true;
 						break;
 					case 'edit':
+						this.editingClient = client;
 						this.vFClientsEdit = true;
 						break;
 					default:

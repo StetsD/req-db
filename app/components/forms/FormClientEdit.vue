@@ -3,7 +3,7 @@
 	  <div class="field">
 	    <label>Имя</label>
 	    <input type="text" name="name"
-			v-model="formData.name"
+			:value="client.name"
 			data-validation="required"
 			data-f="oC"
 			data-msg='{"filter": "Разрешены только символы кириллицы"}'>
@@ -12,7 +12,7 @@
 	  <div class="field">
 	    <label>Возраст</label>
 	    <input type="text" name="age"
-			v-model="formData.age"
+			:value="client.age"
 			data-validation="required"
 			data-f="oN"
 			data-msg='{"filter": "Разрешены только цифры"}'>
@@ -34,7 +34,7 @@
 
 
 	export default {
-		props: ['cancel', 'ok', 'visible'],
+		props: ['cancel', 'ok', 'visible', 'client'],
 		data(){
 			return {
 				formData:{

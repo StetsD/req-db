@@ -27,4 +27,12 @@ p, a, h1, h2, h3, h4, h5, h6, textarea, input, option, li, div{
 	color: #9f3a38;
 }
 
+.ui.modal.active{
+	position: absolute;
+	top: 140px;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
 @import './style-components/tables';

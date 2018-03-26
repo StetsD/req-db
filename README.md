@@ -1,2 +1,8 @@
 # req-db
-req with pg + sequelize
+
+
++koa
++nuxt
++vue
++pg
++sequelize

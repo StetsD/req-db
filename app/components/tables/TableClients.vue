@@ -16,7 +16,7 @@
 				</td>
 				<td>{{client.age}}</td>
 				<td>
-					<button class="ui orange mini icon button">
+					<button @click="$emit('edit')" class="ui orange mini icon button">
 						<i class="cog icon"></i>
 					</button>
 					<button @click="$emit('delete', client)" class="ui red mini icon button">

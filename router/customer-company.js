@@ -1,9 +1,15 @@
 const {router, apiPath} = require('./index');
-const {getCustomerCompanies, getCustomerCompany} = require('../db/models/customer-company');
+const {getCustomerCompanies, getCustomerCompany, getCustomerCompaniesByName} = require('../db/models/customer-company');
 
 router.get(apiPath('customer-company'), async (ctx, next) => {
 	ctx.type = "application/json";
-	ctx.body = await getCustomerCompanies();
+
+	if(ctx.request.query.q){
+		ctx.body = await getCustomerCompaniesByName(ctx.request.query.q);
+	}else{
+		ctx.body = await getCustomerCompanies();
+	}
+
 	next();
 });
 

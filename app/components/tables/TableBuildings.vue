@@ -7,6 +7,7 @@
 				<th>Цена</th>
 				<th>Застройщик</th>
 				<th>Подрядчик</th>
+				<th>Действия</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -19,6 +20,14 @@
 				</td>
 				<td>
 					<nuxt-link :to="{path: `building-company/${item.building_company_id}`}">{{item.building_company.name}}</nuxt-link>
+				</td>
+				<td>
+					<button @click="$emit('edit', 'edit', item)" class="ui orange mini icon button">
+						<i class="cog icon"></i>
+					</button>
+					<button @click="$emit('delete', item)" class="ui red mini icon button">
+						<i class="trash icon"></i>
+					</button>
 				</td>
 			</tr>
 		</tbody>

@@ -24,3 +24,9 @@ exports.getCustomerCompany = async (id) => {
 			where cc.id = ${id} and s.customer_company_id = cc.id;`,
 		{type: db.QueryTypes.SELECT});
 }
+
+exports.getCustomerCompaniesByName = async val => {
+	return await db.query(`select * from customer_companies
+			where name ilike '${val}%'`,
+		{type: db.QueryTypes.SELECT});
+}

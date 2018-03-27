@@ -25,3 +25,9 @@ exports.getBuildings = async () => {
 		]
 	});
 }
+
+exports.editBuilding = async data => {
+	await db.query(`update buildings set
+		(name, price, customer_company_id, building_company_id) = ('${data.name}','${data.price}','${data.customer}','${data.builder}')
+		where id = ${data.id}`)
+}

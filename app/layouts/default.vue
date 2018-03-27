@@ -8,6 +8,10 @@
 </template>
 
 <script type="text/javascript">
+const $ = require('jquery');
+import semantic from 'semantic-ui-css';
+window.$ = window.jQuery = $;
+
 import Menu from '~/components/Menu';
 
 const axios = require('axios');

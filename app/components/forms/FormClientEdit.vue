@@ -64,8 +64,14 @@
 				univalid.get('check');
 				if(univalid.getCommonState === 'success'){
 					this.$emit('edit', {name: this.$refs.name.value, age: this.$refs.age.value, id: this.client.id});
+				}
+			}
+		},
+		watch: {
+			visible: function(val){
+				if(!val){
 					univalid.get('clearInputs');
-					// univalid.get('clearStatuses', univalid.get('$form').querySelectorAll('inputs, select, textarea'));
+					univalid.get('clearStatuses');	
 				}
 
 			}

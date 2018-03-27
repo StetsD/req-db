@@ -10,6 +10,7 @@ async function _rq(props){
 }
 
 const api = {
+	//Client
 	async getClients(){
 		return await _rq({
 			method: 'get',
@@ -35,6 +36,49 @@ const api = {
 			method: 'delete',
 			endpoint: `/client/${id}`
 		});
+	},
+
+	//Customer company
+	async getCCompany(){
+		return await _rq({
+			method: 'get',
+			endpoint: '/customer-company'
+		});
+	},
+	async getCCompanyByName(val){
+		return await _rq({
+			method: 'get',
+			endpoint: `/customer-company?q=${val}`
+		});
+	},
+
+	//Building cCompany
+	async getBCompany(){
+		return await _rq({
+			method: 'get',
+			endpoint: '/building-company'
+		});
+	},
+	async getBCompanyByName(val){
+		return await _rq({
+			method: 'get',
+			endpoint: `/building-company?q=${val}`
+		});
+	},
+
+	//buildings
+	async getBuildings(){
+		return await _rq({
+			method: 'get',
+			endpoint: '/building'
+		});
+	},
+	async editBuilding(data){
+		return _rq({
+			method: 'post',
+			endpoint: '/building',
+			data
+		})
 	}
 }
 

@@ -23,6 +23,13 @@ const api = {
 			data
 		});
 	},
+	async editClient(data){
+		return await _rq({
+			method: 'patch',
+			endpoint: `/client/${data.id}`,
+			data
+		});
+	},
 	async deleteClient(id){
 		return await _rq({
 			method: 'delete',

@@ -14,7 +14,7 @@
 			/>
 			<FormClientEdit
 				:visible="vFClientsEdit"
-				@add="editClient"
+				@edit="editClient"
 				:client="editingClient"
 				slot="content"
 				@close="togglePopup"
@@ -91,10 +91,12 @@
 			async addClient(formData){
 				await api.addClient(formData);
 				await this.getClients();
-				this.togglePopup('add');
+				this.togglePopup();
 			},
 			async editClient(formData){
-				console.log(formData);
+				await api.editClient(formData);
+				await this.getClients();
+				this.togglePopup();
 			},
 			async deleteClient(client){
 				await api.deleteClient(client.id);

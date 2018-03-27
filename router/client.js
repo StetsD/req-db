@@ -1,5 +1,5 @@
 const {router, apiPath} = require('./index');
-const {getClients, getClient, addClient, deleteClient} = require('../db/models/client');
+const {getClients, getClient, addClient, deleteClient, editClient} = require('../db/models/client');
 const univalid = require('univalid')();
 
 //get clients
@@ -18,21 +18,7 @@ router.get(apiPath('client/:id'), async (ctx, next) => {
 
 //add client
 router.post(apiPath('client'), async (ctx, next) => {
-	univalid.check([
-		{
-			name: 'name',
-			val: ctx.request.body.name,
-			type: 'required',
-			filter: 'oC'
-		},
-		{
-			name: 'age',
-			val: ctx.request.body.age,
-			type: 'required',
-			filter: 'oN'
-		}
-	]);
-	if(univalid.getCommonState === 'success'){
+	if(validateClient(ctx.request.body)){
 		await addClient(ctx.request.body);
 		ctx.body = ctx.request.body;
 	}else{
@@ -50,3 +36,41 @@ router.delete(apiPath('client/:id'), async (ctx, next) => {
 	ctx.body = ctx.params;
 	next();
 });
+
+//edit client
+router.patch(apiPath('client/:id'), async (ctx, next) => {
+	// let {name, age} = ctx.request.body;
+	if(validateClient(ctx.request.body)){
+		await editClient({id: ctx.params.id, ...ctx.request.body});
+		ctx.body = ctx.request.body;
+	}else{
+		ctx.status = 400;
+		ctx.body = univalid.getState;
+	}
+});
+
+
+function validateClient(body){
+	univalid.check([
+		{
+			name: 'name',
+			val: body.name,
+			type: 'required',
+			filter: 'oC'
+		},
+		{
+			name: 'age',
+			val: body.age,
+			type: 'required',
+			filter: 'oN'
+		}
+	]);
+	let state = univalid.getCommonState;
+	if(state === 'success'){
+		univalid.clearState();
+		return true;
+	}else{
+		return false;
+	}
+
+}

@@ -30,3 +30,8 @@ exports.deleteClient = async (id) => {
 		}
 	})
 }
+
+exports.editClient = async (data) => {
+	return await db.query(`update clients set (name, age) = ('${data.name}', ${data.age})
+							where id = ${data.id};`);
+}

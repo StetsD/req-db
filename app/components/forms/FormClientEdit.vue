@@ -3,6 +3,7 @@
 	  <div class="field">
 	    <label>Имя</label>
 	    <input type="text" name="name"
+			ref="name"
 			:value="client.name"
 			data-validation="required"
 			data-f="oC"
@@ -12,6 +13,7 @@
 	  <div class="field">
 	    <label>Возраст</label>
 	    <input type="text" name="age"
+			ref="age"
 			:value="client.age"
 			data-validation="required"
 			data-f="oN"
@@ -35,14 +37,6 @@
 
 	export default {
 		props: ['cancel', 'ok', 'visible', 'client'],
-		data(){
-			return {
-				formData:{
-					name: '',
-					age: ''
-				}
-			}
-		},
 		mounted(){
 			univalid.setStrategy(
 				USF({
@@ -64,13 +58,14 @@
 				filter: 'Недопустимые символы',
 				success: 'ok'
 			});
-			console.log(univalid.get('$form'))
 		},
 		methods: {
 			validate(){
 				univalid.get('check');
 				if(univalid.getCommonState === 'success'){
-					this.$emit('edit', this.formData);
+					this.$emit('edit', {name: this.$refs.name.value, age: this.$refs.age.value, id: this.client.id});
+					univalid.get('clearInputs');
+					// univalid.get('clearStatuses', univalid.get('$form').querySelectorAll('inputs, select, textarea'));
 				}
 
 			}

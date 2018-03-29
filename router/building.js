@@ -1,13 +1,15 @@
 const {router, apiPath} = require('./index');
-const {getBuildings, editBuilding, addBuilding} = require('../db/models/building');
+const {getBuildings, editBuilding, addBuilding, deleteBuilding} = require('../db/models/building');
 const univalid = require('univalid')();
 
+//get building
 router.get(apiPath('building'), async (ctx, next) => {
 	ctx.type = "application/json";
 	ctx.body = await getBuildings();
 	next();
 });
 
+//add building
 router.post(apiPath('building'), async (ctx, next) => {
 	if(validate(ctx.request.body)){
 		let {name, price} = ctx.request.body;
@@ -21,6 +23,7 @@ router.post(apiPath('building'), async (ctx, next) => {
 	}
 });
 
+//edit building
 router.patch(apiPath('building'), async (ctx, next) => {
 	if(validate(ctx.request.body)){
 		await editBuilding(ctx.request.body);
@@ -29,6 +32,14 @@ router.patch(apiPath('building'), async (ctx, next) => {
 		ctx.status = 400;
 		ctx.body = univalid.getState;
 	}
+});
+
+//delete building
+router.delete(apiPath('building/:id'), async (ctx, next) => {
+	await deleteBuilding(ctx.params.id);
+	ctx.status = 200;
+	ctx.body = ctx.params;
+	next();
 });
 
 function validate(body){

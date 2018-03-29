@@ -35,3 +35,11 @@ exports.editBuilding = async data => {
 		(name, price, customer_company_id, building_company_id) = ('${data.name}','${data.price}','${data.customer}','${data.builder}')
 		where id = ${data.id}`)
 }
+
+exports.deleteBuilding = async id => {
+	return await Building.destroy({
+		where: {
+			id
+		}
+	})
+}

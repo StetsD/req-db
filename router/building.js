@@ -1,5 +1,5 @@
 const {router, apiPath} = require('./index');
-const {getBuildings, editBuilding} = require('../db/models/building');
+const {getBuildings, editBuilding, addBuilding} = require('../db/models/building');
 const univalid = require('univalid')();
 
 router.get(apiPath('building'), async (ctx, next) => {
@@ -9,18 +9,29 @@ router.get(apiPath('building'), async (ctx, next) => {
 });
 
 router.post(apiPath('building'), async (ctx, next) => {
-	if(validateClient(ctx.request.body)){
+	if(validate(ctx.request.body)){
+		let {name, price} = ctx.request.body;
+		let customer_company_id = ctx.request.body.customer;
+		let building_company_id = ctx.request.body.builder;
+		await addBuilding({name, price, customer_company_id, building_company_id});
+		ctx.body = ctx.request.body;
+	}else{
+		ctx.status = 400;
+		ctx.body = univalid.getState;
+	}
+});
+
+router.patch(apiPath('building'), async (ctx, next) => {
+	if(validate(ctx.request.body)){
 		await editBuilding(ctx.request.body);
 		ctx.body = ctx.request.body;
 	}else{
 		ctx.status = 400;
 		ctx.body = univalid.getState;
 	}
-
-
 });
 
-function validateClient(body){
+function validate(body){
 	univalid.check([
 		{
 			name: 'name',

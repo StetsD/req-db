@@ -26,6 +26,10 @@ exports.getBuildings = async () => {
 	});
 }
 
+exports.addBuilding = async data => {
+	return await Building.create(data);
+}
+
 exports.editBuilding = async data => {
 	await db.query(`update buildings set
 		(name, price, customer_company_id, building_company_id) = ('${data.name}','${data.price}','${data.customer}','${data.builder}')

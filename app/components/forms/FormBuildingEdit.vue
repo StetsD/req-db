@@ -5,7 +5,7 @@
 	    <label>Имя</label>
 	    <input type="text" name="name"
 			ref="name"
-			:value="building.name"
+			v-model="building.name"
 			data-validation="required"
 			data-f="oC"
 			data-msg='{"filter": "Разрешены только символы кириллицы"}'>
@@ -16,7 +16,7 @@
 	    <label>Цена</label>
 	    <input type="text" name="price"
 			ref="price"
-			:value="building.price"
+			v-model="building.price"
 			data-validation="required"
 			data-f="oN"
 			data-msg='{"filter": "Разрешены только цифры"}'>
@@ -64,12 +64,12 @@
 	const univalid = require('univalid')();
 	const USF = require('univalid-strategy-form');
 	const {throttle} = require('lodash');
-
+	let dropdowns;
 
 	export default {
 		props: ['cancel', 'ok', 'visible', 'building', 'companies', 'bcompanies'],
 		mounted(){
-			$('.form-building-edit__cc, .form-building-edit__bc').dropdown({
+			dropdowns = $('.form-building-edit__cc, .form-building-edit__bc').dropdown({
 				ignoreCase: true
 			});
 
@@ -109,17 +109,13 @@
 			validate(){
 				univalid.get('check');
 				if(univalid.getCommonState === 'success'){
-					console.log({name: this.$refs.name.value,
-					 price: this.$refs.price.value,
-					 customer: this.$refs.cCompanyVal.value,
-					 builder: this.$refs.bCompanyVal.value,
-					 id: this.building.id})
-					// this.$emit('edit',
-					// 	{name: this.$refs.name.value,
-					// 	 price: this.$refs.price.value,
-					// 	 customer: this.$refs.cCompanyVal.value,
-					// 	 builder: this.$refs.bCompanyVal.value,
-					// 	 id: this.building.id});
+					this.$emit('edit',
+						{name: this.$refs.name.value,
+						 price: this.$refs.price.value,
+						 customer: this.$refs.cCompanyVal.value,
+						 builder: this.$refs.bCompanyVal.value,
+						 id: this.building.id});
+					 dropdowns.dropdown('clear');
 				}
 			}
 		},

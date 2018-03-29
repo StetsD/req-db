@@ -1,23 +1,53 @@
 <template lang="html">
-	<form class="ui form js-form-add-cli form-client-add" :class="{active: visible}">
+	<form class="ui form js-form-add-building form-building-add" :class="{active: visible}">
+
 	  <div class="field">
 	    <label>Имя</label>
-	    <input type="text" name="name" placeholder="Иван Иванов"
-			v-model="formData.name"
+	    <input type="text" name="name"
+			ref="name"
 			data-validation="required"
 			data-f="oC"
 			data-msg='{"filter": "Разрешены только символы кириллицы"}'>
 		<div class="field__msg"></div>
 	  </div>
+
 	  <div class="field">
-	    <label>Возраст</label>
-	    <input type="text" name="age" placeholder="34"
-			v-model="formData.age"
+	    <label>Цена</label>
+	    <input type="text" name="price"
+			ref="price"
 			data-validation="required"
 			data-f="oN"
 			data-msg='{"filter": "Разрешены только цифры"}'>
 		<div class="field__msg"></div>
 	  </div>
+
+	 <div class="field">
+		<label>Застройщик</label>
+		 <div ref="cCompany" class="ui fluid search normal selection dropdown form-building-add__cc">
+		 	<input ref="cCompanyVal" type="hidden" name="customer" data-validation="required">
+			<i class="dropdown icon "></i>
+	        <div class="default text"></div>
+	        <div class="menu">
+				<div class="item" v-for="(comp, i) in companies" :key="i" :data-value="comp.id">{{comp.name}}</div>
+			</div>
+		</div>
+	 	<div class="field__msg"></div>
+	 </div>
+
+	 <div class="field">
+		<label>Подрядчик</label>
+		 <div ref="bCompany" class="ui fluid search normal selection dropdown form-building-add__bc">
+		 	<input ref="bCompanyVal" type="hidden" name="builder" data-validation="required">
+			<i class="dropdown icon"></i>
+	        <div class="default text"></div>
+	        <div class="menu">
+				<div class="item" v-for="(comp, i) in bcompanies" :key="i" :data-value="comp.id">{{comp.name}}</div>
+			</div>
+		</div>
+	 	<div class="field__msg"></div>
+	 </div>
+
+
 	  <div class="actions">
 	    <div class="ui black deny button" @click="$emit('close')">{{cancel ? cancel : 'Отмена'}}
 	    </div>
@@ -31,23 +61,31 @@
 <script>
 	const univalid = require('univalid')();
 	const USF = require('univalid-strategy-form');
-
+	const {throttle} = require('lodash');
+	let dropdowns;
 
 	export default {
-		props: ['cancel', 'ok', 'visible'],
-		data(){
-			return {
-				formData:{
-					name: '',
-					age: ''
-				}
-			}
-		},
+		props: ['cancel', 'ok', 'visible', 'companies', 'bcompanies'],
 		mounted(){
+			dropdowns = $('.form-building-add__cc, .form-building-add__bc').dropdown({
+				ignoreCase: true
+			});
+
+			this.$refs.cCompany.querySelector('.search').addEventListener('keyup',
+				throttle((e) => {
+					_fetchCompanies.apply(this, [e, 'cCompany', 'cCompanyChange']);
+				}, 1500)
+			, false);
+			this.$refs.bCompany.querySelector('.search').addEventListener('keyup',
+				throttle((e) => {
+					_fetchCompanies.apply(this, [e, 'bCompany', 'bCompanyChange']);
+				}, 1500)
+			, false);
+
 			univalid.setStrategy(
 				USF({
 					core: univalid,
-					$form: '.js-form-add-cli',
+					$form: '.js-form-add-building',
 					statusConfig: {
 						targetParent: '.field',
 						targetStatus: '.field__msg'
@@ -69,26 +107,43 @@
 			validate(){
 				univalid.get('check');
 				if(univalid.getCommonState === 'success'){
-					this.$emit('add', this.formData);
+					this.$emit('add',
+						{name: this.$refs.name.value,
+						 price: this.$refs.price.value,
+						 customer: this.$refs.cCompanyVal.value,
+						 builder: this.$refs.bCompanyVal.value});
+					 dropdowns.dropdown('clear');
 				}
-
 			}
 		},
 		watch: {
 			visible: function(val){
 				if(!val){
-					this.formData = {name: '', age: ''};
 					univalid.get('clearInputs');
 					univalid.get('clearStatuses');
 				}
+			},
+			companies: function(){
+				this.$refs.cCompany.classList.remove('loading');
+			},
+			bcompanies: function(){
+				this.$refs.bCompany.classList.remove('loading');
 			}
+		}
+	}
+
+	function _fetchCompanies(e, type, method){
+		let val = e.target.value;
+		if(val.length >= 2){
+			this.$refs[type].classList.add('loading');
+			this.$emit(method, val);
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 
-.form-client-add{
+.form-building-add{
 	display: none;
 
 	&.active{

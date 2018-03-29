@@ -73,13 +73,26 @@ const api = {
 			endpoint: '/building'
 		});
 	},
-	async editBuilding(data){
-		return _rq({
+	async addBuilding(data){
+		return await _rq({
 			method: 'post',
 			endpoint: '/building',
 			data
+		});
+	},
+	async editBuilding(data){
+		return _rq({
+			method: 'patch',
+			endpoint: '/building',
+			data
 		})
-	}
+	},
+	async deleteBuilding(id){
+		return await _rq({
+			method: 'delete',
+			endpoint: `/building/${id}`
+		});
+	},
 }
 
 export default api;

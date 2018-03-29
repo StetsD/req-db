@@ -6,22 +6,26 @@
 
 		<ModalDefault :visible="visibleMBuildings" @close="togglePopup"  header="Строение">
 			<FormBuildingAdd
-				:visible="vFBuildingsAdd"
-				@add="addBuilding"
 				slot="content"
+				@add="addBuilding"
 				@close="togglePopup"
+				@cCompanyChange="getCCompanyByName"
+				@bCompanyChange="getBCompanyByName"
+				:companies="ccompanies"
+				:bcompanies="bcompanies"
+				:visible="vFBuildingsAdd"
 				ok="Добавить"
 			/>
 			<FormBuildingEdit
-				:visible="vFBuildingsEdit"
+				slot="content"
 				@edit="editBuilding"
+				@close="togglePopup"
 				@cCompanyChange="getCCompanyByName"
 				@bCompanyChange="getBCompanyByName"
 				:companies="ccompanies"
 				:bcompanies="bcompanies"
 				:building="editingBuilding"
-				slot="content"
-				@close="togglePopup"
+				:visible="vFBuildingsEdit"
 				ok="Изменить"
 			/>
 		</ModalDefault>

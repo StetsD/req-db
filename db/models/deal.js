@@ -18,3 +18,7 @@ exports.deal = Deal;
 exports.getDeals = async () => {
 	return await Deal.findAll({include: [{model: client, required: true}, {model: building, required: true}]});
 }
+
+exports.addDeal = async data => {
+	return await Deal.create(data);
+}

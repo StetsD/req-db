@@ -37,6 +37,12 @@ const api = {
 			endpoint: `/client/${id}`
 		});
 	},
+	async getClientByName(name){
+		return await _rq({
+			method: 'get',
+			endpoint: `/client?q=${name}`
+		});
+	},
 
 	//Customer company
 	async getCCompany(){
@@ -93,6 +99,41 @@ const api = {
 			endpoint: `/building/${id}`
 		});
 	},
+	async getBuildingByName(name){
+		return await _rq({
+			method: 'get',
+			endpoint: `/building?q=${name}`
+		});
+	},
+
+	//deals
+	async getDeals(){
+		return await _rq({
+			method: 'get',
+			endpoint: '/deal'
+		});
+	},
+	async addDeal(data){
+		return await _rq({
+			method: 'post',
+			endpoint: '/deal',
+			data
+		});
+	},
+	async editDeal(data){
+		return _rq({
+			method: 'patch',
+			endpoint: '/deal',
+			data
+		})
+	},
+	async deleteDeal(id){
+		return await _rq({
+			method: 'delete',
+			endpoint: `/deal/${id}`
+		});
+	},
+
 }
 
 export default api;

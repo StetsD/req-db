@@ -43,3 +43,9 @@ exports.deleteBuilding = async id => {
 		}
 	})
 }
+
+exports.getBuildingByName = async name => {
+	return await db.query(`select * from buildings
+			where name ilike '${name}%'`,
+		{type: db.QueryTypes.SELECT});
+}

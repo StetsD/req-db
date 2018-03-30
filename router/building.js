@@ -1,11 +1,17 @@
 const {router, apiPath} = require('./index');
-const {getBuildings, editBuilding, addBuilding, deleteBuilding} = require('../db/models/building');
+const {getBuildings, editBuilding, addBuilding, deleteBuilding, getBuildingByName} = require('../db/models/building');
 const univalid = require('univalid')();
 
 //get building
 router.get(apiPath('building'), async (ctx, next) => {
 	ctx.type = "application/json";
-	ctx.body = await getBuildings();
+
+	if(ctx.request.query.q){
+		ctx.body = await getBuildingByName(ctx.request.query.q);
+	}else{
+		ctx.body = await getBuildings();
+	}
+
 	next();
 });
 

@@ -35,3 +35,9 @@ exports.editClient = async (data) => {
 	return await db.query(`update clients set (name, age) = ('${data.name}', ${data.age})
 							where id = ${data.id};`);
 }
+
+exports.getClientByName = async name => {
+	return await db.query(`select * from clients
+			where name ilike '${name}%'`,
+		{type: db.QueryTypes.SELECT});
+}

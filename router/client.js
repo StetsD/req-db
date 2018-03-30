@@ -1,11 +1,16 @@
 const {router, apiPath} = require('./index');
-const {getClients, getClient, addClient, deleteClient, editClient} = require('../db/models/client');
+const {getClients, getClient, addClient, deleteClient, editClient, getClientByName} = require('../db/models/client');
 const univalid = require('univalid')();
 
 //get clients
 router.get(apiPath('client'), async (ctx, next) => {
 	ctx.type = "application/json";
-	ctx.body = await getClients();
+	if(ctx.request.query.q){
+		ctx.body = await getClientByName(ctx.request.query.q);
+	}else{
+		ctx.body = await getClients();
+	}
+
 	next();
 });
 

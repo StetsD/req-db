@@ -22,3 +22,17 @@ exports.getDeals = async () => {
 exports.addDeal = async data => {
 	return await Deal.create(data);
 }
+
+exports.editDeal = async data => {
+	return await db.query(`update deals set
+				(client_id, building_id) = ('${data.client_id}', '${data.building_id}')
+				where id = ${data.id}`, {
+					type: db.QueryTypes.SELECT
+				});
+};
+
+exports.deleteDeal = async id => {
+	return await db.query(`delete from deals where id = ${id}`, {
+		type: db.QueryTypes.SELECT
+	});
+}

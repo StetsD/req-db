@@ -1,5 +1,5 @@
 const {router, apiPath} = require('./index');
-const {getDeals, addDeal, editDeal} = require('../db/models/deal');
+const {getDeals, addDeal, editDeal, deleteDeal} = require('../db/models/deal');
 const univalid = require('univalid')();
 
 router.get(apiPath('deal'), async (ctx, next) => {
@@ -30,6 +30,12 @@ router.patch(apiPath('deal'), async (ctx, next) => {
 	next();
 });
 
+router.delete(apiPath('deal/:id'), async (ctx, next) => {
+	await deleteDeal(ctx.params.id);
+	ctx.status = 200;
+	ctx.body = ctx.params;
+	next();
+});
 
 function validate(body){
 	univalid.check([

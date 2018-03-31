@@ -3,7 +3,7 @@
 		<Header title="Сделки" sub="Клиенты и строения" icon="briefcase"/>
 		<button class="ui button green mini" @click="togglePopup('add')">Добавить</button>
 		<TableDeals
-			@edit="editDeal"
+			@edit="togglePopup"
 			@delete="deleteDeal"
 			:deals="deals"/>
 
@@ -19,6 +19,19 @@
 				:visible="vFDealsAdd"
 				ok="Добавить"
 			/>
+
+			<FormDealEdit
+				slot="content"
+				@edit="editDeal"
+				@close="togglePopup"
+				@clientChange="getClientByName"
+				@buildingChange="getBuildingByName"
+				:deal="editingDeal"
+				:clients="clients"
+				:buildings="buildings"
+				:visible="vFDealsEdit"
+				ok="Изменить"
+			/>
 		</ModalDefault>
 		<ModalDimmer :visible="visibleDimmer" @close="togglePopup"/>
 	</div>
@@ -30,12 +43,18 @@
 	import ModalDefault from '~/components/modals/ModalDefault';
 	import ModalDimmer from '~/components/modals/ModalDimmer';
 	import FormDealAdd from '~/components/forms/FormDealAdd';
+	import FormDealEdit from '~/components/forms/FormDealEdit';
 
 	const axios = require('axios');
 	const api = require('~/assets/modules/api').default;
 
 	export default {
-		components: {Header, TableDeals, ModalDefault, ModalDimmer, FormDealAdd},
+		components: {Header,
+					TableDeals,
+					ModalDefault,
+					ModalDimmer,
+					FormDealAdd,
+					FormDealEdit},
 		async asyncData(){
 
 			try{
@@ -85,11 +104,14 @@
 				await this.getDeals();
 				this.togglePopup();
 			},
-			async editDeal(){
-
+			async editDeal(data){
+				await api.editDeal(data);
+				await this.getDeals();
+				this.togglePopup();
 			},
-			async deleteDeal(){
-
+			async deleteDeal(deal){
+				await api.deleteDeal(deal.id);
+				await this.getDeals();
 			},
 			async getDeals(){
 				let {data} = await api.getDeals();

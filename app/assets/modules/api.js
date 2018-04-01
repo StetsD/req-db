@@ -85,6 +85,26 @@ const api = {
 			endpoint: '/building-company'
 		});
 	},
+	async addBCompany(data){
+		return await _rq({
+			method: 'post',
+			endpoint: '/building-company',
+			data
+		});
+	},
+	async editBCompany(data){
+		return await _rq({
+			method: 'patch',
+			endpoint: `/building-company`,
+			data
+		});
+	},
+	async deleteBCompany(id){
+		return await _rq({
+			method: 'delete',
+			endpoint: `/building-company/${id}`
+		});
+	},
 	async getBCompanyByName(val){
 		return await _rq({
 			method: 'get',

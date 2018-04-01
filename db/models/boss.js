@@ -6,7 +6,7 @@ const Boss = db.define('boss', {
 	name: {type: Sequelize.STRING, allowNull: false},
 	age: {type: Sequelize.INTEGER},
 	experience: {type: Sequelize.INTEGER, allowNull: false},
-	building_company_id: {type: Sequelize.INTEGER, allowNull: false}
+	building_company_id: {type: Sequelize.INTEGER, allowNull: false, unique: true}
 });
 
 
@@ -15,4 +15,8 @@ exports.boss = Boss;
 
 exports.getBosses = async () => {
 	return await Boss.findAll();
+}
+
+exports.addBoss = async data => {
+	return await Boss.create(data);
 }

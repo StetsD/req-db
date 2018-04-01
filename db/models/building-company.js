@@ -7,16 +7,16 @@ const {worker} = require('./worker');
 const BuildingCompany = db.define('building_company', {
 	id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
 	name: {type: Sequelize.STRING, allowNull: false},
-	address: {type: Sequelize.STRING},
-	boss_id: {type: Sequelize.INTEGER, allowNull: false}
+	address: {type: Sequelize.STRING}
 });
-
-BuildingCompany.belongsTo(boss, {foreignKey: 'boss_id'});
 
 exports.buildingCompany = BuildingCompany;
 
 exports.getBuildingCompanies = async () => {
-	return await BuildingCompany.findAll({include: [{model: boss, required: true}]});
+	return await db.query(`select bc.*, b.name as boss from building_companies as bc
+				inner join bosses b on b.building_company_id = bc.id;`, {
+					type: db.QueryTypes.SELECT
+				});
 }
 
 exports.getBuildingCompany = async (id) => {
@@ -44,4 +44,8 @@ exports.getBuildingCompanyByName = async val => {
 	return await db.query(`select * from building_companies
 			where name ilike '${val}%'`,
 		{type: db.QueryTypes.SELECT});
+}
+
+exports.addBuildingCompany = async data => {
+	return await BuildingCompany.create(data);
 }

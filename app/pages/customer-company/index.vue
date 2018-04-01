@@ -20,7 +20,10 @@
 				slot="content"
 				@edit="editCompany"
 				@close="togglePopup"
+				@addSeller="addSeller"
+				@deleteSeller="deleteSeller"
 				:company="editingCompany"
+				:sellers="editingSellers"
 				:visible="vFCompanyEdit"
 				ok="Изменить"
 			/>
@@ -65,7 +68,8 @@
 				vFCompanyEdit: false,
 
 				editingCompany: {name: "", managers: []},
-				companies: data || []
+				companies: data || [],
+				editingSellers: []
 			}
 		},
 		methods: {
@@ -78,6 +82,7 @@
 						this.vFCompanyAdd = true;
 						break;
 					case 'edit':
+						this.getSellersByCompanyId(company.id);
 						this.editingCompany = company;
 						this.vFCompanyEdit = true;
 						break;
@@ -91,24 +96,38 @@
 				this.visibleDimmer = !this.visibleDimmer;
 			},
 			async addCompany(data){
-				console.log(data)
-
-				// await api.addCompany(data);
-				// await this.getCompanies();
+				await api.addCCompany(data);
+				await this.getCompanies();
 				this.togglePopup();
 			},
 			async editCompany(data){
-				await api.editCompany(data);
+				await api.editCCompany(data);
 				await this.getCompanies();
 				this.togglePopup();
 			},
 			async deleteCompany(company){
-				await api.deleteCompany(company.id);
+				await api.deleteCCompany(company.id);
 				await this.getCompanies();
 			},
 			async getCompanies(){
-				let {data} = await api.getCompanies();
+				let {data} = await api.getCCompany();
 				this.companies = data;
+			},
+
+			//service
+			async getSellersByCompanyId(id){
+				let {data} = await api.getSellersByCompanyId(id);
+				this.editingSellers = data;
+			},
+			async addSeller(data){
+				await api.addSeller(data);
+				await this.getSellersByCompanyId(data.id);
+				await this.getCompanies();
+			},
+			async deleteSeller(data){
+				await api.deleteSeller(data);
+				await this.getSellersByCompanyId(data.id);
+				await this.getCompanies();
 			}
 		}
 	}

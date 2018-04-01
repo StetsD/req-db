@@ -51,6 +51,26 @@ const api = {
 			endpoint: '/customer-company'
 		});
 	},
+	async addCCompany(data){
+		return await _rq({
+			method: 'post',
+			endpoint: '/customer-company',
+			data
+		});
+	},
+	async editCCompany(data){
+		return await _rq({
+			method: 'patch',
+			endpoint: `/customer-company`,
+			data
+		});
+	},
+	async deleteCCompany(id){
+		return await _rq({
+			method: 'delete',
+			endpoint: `/customer-company/${id}`
+		});
+	},
 	async getCCompanyByName(val){
 		return await _rq({
 			method: 'get',
@@ -131,6 +151,27 @@ const api = {
 		return await _rq({
 			method: 'delete',
 			endpoint: `/deal/${id}`
+		});
+	},
+
+	//sellers
+	async getSellersByCompanyId(id){
+		return _rq({
+			method: 'get',
+			endpoint: `/customer-company/${id}/sellers`
+		});
+	},
+	async addSeller(data){
+		return _rq({
+			method: 'post',
+			endpoint: `/customer-company/${data.id}/sellers`,
+			data: data.seller
+		});
+	},
+	async deleteSeller(data){
+		return _rq({
+			method: 'delete',
+			endpoint: `/customer-company/${data.id}/sellers/${data.seller.id}`
 		});
 	},
 

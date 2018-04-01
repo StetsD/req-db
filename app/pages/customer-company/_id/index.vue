@@ -1,9 +1,9 @@
 <template lang="html">
 	<div class="">
-		<Header title="Компания" :sub="sellers[0].company" icon="industry"/> 
+		<Header title="Компания" :sub="company.name" icon="industry"/>
 		<h4>Кол-во менеджеров</h4>
 		<h2>Менеджеры</h2>
-		<TableSellers :sellers="sellers"/>
+		<TableSellers :sellers="company.sellers"/>
 	</div>
 </template>
 
@@ -24,7 +24,7 @@
 			}
 
 			return {
-				sellers: data
+				company: data || []
 			}
 		}
 	}

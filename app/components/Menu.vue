@@ -30,7 +30,7 @@
 	        <i class="search link icon"></i>
 	      </div>
 	    </div>
-	    <a class="ui item">
+	    <a class="ui item" @click="$emit('openLogin', 'login')">
 	      Войти
 	    </a>
 	  </div>
@@ -43,6 +43,13 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.pointing.menu{
+	display: flex;
+	flex-wrap: wrap;
 
+	& .item{
+		font-size: 12px;
+	}
+}
 </style>

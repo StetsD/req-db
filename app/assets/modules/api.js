@@ -242,6 +242,12 @@ const api = {
 			endpoint: `/worker`,
 			data
 		});
+	},
+	async getWorkersByCompId(id){
+		return _rq({
+			method: 'get',
+			endpoint: `/building-company/${id}/worker`
+		});
 	}
 
 }

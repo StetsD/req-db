@@ -6,7 +6,8 @@
 		<TableWorkers
 			@delete="deleteWorker"
 			@edit="togglePopup"
-			:workers="workers"/>
+			:workers="workers"
+			func="true"/>
 
 		<ModalDefault :visible="visibleModal" @close="togglePopup"  header="Рабочий">
 			<FormWorkerAdd

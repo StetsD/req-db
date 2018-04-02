@@ -6,7 +6,7 @@
 				<th>Имя</th>
 				<th>Возраст</th>
 				<th>Стаж</th>
-				<th>Действия</th>
+				<th v-if="func">Действия</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -15,7 +15,7 @@
 				<td>{{item.name}}</td>
 				<td>{{item.age}}</td>
 				<td>{{item.experience}}</td>
-				<td>
+				<td v-if="func">
 					<button @click="$emit('edit', 'edit', item)" class="ui orange mini icon button">
 						<i class="cog icon"></i>
 					</button>
@@ -31,7 +31,7 @@
 <script>
 
 	export default {
-		props: ['workers']
+		props: ['workers', 'func']
 	}
 
 </script>

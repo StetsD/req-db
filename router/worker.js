@@ -92,19 +92,6 @@ router.delete(apiPath('worker/:id'), async (ctx, next) => {
 	next();
 });
 
-//edit worker
-router.patch(apiPath('worker/:id'), async (ctx, next) => {
-	// let {name, age} = ctx.request.body;
-	if(_validateWorker(ctx.request.body)){
-		await editWorker({id: ctx.params.id, ...ctx.request.body});
-		ctx.body = ctx.request.body;
-	}else{
-		ctx.status = 400;
-		ctx.body = univalid.getState;
-	}
-});
-
-
 function _validateWorker(body){
 	univalid.check([
 		{

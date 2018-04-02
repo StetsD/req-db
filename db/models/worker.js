@@ -27,6 +27,14 @@ exports.getSummWorkers = async () => {
 		});
 }
 
+exports.getWorkersByCompId = async id => {
+	return await db.query(`select w.* from worker_to_companies wtc
+			inner join workers w on w.id = wtc.worker_id
+			where wtc.building_company_id = ${id};`, {
+				type: db.QueryTypes.SELECT
+			});
+}
+
 exports.addWorker = async data => {
 	return await Worker.create(data);
 }

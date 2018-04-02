@@ -5,7 +5,7 @@
 		<h2>Начальник</h2>
 		<TableBosses :boss="boss"/>
 		<h2>Рабочие</h2>
-		<!-- <TableWorkers :workers="workers"/> -->
+		<TableWorkers :workers="workers" />
 	</div>
 </template>
 
@@ -24,6 +24,7 @@
 			try{
 				var {data} = await axios(`/building-company/${ctx.params.id}`);
 				var boss = await api.getBoss(ctx.params.id);
+				var workers = await api.getWorkersByCompId(ctx.params.id);
 			}catch(err){
 				console.error(err);
 			}
@@ -31,7 +32,7 @@
 			return {
 				company: data || {},
 				boss: boss.data && boss.data[0] ? boss.data[0] : {},
-				// workers: data.workers
+				workers: workers.data || []
 			}
 		}
 	}

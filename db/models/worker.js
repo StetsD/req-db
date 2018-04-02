@@ -14,11 +14,32 @@ exports.getWorkers = async () => {
 	return await Worker.findAll();
 }
 
+exports.getWorker = async id => {
+	return await Worker.findById(id);
+}
+
 exports.getSummWorkers = async () => {
 	return await db.query(`select workers.*,
 		wtc.building_company_id, bc.name as company_name from workers
 		left join worker_to_companies wtc on wtc.worker_id = workers.id
 		left join building_companies bc on bc.id = wtc.building_company_id;`, {
+			type: db.QueryTypes.SELECT
+		});
+}
+
+exports.addWorker = async data => {
+	return await Worker.create(data);
+}
+
+exports.deleteWorker = async id => {
+	return await Worker.destroy({
+		where: {id}
+	});
+}
+
+exports.editWorker = async data => {
+	return await db.query(`update workers set (name, age, experience) =
+		('${data.name}', '${data.age}', '${data.experience}') where id = ${data.id}`, {
 			type: db.QueryTypes.SELECT
 		});
 }

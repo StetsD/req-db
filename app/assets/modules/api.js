@@ -217,6 +217,25 @@ const api = {
 			endpoint: `/worker`
 		});
 	},
+	async getWorker(id){
+		return _rq({
+			method: 'get',
+			endpoint: `/worker/${id}`
+		});
+	},
+	async addWorker(data){
+		return _rq({
+			method: 'post',
+			endpoint: `/worker`,
+			data
+		});
+	},
+	async deleteWorker(id){
+		return _rq({
+			method: 'delete',
+			endpoint: `/worker/${id}`
+		});
+	},
 	async editWorker(data){
 		return _rq({
 			method: 'patch',

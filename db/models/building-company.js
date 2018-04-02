@@ -27,7 +27,7 @@ exports.getBuildingCompany = async (id) => {
 
 exports.getBuildingCompanyByName = async val => {
 	return await db.query(`select * from building_companies
-			where name ilike '${val}%'`,
+			where name ilike '%${val}%'`,
 		{type: db.QueryTypes.SELECT});
 }
 

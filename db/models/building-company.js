@@ -49,3 +49,9 @@ exports.getBuildingCompanyByName = async val => {
 exports.addBuildingCompany = async data => {
 	return await BuildingCompany.create(data);
 }
+
+exports.deleteBuildingCompany = async id => {
+	return await BuildingCompany.destroy({
+		where: {id}
+	});
+}

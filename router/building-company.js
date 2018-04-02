@@ -3,6 +3,7 @@ const {
 	getBuildingCompanies,
 	getBuildingCompany,
 	getBuildingCompanyByName,
+	deleteBuildingCompany,
 	addBuildingCompany} = require('../db/models/building-company');
 const {
 	addBoss} = require('../db/models/boss');
@@ -29,6 +30,11 @@ router.post(apiPath('building-company'), async (ctx, next) => {
 	boss.building_company_id = newComp.id;
 	await addBoss(boss);
 	ctx.body = ctx.request.body;
+});
+
+router.delete(apiPath('building-company/:id'), async (ctx, next) => {
+	await deleteBuildingCompany(ctx.params.id);
+	ctx.body = ctx.params.id;
 });
 
 function _validateBCompany(body){

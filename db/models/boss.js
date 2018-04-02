@@ -17,6 +17,14 @@ exports.getBosses = async () => {
 	return await Boss.findAll();
 }
 
+exports.getBoss = async (id) => {
+	return await Boss.findAll({
+		where: {
+			building_company_id: id
+		}
+	});
+}
+
 exports.addBoss = async data => {
 	return await Boss.create(data);
 }

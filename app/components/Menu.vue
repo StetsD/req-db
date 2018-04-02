@@ -19,6 +19,9 @@
 		<nuxt-link to="/building-company" class="item">
 			Подрядчики
 		</nuxt-link>
+		<nuxt-link to="/workers" class="item">
+			Рабочие
+		</nuxt-link>
 
 	  <div class="right menu">
 	    <div class="item">

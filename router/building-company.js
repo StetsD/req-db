@@ -7,6 +7,7 @@ const {
 	deleteBuildingCompany,
 	addBuildingCompany} = require('../db/models/building-company');
 const {
+	getBoss,
 	addBoss,
 	editBoss} = require('../db/models/boss');
 const univalid = require('univalid')();
@@ -23,6 +24,11 @@ router.get(apiPath('building-company'), async (ctx, next) => {
 
 router.get(apiPath('building-company/:id'), async (ctx, next) => {
 	ctx.body = await getBuildingCompany(ctx.params.id);
+	next();
+});
+
+router.get(apiPath('building-company/:id/boss'), async (ctx, next) => {
+	ctx.body = await getBoss(ctx.params.id);
 	next();
 });
 

@@ -196,10 +196,31 @@ const api = {
 	},
 
 	//bosses
+	async getBoss(id){
+		return _rq({
+			method: 'get',
+			endpoint: `/building-company/${id}/boss`
+		});
+	},
 	async editBoss(data){
 		return _rq({
 			method: 'patch',
 			endpoint: `/building-company/${data.building_company_id}/boss`,
+			data
+		});
+	},
+
+	//workers
+	async getWorkers(){
+		return _rq({
+			method: 'get',
+			endpoint: `/worker`
+		});
+	},
+	async editWorker(data){
+		return _rq({
+			method: 'patch',
+			endpoint: `/worker`,
 			data
 		});
 	}

@@ -6,6 +6,7 @@
 				<th>Имя</th>
 				<th>Возраст</th>
 				<th>Стаж</th>
+				<th>Действия</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -14,6 +15,14 @@
 				<td>{{item.name}}</td>
 				<td>{{item.age}}</td>
 				<td>{{item.experience}}</td>
+				<td>
+					<button @click="$emit('edit', 'edit', item)" class="ui orange mini icon button">
+						<i class="cog icon"></i>
+					</button>
+					<button @click="$emit('delete', item)" class="ui red mini icon button">
+						<i class="trash icon"></i>
+					</button>
+				</td>
 			</tr>
 		</tbody>
 	</table>

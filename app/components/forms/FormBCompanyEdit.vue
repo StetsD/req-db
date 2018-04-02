@@ -116,14 +116,6 @@
 					});
 				}
 			}
-		},
-		watch: {
-			visible: function(val){
-				if(!val){
-					mForm.get('clearInputs');
-					mForm.get('clearStatuses');
-				}
-			}
 		}
 	}
 </script>

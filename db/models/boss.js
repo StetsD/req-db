@@ -20,3 +20,11 @@ exports.getBosses = async () => {
 exports.addBoss = async data => {
 	return await Boss.create(data);
 }
+
+exports.editBoss = async data => {
+	return await db.query(`update bosses set
+			(name, age, experience) = ('${data.name}', '${data.age}', '${data.experience}')
+			where building_company_id = ${data.building_company_id}`, {
+				type: db.QueryTypes.SELECT
+			});
+}

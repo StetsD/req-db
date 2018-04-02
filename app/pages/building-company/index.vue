@@ -35,11 +35,12 @@
 	import ModalDefault from '~/components/modals/ModalDefault';
 	import ModalDimmer from '~/components/modals/ModalDimmer';
 	import FormCompanyAdd from '~/components/forms/FormBCompanyAdd';
-	import FormCompanyEdit from '~/components/forms/FormCompanyEdit';
+	import FormCompanyEdit from '~/components/forms/FormBCompanyEdit';
 
 
 	const axios = require('axios');
 	const api = require('~/assets/modules/api').default;
+	const {pick} = require('lodash');
 
 	export default {
 		components:{Header,
@@ -72,12 +73,12 @@
 			togglePopup(type, company){
 				this.visibleModal = !this.visibleModal;
 				this.toggleDimmer();
-
 				switch(type){
 					case 'add':
 						this.vFCompanyAdd = true;
 						break;
 					case 'edit':
+
 						this.editingCompany = company;
 						this.vFCompanyEdit = true;
 						break;
@@ -96,7 +97,12 @@
 				this.togglePopup();
 			},
 			async editCompany(data){
-				await api.editBCompany(data);
+				let company = pick(data, ['name', 'address']);
+				company.id = this.editingCompany.id;
+				let {boss} = pick(data, ['boss']);
+				boss.building_company_id = this.editingCompany.id;
+				await api.editBoss(boss);
+				await api.editBCompany(company);
 				await this.getCompanies();
 				this.togglePopup();
 			},

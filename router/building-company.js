@@ -3,10 +3,12 @@ const {
 	getBuildingCompanies,
 	getBuildingCompany,
 	getBuildingCompanyByName,
+	editBuildingCompany,
 	deleteBuildingCompany,
 	addBuildingCompany} = require('../db/models/building-company');
 const {
-	addBoss} = require('../db/models/boss');
+	addBoss,
+	editBoss} = require('../db/models/boss');
 const univalid = require('univalid')();
 
 router.get(apiPath('building-company'), async (ctx, next) => {
@@ -26,10 +28,50 @@ router.get(apiPath('building-company/:id'), async (ctx, next) => {
 
 router.post(apiPath('building-company'), async (ctx, next) => {
 	let {boss, name, address} = ctx.request.body;
-	let newComp = await addBuildingCompany({name, address});
-	boss.building_company_id = newComp.id;
-	await addBoss(boss);
+
+	if(_validateBCompany({name, address})){
+		var newComp = await addBuildingCompany({name, address});
+		boss.building_company_id = newComp.id;
+	}else{
+		ctx.status = 400;
+		ctx.body = univalid.getState;
+		next();
+	}
+
+	if(_validateBoss(boss)){
+		await addBoss(boss);
+	}else{
+		ctx.status = 400;
+		ctx.body = univalid.getState;
+		next();
+	}
+
 	ctx.body = ctx.request.body;
+	next();
+});
+
+router.patch(apiPath('building-company'), async (ctx, next) => {
+	if(_validateBCompany(ctx.request.body)){
+		await editBuildingCompany(ctx.request.body);
+		ctx.body = ctx.request.body;
+	}else{
+		ctx.status = 400;
+		ctx.body = univalid.getState;
+	}
+
+	next();
+});
+
+router.patch(apiPath('building-company/:id/boss'), async (ctx, next) => {
+	if(_validateBoss(ctx.request.body)){
+		await editBoss(ctx.request.body);
+		ctx.body = ctx.request.body;
+	}else{
+		ctx.status = 400;
+		ctx.body = univalid.getState;
+	}
+
+	next();
 });
 
 router.delete(apiPath('building-company/:id'), async (ctx, next) => {

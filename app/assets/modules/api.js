@@ -195,6 +195,15 @@ const api = {
 		});
 	},
 
+	//bosses
+	async editBoss(data){
+		return _rq({
+			method: 'patch',
+			endpoint: `/building-company/${data.building_company_id}/boss`,
+			data
+		});
+	}
+
 }
 
 export default api;

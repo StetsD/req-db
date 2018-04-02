@@ -13,8 +13,10 @@ const BuildingCompany = db.define('building_company', {
 exports.buildingCompany = BuildingCompany;
 
 exports.getBuildingCompanies = async () => {
-	return await db.query(`select bc.*, b.name as boss from building_companies as bc
-				inner join bosses b on b.building_company_id = bc.id;`, {
+	return await db.query(`select bc.*, b.name as boss, b.age as age, b.experience as exp
+						from building_companies as bc
+						inner join bosses b on b.building_company_id = bc.id;`,
+				{
 					type: db.QueryTypes.SELECT
 				});
 }
@@ -55,3 +57,11 @@ exports.deleteBuildingCompany = async id => {
 		where: {id}
 	});
 }
+
+exports.editBuildingCompany = async data => {
+	return await db.query(`update building_companies set
+			(name, address) = ('${data.name}', '${data.address}')
+			where id = ${data.id}`,{
+				type: db.QueryTypes.SELECT
+			});
+};

@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
 	port: 8000,
-	keys: 'sukablyat',
+	keys: ['sukablyat', 'mazafaka'],
 	api: {
 		version: 'v1',
 		name: 'api'
@@ -12,7 +12,7 @@ module.exports = {
 		user: 'postgres',
 		password: '987654321Qq',
 		host: 'localhost',
-		port: 5433,
+		port: 5432,
 		dialect: 'postgres'
 	}
 }

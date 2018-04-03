@@ -7,7 +7,7 @@ const {router} = require('./router');
 
 const {port} = require('./config');
 
-app.keys = [keys];
+app.keys = keys;
 
 const middlewares = fs.readdirSync('./middlewares');
 middlewares.forEach(handler => {

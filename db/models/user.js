@@ -11,8 +11,8 @@ const User = db.define('user', {
 
 exports.user = User;
 
-exports.getUser = async name => {
-
+exports.getUser = async login => {
+	return await User.findOne({where: {login}});
 }
 
 exports.addUser = async data => {

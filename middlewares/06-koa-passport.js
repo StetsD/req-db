@@ -1,2 +1,2 @@
-const cors = require('@koa/cors');
-exports.init = (app) => app.use(cors());
+const passport = require('../lib/passport');
+exports.init = app => app.use(passport.initialize());

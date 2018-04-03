@@ -10,6 +10,22 @@ async function _rq(props){
 }
 
 const api = {
+	//user
+	async login(data){
+		return await _rq({
+			method: 'post',
+			endpoint: '/login',
+			data
+		});
+	},
+	async reg(data){
+		return await _rq({
+			method: 'post',
+			endpoint: '/reg',
+			data
+		});
+	},
+
 	//Client
 	async getClients(){
 		return await _rq({

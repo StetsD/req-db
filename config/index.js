@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
 	port: 8000,
+	keys: 'sukablyat',
 	api: {
 		version: 'v1',
 		name: 'api'

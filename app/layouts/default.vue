@@ -36,6 +36,7 @@ import FormLogin from '~/components/forms/FormLogin';
 import FormReg from '~/components/forms/FormReg';
 
 const axios = require('axios');
+const API = require('~/assets/modules/api').default;
 const {port, api} = require('~/app-config');
 const univalid = require('univalid')();
 univalid.setDefaultMsgConfig({
@@ -99,7 +100,7 @@ export default {
 			}
 		},
 		async login(data){
-			console.log(data);
+			await API.login(data);
 		},
 		async reg(data){
 			console.log(data);

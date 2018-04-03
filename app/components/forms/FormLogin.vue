@@ -1,5 +1,10 @@
 <template lang="html">
 	<div class="ui form js-form-login form-login" :class="{active: visible}">
+
+		<div class="ui ignored warning message">
+			Если у вас нет аккаунта пройдите <a @click="$emit('toggleForm', 'reg')">регистрацию</a>
+		</div>
+
 		<div class="field">
 			<label>Логин</label>
 			<input
@@ -57,6 +62,12 @@ export default {
 				this.$emit('login', {login, password});
 			}
 		}
+	},
+	watch: {
+		visible(){
+			this.login = '';
+			this.password = '';
+		}
 	}
 }
 
@@ -66,6 +77,14 @@ export default {
 
 .form-login{
 	display: none;
+
+	& .ui.ignored.warning.message{
+		display: block;
+		& a {
+			cursor: pointer;
+		}
+	}
+
 	&.active{
 		display: block;
 	}

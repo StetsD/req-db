@@ -6,11 +6,18 @@
 		<sui-container class="main">
 			<nuxt/>
 		</sui-container>
-		<ModalDefault :visible="visibleModal" @close="togglePopup" header="Логин">
+		<ModalDefault :visible="visibleModal" @close="togglePopup" :header="headerMsg">
 			<FormLogin
 				slot="content"
 				@login="login"
+				@toggleForm="toggleForm"
 				:visible="vFLogin"
+			/>
+			<FormReg
+				slot="content"
+				@reg="reg"
+				@toggleForm="toggleForm"
+				:visible="vFReg"
 			/>
 		</ModalDefault>
 		<ModalDimmer :visible="visibleDimmer" @close="togglePopup"/>
@@ -26,6 +33,7 @@ import Menu from '~/components/Menu';
 import ModalDefault from '~/components/modals/ModalDefault';
 import ModalDimmer from '~/components/modals/ModalDimmer';
 import FormLogin from '~/components/forms/FormLogin';
+import FormReg from '~/components/forms/FormReg';
 
 const axios = require('axios');
 const {port, api} = require('~/app-config');
@@ -44,7 +52,8 @@ export default {
 		Menu,
 		ModalDefault,
 		ModalDimmer,
-		FormLogin
+		FormLogin,
+		FormReg
 	},
 	data(){
 		return {
@@ -54,7 +63,10 @@ export default {
 
 			//forms
 			vFLogin: false,
-			vFReg: false
+			vFReg: false,
+
+			//data
+			headerMsg: 'Вход'
 		}
 	},
 	methods: {
@@ -62,21 +74,35 @@ export default {
 			this.visibleModal = !this.visibleModal;
 			this.toggleDimmer();
 
-			switch(type){
-				case 'login':
-					this.vFLogin = true;
-					break;
-				default:
-					this.vFDealsAdd = false;
-					this.vFDealsEdit = false;
-					break;
-			}
+			this.toggleForm(type);
 		},
 		toggleDimmer(){
 			this.visibleDimmer = !this.visibleDimmer;
 		},
-		async login(data){
+		toggleForm(type){
+			this.vFLogin = false;
+			this.vFReg = false;
 
+			switch(type){
+				case 'login':
+					this.vFLogin = true;
+					this.headerMsg = 'Вход';
+					break;
+				case 'reg':
+					this.vFReg = true;
+					this.headerMsg = 'Регистрация';
+					break;
+				default:
+					this.vFLogin = false;
+					this.vFReg = false;
+					break;
+			}
+		},
+		async login(data){
+			console.log(data);
+		},
+		async reg(data){
+			console.log(data);
 		}
 	}
 }

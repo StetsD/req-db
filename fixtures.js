@@ -11,6 +11,8 @@ const dealFixtures = require('./src/fixtures/deal').tbody;
 const sellerFixtures = require('./src/fixtures/seller').tbody;
 const workerFixtures = require('./src/fixtures/worker').tbody;
 const workerToCompanyFixtures = require('./src/fixtures/worker-to-company').tbody;
+const roleFixtures = require('./src/fixtures/role').tbody;
+const userFixtures = require('./src/fixtures/user').tbody;
 
 const {client} = require('./db/models/client');
 const {deal} = require('./db/models/deal');
@@ -21,6 +23,8 @@ const {boss} = require('./db/models/boss');
 const {seller} = require('./db/models/seller');
 const {worker} = require('./db/models/worker');
 const {workerToCompany} = require('./db/models/worker-to-company');
+const {role} = require('./db/models/role');
+const {user} = require('./db/models/user');
 
 DB.init()
 .then(async ()=> {
@@ -76,6 +80,18 @@ DB.init()
 	await workerToCompany.sync({force: true}).then(()=>{
 		workerToCompanyFixtures.forEach(fix => {
 			workerToCompany.create(fix);
+		});
+	});
+
+	await role.sync({force: true}).then(()=>{
+		roleFixtures.forEach(fix => {
+			role.create(fix);
+		});
+	});
+
+	await user.sync({force: true}).then(()=>{
+		userFixtures.forEach(fix => {
+			user.create(fix);
 		});
 	});
 

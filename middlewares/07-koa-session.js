@@ -1,4 +1,4 @@
-const session = require('koa-session');
+const session = require('koa-generic-session');
 const PgStore = require('koa-pg-session');
 const {database} = require('../config');
 

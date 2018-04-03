@@ -21,3 +21,5 @@ db.init().then(()=>{
 }).catch(err => {
 	throw err;
 });
+
+module.exports = app;

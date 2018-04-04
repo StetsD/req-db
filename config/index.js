@@ -1,12 +1,14 @@
 const path = require('path');
 
 module.exports = {
+	host: 'localhost',
+	protocol: 'http',
 	port: 8000,
-	keys: ['sukablyat', 'mazafaka'],
 	api: {
 		version: 'v1',
 		name: 'api'
 	},
+	keys: ['sukablyat', 'mazafaka'],
 	database: {
 		name: 'building',
 		user: 'postgres',

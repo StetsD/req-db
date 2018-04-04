@@ -11,7 +11,8 @@
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
-    "app": "npm run generate && node index"
+    "app": "npm run generate && node index",
+	"dev:server": "nodemon --inspect index"
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",
@@ -50,6 +51,7 @@
     "eslint-loader": "^1.7.1",
     "eslint-plugin-vue": "^4.0.0",
     "node-sass": "^4.7.2",
+    "nodemon": "^1.17.3",
     "sass-loader": "^6.0.7"
   }
 }

@@ -37,7 +37,7 @@ import FormReg from '~/components/forms/FormReg';
 
 const axios = require('axios');
 const API = require('~/assets/modules/api').default;
-const {port, api} = require('~/app-config');
+const {port, api, host, protocol} = require('../../config');
 const univalid = require('univalid')();
 univalid.setDefaultMsgConfig({
 	empty: 'Значение не должно быть пустым',
@@ -46,7 +46,7 @@ univalid.setDefaultMsgConfig({
     success: 'Успех'
 });
 
-axios.defaults.baseURL = `http://127.0.0.1:${port}/${api.name}/${api.version}`;
+axios.defaults.baseURL = `${protocol}://${host}:${port}/${api.name}/${api.version}`;
 
 export default {
 	components: {

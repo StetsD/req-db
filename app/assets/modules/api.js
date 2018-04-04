@@ -5,7 +5,7 @@ async function _rq(props){
 	try{
 		return axios[method](endpoint, data ? data : '');
 	}catch(err){
-		return err;
+		return new Error(err);
 	}
 }
 

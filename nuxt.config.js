@@ -26,6 +26,9 @@ module.exports = {
   ],
   plugins: ['~/plugins/semantic-ui.js'],
   loading: { color: '#3B8070' },
+  router: {
+	middleware: ['check-auth']
+  },
   build: {
 	vendor: [
 	  'jquery', 'semantic-ui-css', 'axios'

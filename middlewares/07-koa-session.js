@@ -1,14 +1,14 @@
 const session = require('koa-generic-session');
-const PgStore = require('koa-pg-session');
-const {database} = require('../config');
-
-let {name, user, password, port, host} = database;
-
-let pgStore = new PgStore(`postgres://${user}:${password}@${host}:${port}/${name}`);
-
-pgStore.setup();
+const redisStore = require('koa-redis');
+const {redis} = require('../config');
 
 exports.init = app => app.use(session({
-	key: 'sid',
-	store: pgStore
-}, app));
+	store: redisStore({
+		host: redis.host,
+		port: redis.port
+	}),
+	ttl: 64000,
+	cookie: {
+		maxAge: 64000
+	}
+}));

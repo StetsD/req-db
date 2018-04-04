@@ -10,7 +10,7 @@
 
 +sequelize
 
-# Frontend
+# Front
 
 > Nuxt.js
 

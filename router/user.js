@@ -5,7 +5,7 @@ const passport = require('../lib/passport');
 
 //get clients
 router.post(apiPath('login'), async (ctx, next) => {
-
+	console.log(ctx.app.session);
 	await passport.authenticate('local', async (err, user, msg) => {
 		if(err) return new Error(msg);
 		if(!user){

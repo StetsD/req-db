@@ -15,6 +15,12 @@ exports.getUser = async login => {
 	return await User.findOne({where: {login}});
 }
 
+exports.getMainInfoUser = async login => {
+	return await db.query(`select login, email from users where login = '${login}' limit 1;`, {
+		type: db.QueryTypes.SELECT
+	});
+}
+
 exports.addUser = async data => {
 	// return await Deal.findAll({include: [{model: client, required: true}, {model: building, required: true}]});
 }

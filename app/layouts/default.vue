@@ -2,6 +2,7 @@
 	<div class="">
 		<Menu
 			@openLogin="togglePopup"
+			@logout="logout"
 		/>
 		<sui-container class="main">
 			<nuxt/>
@@ -100,7 +101,14 @@ export default {
 			}
 		},
 		async login(data){
-			await API.login(data);
+			let res = await API.login(data);
+			this.$store.commit('user/login', res.data);
+			this.togglePopup();
+		},
+		async logout(){
+			this.$store.commit('user/logout');
+			window.location = '/';
+			// this.$router.go({path: '/', force: true});
 		},
 		async reg(data){
 			console.log(data);

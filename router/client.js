@@ -4,6 +4,7 @@ const univalid = require('univalid')();
 
 //get clients
 router.get(apiPath('client'), async (ctx, next) => {
+	console.log(ctx.isAuthenticated());
 	ctx.type = "application/json";
 	if(ctx.request.query.q){
 		ctx.body = await getClientByName(ctx.request.query.q);

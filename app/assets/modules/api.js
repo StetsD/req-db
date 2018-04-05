@@ -20,6 +20,12 @@ const api = {
 			data
 		});
 	},
+	async logout(){
+		return await _rq({
+			method: 'post',
+			endpoint: '/logout'
+		});
+	},
 	async reg(data){
 		return await _rq({
 			method: 'post',

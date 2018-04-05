@@ -21,13 +21,9 @@
 		components: {Header, TableBosses, TableWorkers},
 		async asyncData(ctx){
 
-			try{
-				let {data} = await api.getBCompany(ctx.params.id);
-				var boss = await api.getBoss(ctx.params.id);
-				var workers = await api.getWorkersByCompId(ctx.params.id);
-			}catch(err){
-				console.error(err);
-			}
+			let {data} = await api.getBCompany(ctx.params.id);
+			var boss = await api.getBoss(ctx.params.id);
+			var workers = await api.getWorkersByCompId(ctx.params.id);
 
 			return {
 				company: data || {},

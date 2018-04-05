@@ -6,7 +6,9 @@ const User = db.define('user', {
 	login: {type: Sequelize.STRING, primaryKey: true, unique: true, allowNull: false},
 	email: {type: Sequelize.STRING, unique: true, allowNull: false},
 	password: {type: Sequelize.STRING, allowNull: false},
-	role: {type: Sequelize.INTEGER, allowNull: false}
+	salt: {type: Sequelize.STRING, allowNull: false},
+	role: {type: Sequelize.INTEGER, allowNull: false},
+	verify: {type: Sequelize.INTEGER, defaultValue: 0}
 });
 
 exports.user = User;
@@ -22,7 +24,7 @@ exports.getMainInfoUser = async login => {
 }
 
 exports.addUser = async data => {
-	// return await Deal.findAll({include: [{model: client, required: true}, {model: building, required: true}]});
+	return await User.create(data);
 }
 
 exports.editUser = async data => {

@@ -106,12 +106,13 @@ export default {
 			this.togglePopup();
 		},
 		async logout(){
+			await API.logout();
 			this.$store.commit('user/logout');
 			window.location = '/';
-			// this.$router.go({path: '/', force: true});
 		},
 		async reg(data){
-			console.log(data);
+			await API.reg(data);
+			this.togglePopup();
 		}
 	}
 }

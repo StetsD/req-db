@@ -53,11 +53,8 @@
 					FormCompanyEdit
 		},
 		async asyncData(){
-			try{
-				var {data} = await axios('/customer-company');
-			}catch(err){
-				console.error(err);
-			}
+
+			let {data} = await api.getCCompany();
 
 			return {
 				//modal

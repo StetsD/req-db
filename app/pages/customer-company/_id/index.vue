@@ -12,16 +12,13 @@
 	import TableSellers from '~/components/tables/TableSellers';
 
 	const axios = require('axios');
+	const api = require('~/assets/modules/api').default;
 
 	export default {
 		components: {Header, TableSellers},
 		async asyncData(ctx){
 
-			try{
-				var {data} = await axios(`/customer-company/${ctx.params.id}`);
-			}catch(err){
-				console.error(err);
-			}
+			let {data} = await api.getCCompany(ctx.params.id);
 
 			return {
 				company: data || []

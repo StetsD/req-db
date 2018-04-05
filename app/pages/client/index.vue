@@ -46,11 +46,7 @@
 				 	 FormClientEdit},
 		async asyncData(){
 
-			try{
-				var {data} = await axios('/client');
-			}catch(err){
-				console.error(err);
-			}
+			let {data} = await api.getClients();
 
 			return {
 				//modal

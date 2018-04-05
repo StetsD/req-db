@@ -22,7 +22,7 @@
 		async asyncData(ctx){
 
 			try{
-				var {data} = await axios(`/building-company/${ctx.params.id}`);
+				let {data} = await api.getBCompany(ctx.params.id);
 				var boss = await api.getBoss(ctx.params.id);
 				var workers = await api.getWorkersByCompId(ctx.params.id);
 			}catch(err){

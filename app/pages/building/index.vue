@@ -56,11 +56,7 @@
 		},
 		async asyncData(){
 
-			try{
-				var {data} = await axios('/building');
-			}catch(err){
-				console.error(err);
-			}
+			let {data} = await api.getBuildings();
 
 			return {
 				//modal

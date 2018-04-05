@@ -1,11 +1,13 @@
 const axios = require('axios');
+const checkAuth = require('./check-auth');
 
 async function _rq(props){
 	let {method, endpoint, data} = props;
 	try{
-		return axios[method](endpoint, data ? data : '');
+		return await axios[method](endpoint, data ? data : '');
 	}catch(err){
-		return new Error(err);
+		new Error(err);
+		checkAuth(err.response);
 	}
 }
 
@@ -27,10 +29,10 @@ const api = {
 	},
 
 	//Client
-	async getClients(){
+	async getClients(id){
 		return await _rq({
 			method: 'get',
-			endpoint: '/client'
+			endpoint: `/client${id ? '/'+id : ''}`
 		});
 	},
 	async addClient(data){
@@ -61,10 +63,10 @@ const api = {
 	},
 
 	//Customer company
-	async getCCompany(){
+	async getCCompany(id){
 		return await _rq({
 			method: 'get',
-			endpoint: '/customer-company'
+			endpoint: `/customer-company${id ? '/'+id : ''}`
 		});
 	},
 	async addCCompany(data){
@@ -95,10 +97,10 @@ const api = {
 	},
 
 	//Building cCompany
-	async getBCompany(){
+	async getBCompany(id){
 		return await _rq({
 			method: 'get',
-			endpoint: '/building-company'
+			endpoint: `/building-company${id ? '/'+id : ''}`
 		});
 	},
 	async addBCompany(data){
@@ -143,7 +145,7 @@ const api = {
 		});
 	},
 	async editBuilding(data){
-		return _rq({
+		return await _rq({
 			method: 'patch',
 			endpoint: '/building',
 			data
@@ -177,7 +179,7 @@ const api = {
 		});
 	},
 	async editDeal(data){
-		return _rq({
+		return await _rq({
 			method: 'patch',
 			endpoint: '/deal',
 			data
@@ -192,20 +194,20 @@ const api = {
 
 	//sellers
 	async getSellersByCompanyId(id){
-		return _rq({
+		return await _rq({
 			method: 'get',
 			endpoint: `/customer-company/${id}/sellers`
 		});
 	},
 	async addSeller(data){
-		return _rq({
+		return await _rq({
 			method: 'post',
 			endpoint: `/customer-company/${data.id}/sellers`,
 			data: data.seller
 		});
 	},
 	async deleteSeller(data){
-		return _rq({
+		return await _rq({
 			method: 'delete',
 			endpoint: `/customer-company/${data.id}/sellers/${data.seller.id}`
 		});
@@ -213,13 +215,13 @@ const api = {
 
 	//bosses
 	async getBoss(id){
-		return _rq({
+		return await _rq({
 			method: 'get',
 			endpoint: `/building-company/${id}/boss`
 		});
 	},
 	async editBoss(data){
-		return _rq({
+		return await _rq({
 			method: 'patch',
 			endpoint: `/building-company/${data.building_company_id}/boss`,
 			data
@@ -228,39 +230,39 @@ const api = {
 
 	//workers
 	async getWorkers(){
-		return _rq({
+		return await _rq({
 			method: 'get',
 			endpoint: `/worker`
 		});
 	},
 	async getWorker(id){
-		return _rq({
+		return await _rq({
 			method: 'get',
 			endpoint: `/worker/${id}`
 		});
 	},
 	async addWorker(data){
-		return _rq({
+		return await _rq({
 			method: 'post',
 			endpoint: `/worker`,
 			data
 		});
 	},
 	async deleteWorker(id){
-		return _rq({
+		return await _rq({
 			method: 'delete',
 			endpoint: `/worker/${id}`
 		});
 	},
 	async editWorker(data){
-		return _rq({
+		return await _rq({
 			method: 'patch',
 			endpoint: `/worker`,
 			data
 		});
 	},
 	async getWorkersByCompId(id){
-		return _rq({
+		return await _rq({
 			method: 'get',
 			endpoint: `/building-company/${id}/worker`
 		});

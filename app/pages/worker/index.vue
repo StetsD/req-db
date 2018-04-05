@@ -57,11 +57,7 @@
 		},
 		async asyncData(ctx){
 
-			try{
-				var {data} = await api.getWorkers();
-			}catch(err){
-				console.error(err);
-			}
+			var {data} = await api.getWorkers();
 
 			return {
 				//modal

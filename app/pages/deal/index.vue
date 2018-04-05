@@ -57,11 +57,7 @@
 					FormDealEdit},
 		async asyncData(){
 
-			try{
-				var {data} = await axios('/deal');
-			}catch(err){
-				console.error(err);
-			}
+			var {data} = await api.getDeals();
 
 			return {
 				//modal

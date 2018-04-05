@@ -13,11 +13,7 @@
 		components: {CardClient},
 		async asyncData(ctx){
 
-			try{
-				var {data} = await axios(`client/${ctx.params.id}`);
-			}catch(err){
-				console.error(err);
-			}
+			let {data} = await api.getClients(ctx.params.id);
 
 			return {
 				client: data

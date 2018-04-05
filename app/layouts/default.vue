@@ -13,6 +13,7 @@
 				@login="login"
 				@toggleForm="toggleForm"
 				:visible="vFLogin"
+				:logErr="commonLogErr"
 			/>
 			<FormReg
 				slot="content"
@@ -68,12 +69,14 @@ export default {
 			vFReg: false,
 
 			//data
-			headerMsg: 'Вход'
+			headerMsg: 'Вход',
+			commonLogErr: ''
 		}
 	},
 	methods: {
 		togglePopup(type){
 			this.visibleModal = !this.visibleModal;
+			this.commonLogErr = '';
 			this.toggleDimmer();
 
 			this.toggleForm(type);
@@ -102,6 +105,12 @@ export default {
 		},
 		async login(data){
 			let res = await API.login(data);
+
+			if(res.status === 400){
+				this.commonLogErr = res.data.status;
+				return;
+			}
+
 			this.$store.commit('user/login', res.data);
 			this.togglePopup();
 		},

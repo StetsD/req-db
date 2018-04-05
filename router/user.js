@@ -8,7 +8,7 @@ router.post(apiPath('reg'), async (ctx, next) => {
 	if(_validate(ctx.request.body)){
 		let {login, email, password} = ctx.request.body;
 		let {salt, passwordHash} = createHashPass(password);
-		let role = login === 'admin' ? 1 : 0;
+		let role = login === 'admin' ? 0 : 1;
 
 		await addUser({
 			login,

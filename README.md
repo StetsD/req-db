@@ -2,13 +2,13 @@
 
 +koa
 
++postgresql
+
++redis
+
 +nuxt
 
 +vue
-
-+pg
-
-+sequelize
 
 # Front
 
@@ -32,6 +32,9 @@ $ npm run generate
 # Back
 
 ``` bash
+
+# Initialize fixtures
+$ npm run fixtures
 
 # Start nodemon && --inspect mode && run server
 $ npm run dev:server

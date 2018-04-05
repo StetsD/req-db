@@ -6,8 +6,7 @@ async function _rq(props){
 	try{
 		return await axios[method](endpoint, data ? data : '');
 	}catch(err){
-		new Error(err);
-		checkAuth(err.response);
+		return checkAuth(err.response);
 	}
 }
 

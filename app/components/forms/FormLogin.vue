@@ -24,6 +24,7 @@
 				data-validation="required"/>
 			<div class="field__msg"></div>
 		</div>
+		<div ref="error" class="field__msg field__msg-common">{{logErr}}</div>
 		<button class="ui button" @click="validate">Войти</button>
 	</div>
 </template>
@@ -34,7 +35,7 @@ const univalid = require('univalid')();
 const USF = require('univalid-strategy-form');
 
 export default {
-	props: ['visible'],
+	props: ['visible', 'logErr'],
 	data(){
 		return {
 			login: '',
@@ -67,6 +68,9 @@ export default {
 		visible(){
 			this.login = '';
 			this.password = '';
+		},
+		logErr(val){
+
 		}
 	}
 }
@@ -87,6 +91,10 @@ export default {
 
 	&.active{
 		display: block;
+	}
+
+	.field__msg-common{
+	    margin: 0 0 20px;
 	}
 }
 

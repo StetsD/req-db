@@ -27,5 +27,13 @@ module.exports = {
 			iterations: 12000
 		},
 		algorithm: 'sha256'
+	},
+	mailer: {
+		host: 'smtp.yandex.ru',
+		port: 465,
+		auth: {
+			user: '',
+			pass: ''
+		}
 	}
 }

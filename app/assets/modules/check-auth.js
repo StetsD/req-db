@@ -5,4 +5,6 @@ module.exports = (err) => {
 	if(data.status === 'unauthorized' && status === 401){
 		window.location = '/';
 	}
+
+	return {data, status};
 }

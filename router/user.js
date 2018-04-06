@@ -1,13 +1,14 @@
 const {router, apiPath} = require('./index');
-const {getUser, getMainInfoUser, addUser} = require('../db/models/user');
-const {createHashPass, checkPass} = require('../lib/credentialsHash');
+const {getUser, getMainInfoUser, addUser, verifyUser} = require('../db/models/user');
+const {createHashPass} = require('../lib/credentialsHash');
 const univalid = require('univalid')();
 const passport = require('../lib/passport');
+const {sendToken, checkToken} = require('../lib/verify');
 
 router.post(apiPath('reg'), async (ctx, next) => {
 	if(_validate(ctx.request.body)){
 		let {login, email, password} = ctx.request.body;
-		let {salt, passwordHash} = createHashPass(password);
+		let {salt, passwordHash} = await createHashPass(password);
 		let role = login === 'admin' ? 0 : 1;
 
 		await addUser({
@@ -17,6 +18,8 @@ router.post(apiPath('reg'), async (ctx, next) => {
 			salt,
 			role
 		});
+
+		await sendToken(login, email);
 
 		ctx.status = 200;
 		ctx.body = {status: `User ${login} registered`};
@@ -46,6 +49,19 @@ router.post(apiPath('login'), async (ctx, next) => {
 
 		next();
 	})(ctx, next);
+});
+
+router.get(apiPath('verify'), async (ctx, next) => {
+	let {token} = ctx.request.query;
+	let {checkStatus, email} = await checkToken(token);
+
+	if(!checkStatus){
+		ctx.status = 400;
+		ctx.body = {status: 'Bad Token'};
+	}
+
+	await verifyUser(email);
+	ctx.body = {status: `verified`};
 });
 
 router.post(apiPath('logout'), async (ctx, next) => {

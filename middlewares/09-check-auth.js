@@ -4,12 +4,13 @@ let apiPath = `/${api.name}/${api.version}/`;
 const map = {};
 map[`${apiPath}login::POST`] = true;
 map[`${apiPath}reg::POST`] = true;
+map[`/verify::GET`] = true;
 
 
 exports.init = app => app.use(async (ctx, next) => {
-	let {originalUrl, method} = ctx;
+	let {path, method} = ctx;
 
-	if(map[`${originalUrl}::${method.toUpperCase()}`]){
+	if(map[`${path}::${method.toUpperCase()}`]){
 		return next();
 	}
 

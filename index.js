@@ -1,11 +1,11 @@
 const Koa = require('koa');
 const app = new Koa();
-const {keys} = require('./config');
+const {keys, port} = require('./config');
 const fs = require('fs');
 const db = require('./db');
 const {router} = require('./router');
 
-const {port} = require('./config');
+const redis = require('./lib/redis');
 
 app.keys = keys;
 
@@ -21,5 +21,6 @@ db.init().then(()=>{
 }).catch(err => {
 	throw err;
 });
+
 
 module.exports = app;

@@ -17,6 +17,10 @@ exports.getUser = async login => {
 	return await User.findOne({where: {login}});
 }
 
+exports.getUserByEmail = async email => {
+	return await User.findOne({where: {email}});
+}
+
 exports.getMainInfoUser = async login => {
 	return await db.query(`select login, email from users where login = '${login}' limit 1;`, {
 		type: db.QueryTypes.SELECT
@@ -27,10 +31,8 @@ exports.addUser = async data => {
 	return await User.create(data);
 }
 
-exports.editUser = async data => {
-	// return await db.query(`update deals set
-	// 			(client_id, building_id) = ('${data.client_id}', '${data.building_id}')
-	// 			where id = ${data.id}`, {
-	// 				type: db.QueryTypes.SELECT
-	// 			});
-};
+exports.verifyUser = async email => {
+	return await db.query(`update users set verify = 1 where email = '${email}';`, {
+		type: db.QueryTypes.SELECT
+	});
+}

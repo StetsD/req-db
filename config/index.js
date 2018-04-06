@@ -14,12 +14,13 @@ module.exports = {
 		user: 'postgres',
 		password: '987654321Qq',
 		host: 'localhost',
-		port: 5433,
+		port: 5432,
 		dialect: 'postgres'
 	},
 	redis: {
 		host: '127.0.0.1',
-		port: 6379
+		port: 6379,
+		expireVerify: 500 // seconds
 	},
 	crypto: {
 		hash: {

@@ -4,6 +4,7 @@ const {createHashPass} = require('../lib/credentialsHash');
 const univalid = require('univalid')();
 const passport = require('../lib/passport');
 const {sendToken, checkToken} = require('../lib/verify');
+const {client: rClient} = require('../lib/redis');
 
 router.post(apiPath('reg'), async (ctx, next) => {
 	if(_validate(ctx.request.body)){
@@ -51,17 +52,20 @@ router.post(apiPath('login'), async (ctx, next) => {
 	})(ctx, next);
 });
 
-router.get(apiPath('verify'), async (ctx, next) => {
+router.get('/verifying', async (ctx, next) => {
 	let {token} = ctx.request.query;
-	let {checkStatus, email} = await checkToken(token);
-
-	if(!checkStatus){
-		ctx.status = 400;
-		ctx.body = {status: 'Bad Token'};
+	if(token){
+		let {checkStatus, email} = await checkToken(token);
+		if(!checkStatus){
+			ctx.status = 400;
+			ctx.body = {status: 'Bad Token'};
+		}else{
+			rClient.del(token);
+			await verifyUser(email);
+			ctx.status = 301;
+			ctx.redirect('/');
+		}
 	}
-
-	await verifyUser(email);
-	ctx.body = {status: `verified`};
 });
 
 router.post(apiPath('logout'), async (ctx, next) => {
@@ -81,12 +85,12 @@ function _validate(body){
 		{
 			name: 'email',
 			val: body.email,
-			type: 'email'
+			type: 'required'
 		},
 		{
 			name: 'password',
 			val: body.password,
-			type: 'password'
+			type: 'required'
 		}
 	]);
 	let state = univalid.getCommonState;

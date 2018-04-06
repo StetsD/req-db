@@ -4,7 +4,7 @@ let apiPath = `/${api.name}/${api.version}/`;
 const map = {};
 map[`${apiPath}login::POST`] = true;
 map[`${apiPath}reg::POST`] = true;
-map[`/verify::GET`] = true;
+map[`/verifying::GET`] = true;
 
 
 exports.init = app => app.use(async (ctx, next) => {
@@ -20,5 +20,4 @@ exports.init = app => app.use(async (ctx, next) => {
 
 	ctx.status = 401;
 	ctx.body = {status: 'unauthorized'};
-
 });

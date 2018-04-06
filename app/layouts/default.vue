@@ -49,6 +49,8 @@ univalid.setDefaultMsgConfig({
 });
 
 axios.defaults.baseURL = `${protocol}://${host}:${port}/${api.name}/${api.version}`;
+axios.defaults.headers.get['Data-type'] = 'query';
+axios.defaults.headers.common['Data-type'] = 'query';
 
 export default {
 	components: {

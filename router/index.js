@@ -17,7 +17,7 @@ router.get('/', (ctx, next) => {
 	ctx.body = index;
 });
 
-module.exports = {router, apiPath};
+module.exports = {router, apiPath, index};
 
 fs.readdirSync(__dirname, (err) => {
 	if(err) throw new Error(err);

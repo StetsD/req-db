@@ -4,8 +4,6 @@ const univalid = require('univalid')();
 
 //get clients
 router.get(apiPath('client'), async (ctx, next) => {
-	console.log(ctx.isAuthenticated());
-	ctx.type = "application/json";
 	if(ctx.request.query.q){
 		ctx.body = await getClientByName(ctx.request.query.q);
 	}else{
@@ -17,7 +15,6 @@ router.get(apiPath('client'), async (ctx, next) => {
 
 //get client
 router.get(apiPath('client/:id'), async (ctx, next) => {
-	ctx.type = "application/json";
 	ctx.body = await getClient(ctx.params.id);
 	next();
 });
@@ -45,7 +42,6 @@ router.delete(apiPath('client/:id'), async (ctx, next) => {
 
 //edit client
 router.patch(apiPath('client/:id'), async (ctx, next) => {
-	// let {name, age} = ctx.request.body;
 	if(validateClient(ctx.request.body)){
 		await editClient({id: ctx.params.id, ...ctx.request.body});
 		ctx.body = ctx.request.body;

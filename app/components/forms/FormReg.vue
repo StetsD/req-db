@@ -101,6 +101,9 @@ export default {
 			if(univalid.getCommonState === 'success'){
 				let {login, password, email} = this;
 				this.$emit('reg', {login, password, email});
+				setTimeout(()=>{
+					this.$emit('togglePopupMsg', 'На вашу почту отправленно письмо с активацией аккаунта', 5000);
+				}, 1000);
 			}
 		}
 	},

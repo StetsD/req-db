@@ -19,10 +19,17 @@
 				slot="content"
 				@reg="reg"
 				@toggleForm="toggleForm"
+				@togglePopupMsg="togglePopupMsg"
 				:visible="vFReg"
 			/>
 		</ModalDefault>
+		<ModalDefaultMsg
+			 :visible="visibleModalMsg"
+			 @close="togglePopupMsg"
+			 :header="crossMsg"
+		/>
 		<ModalDimmer :visible="visibleDimmer" @close="togglePopup"/>
+		<ModalDimmerMsg :visible="visibleDimmerMsg" @close="togglePopupMsg"/>
 	</div>
 </template>
 
@@ -33,7 +40,9 @@ window.$ = window.jQuery = $;
 
 import Menu from '~/components/Menu';
 import ModalDefault from '~/components/modals/ModalDefault';
+import ModalDefaultMsg from '~/components/modals/ModalDefault';
 import ModalDimmer from '~/components/modals/ModalDimmer';
+import ModalDimmerMsg from '~/components/modals/ModalDimmer';
 import FormLogin from '~/components/forms/FormLogin';
 import FormReg from '~/components/forms/FormReg';
 
@@ -49,14 +58,15 @@ univalid.setDefaultMsgConfig({
 });
 
 axios.defaults.baseURL = `${protocol}://${host}:${port}/${api.name}/${api.version}`;
-axios.defaults.headers.get['Data-type'] = 'query';
 axios.defaults.headers.common['Data-type'] = 'query';
 
 export default {
 	components: {
 		Menu,
 		ModalDefault,
+		ModalDefaultMsg,
 		ModalDimmer,
+		ModalDimmerMsg,
 		FormLogin,
 		FormReg
 	},
@@ -64,7 +74,9 @@ export default {
 		return {
 			//modal
 			visibleModal: false,
+			visibleModalMsg: false,
 			visibleDimmer: false,
+			visibleDimmerMsg: false,
 
 			//forms
 			vFLogin: false,
@@ -72,7 +84,8 @@ export default {
 
 			//data
 			headerMsg: 'Вход',
-			commonLogErr: ''
+			commonLogErr: '',
+			crossMsg: '',
 		}
 	},
 	methods: {
@@ -82,6 +95,11 @@ export default {
 			this.toggleDimmer();
 
 			this.toggleForm(type);
+		},
+		togglePopupMsg(msg, time){
+			this.crossMsg = msg || '';
+			this.visibleModalMsg = !this.visibleModalMsg;
+			this.visibleDimmerMsg = !this.visibleDimmerMsg;
 		},
 		toggleDimmer(){
 			this.visibleDimmer = !this.visibleDimmer;

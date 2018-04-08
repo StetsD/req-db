@@ -85,12 +85,12 @@ function _validate(body){
 		{
 			name: 'email',
 			val: body.email,
-			type: 'required'
+			type: 'email'
 		},
 		{
 			name: 'password',
 			val: body.password,
-			type: 'required'
+			type: 'password'
 		}
 	]);
 	let state = univalid.getCommonState;

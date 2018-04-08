@@ -8,6 +8,7 @@
 	import CardClient from '~/components/CardClient';
 
 	const axios = require('axios');
+	const api = require('~/assets/modules/api').default;
 
 	export default {
 		components: {CardClient},

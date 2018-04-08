@@ -1,3 +1,5 @@
+import api from '../assets/modules/api';
+
 export const state = () => ({
 	user: null
 })
@@ -8,6 +10,9 @@ export const mutations = {
 	},
 	logout(state){
 		state.user = null;
+	},
+	async getUser(state){
+		let {data} = await api.getUser();
 	}
 }
 

@@ -7,8 +7,8 @@ exports.init = app => app.use(session({
 		host: redis.host,
 		port: redis.port
 	}),
-	ttl: 64000,
+	ttl: redis.expireTTL,
 	cookie: {
-		maxAge: 64000
+		maxAge: redis.expireCookie
 	}
 }));

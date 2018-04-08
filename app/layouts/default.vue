@@ -49,6 +49,7 @@ import FormReg from '~/components/forms/FormReg';
 const axios = require('axios');
 const API = require('~/assets/modules/api').default;
 const {port, api, host, protocol} = require('../../config');
+const {addLocalData, removeLocalData, getLocalData} = require('~/assets/modules/local-store');
 const univalid = require('univalid')();
 univalid.setDefaultMsgConfig({
 	empty: 'Значение не должно быть пустым',
@@ -59,6 +60,8 @@ univalid.setDefaultMsgConfig({
 
 axios.defaults.baseURL = `${protocol}://${host}:${port}/${api.name}/${api.version}`;
 axios.defaults.headers.common['Data-type'] = 'query';
+
+let dataLoc = getLocalData();
 
 export default {
 	components: {
@@ -85,7 +88,7 @@ export default {
 			//data
 			headerMsg: 'Вход',
 			commonLogErr: '',
-			crossMsg: '',
+			crossMsg: ''
 		}
 	},
 	methods: {
@@ -131,18 +134,27 @@ export default {
 				return;
 			}
 
-			this.$store.commit('user/login', res.data);
+			this.$store.commit('user/login', {name: res.data.login});
+			addLocalData({name: res.data.login});
 			this.togglePopup();
+			window.location = '/';
 		},
 		async logout(){
 			await API.logout();
 			this.$store.commit('user/logout');
+			removeLocalData();
 			window.location = '/';
 		},
 		async reg(data){
 			await API.reg(data);
 			this.togglePopup();
 		}
+	},
+	beforeMount(){
+		if(dataLoc){
+			this.$store.commit('user/login', dataLoc);
+		}
+
 	}
 }
 

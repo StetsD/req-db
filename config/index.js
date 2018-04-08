@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
 	host: 'localhost',
 	protocol: 'http',
@@ -20,6 +18,8 @@ module.exports = {
 	redis: {
 		host: '127.0.0.1',
 		port: 6379,
+		expireCookie: (60 * 60 * 24) * 1000,
+		expireTTL: (60 * 60 * 24) * 1000,
 		expireVerify: 1000 // seconds
 	},
 	crypto: {

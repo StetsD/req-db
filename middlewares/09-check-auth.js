@@ -3,7 +3,6 @@ const {apiPath, index} = require('../router');
 const {get} = require('lodash');
 
 const forbiddenMap = {
-	'post': true,
 	'patch': true,
 	'delete': true
 };
@@ -18,6 +17,7 @@ map[`/verifying::GET`] = true;
 exports.init = app => app.use(async (ctx, next) => {
 	let {path, method} = ctx;
 	let rights = get(ctx, 'session.passport.user.role', 1);
+	let verify = get(ctx, 'session.passport.user.verify', 0);
 
 	if(map[`${path}::${method.toUpperCase()}`]){
 		return next();
@@ -30,7 +30,12 @@ exports.init = app => app.use(async (ctx, next) => {
 		return;
 	}
 
-	
+	if(!verify && method !== 'GET'){
+		ctx.status = 400;
+		ctx.body = {status: 'not verifyed'};
+		return;
+	}
+
 	if(rights && forbiddenMap[method.toLowerCase()]){
 		ctx.status = 403;
 		ctx.body = {status: 'forbidden'};
@@ -38,9 +43,9 @@ exports.init = app => app.use(async (ctx, next) => {
 	}
 
 	try{
-		// if(!ctx.isAuthenticated()){
-		// 	ctx.throw(401);
-		// }
+		if(!ctx.isAuthenticated()){
+			ctx.throw(401);
+		}
 
 		await next();
 

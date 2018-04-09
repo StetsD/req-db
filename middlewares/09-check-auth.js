@@ -1,5 +1,12 @@
 const {api} = require('../config');
 const {apiPath, index} = require('../router');
+const {get} = require('lodash');
+
+const forbiddenMap = {
+	'post': true,
+	'patch': true,
+	'delete': true
+};
 
 const map = {};
 map[`${apiPath('login')}::POST`] = true;
@@ -9,6 +16,7 @@ map[`/verifying::GET`] = true;
 
 exports.init = app => app.use(async (ctx, next) => {
 	let {path, method} = ctx;
+	let rights = get(ctx, 'session.passport.user.role', 1);
 
 	if(map[`${path}::${method.toUpperCase()}`]){
 		return next();
@@ -18,6 +26,12 @@ exports.init = app => app.use(async (ctx, next) => {
 		ctx.status = 200;
 		ctx.type = 'text/html';
 		ctx.body = index;
+		return;
+	}
+
+	if(rights && forbiddenMap[method.toLowerCase()]){
+		ctx.status = 403;
+		ctx.body = {status: 'forbidden'};
 		return;
 	}
 

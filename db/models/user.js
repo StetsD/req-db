@@ -13,8 +13,8 @@ const User = db.define('user', {
 
 exports.user = User;
 
-exports.getUser = async login => {
-	return await User.findOne({where: {login}});
+exports.getUser = async props => {
+	return await User.findOne({where: {login: props.login}});
 }
 
 exports.getUserByEmail = async email => {

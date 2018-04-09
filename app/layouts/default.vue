@@ -30,6 +30,7 @@
 		/>
 		<ModalDimmer :visible="visibleDimmer" @close="togglePopup"/>
 		<ModalDimmerMsg :visible="visibleDimmerMsg" @close="togglePopupMsg"/>
+		<TooltipGlobal/>
 	</div>
 </template>
 
@@ -45,6 +46,7 @@ import ModalDimmer from '~/components/modals/ModalDimmer';
 import ModalDimmerMsg from '~/components/modals/ModalDimmer';
 import FormLogin from '~/components/forms/FormLogin';
 import FormReg from '~/components/forms/FormReg';
+import TooltipGlobal from '~/components/TooltipGlobal';
 
 const axios = require('axios');
 const API = require('~/assets/modules/api').default;
@@ -71,7 +73,8 @@ export default {
 		ModalDimmer,
 		ModalDimmerMsg,
 		FormLogin,
-		FormReg
+		FormReg,
+		TooltipGlobal
 	},
 	data(){
 		return {

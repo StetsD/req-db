@@ -11,6 +11,7 @@ const forbiddenMap = {
 const map = {};
 map[`${apiPath('login')}::POST`] = true;
 map[`${apiPath('reg')}::POST`] = true;
+map[`${apiPath('logout')}::POST`] = true;
 map[`/verifying::GET`] = true;
 
 
@@ -29,6 +30,7 @@ exports.init = app => app.use(async (ctx, next) => {
 		return;
 	}
 
+	
 	if(rights && forbiddenMap[method.toLowerCase()]){
 		ctx.status = 403;
 		ctx.body = {status: 'forbidden'};
@@ -36,9 +38,9 @@ exports.init = app => app.use(async (ctx, next) => {
 	}
 
 	try{
-		if(!ctx.isAuthenticated()){
-			ctx.throw(401);
-		}
+		// if(!ctx.isAuthenticated()){
+		// 	ctx.throw(401);
+		// }
 
 		await next();
 

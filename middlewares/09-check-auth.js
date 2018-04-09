@@ -11,6 +11,7 @@ const map = {};
 map[`${apiPath('login')}::POST`] = true;
 map[`${apiPath('reg')}::POST`] = true;
 map[`${apiPath('logout')}::POST`] = true;
+map[`${apiPath('verifying')}::POST`] = true;
 map[`/verifying::GET`] = true;
 
 

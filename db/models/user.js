@@ -22,7 +22,7 @@ exports.getUserByEmail = async email => {
 }
 
 exports.getMainInfoUser = async login => {
-	return await db.query(`select login, email from users where login = '${login}' limit 1;`, {
+	return await db.query(`select login, email, verify from users where login = '${login}' limit 1;`, {
 		type: db.QueryTypes.SELECT
 	});
 }

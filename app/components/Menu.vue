@@ -23,6 +23,9 @@
 			<nuxt-link to="/worker" class="item">
 				Рабочие
 			</nuxt-link>
+			<nuxt-link to="/profile" class="item">
+				Профиль
+			</nuxt-link>
 		</section>
 
 

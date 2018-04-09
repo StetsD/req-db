@@ -43,3 +43,9 @@ $ npm run dev:server
 $ npm run app
 
 ```
+
+# Configure api
+
+### For nodemailer
+
+Set environment var "app_email" and "app_email_pass"

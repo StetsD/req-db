@@ -32,6 +32,19 @@ const api = {
 			data
 		});
 	},
+	async verifyPost(data){
+		return await _rq({
+			method: 'post',
+			endpoint: '/verifying',
+			data
+		});
+	},
+	async getCurrentUser(){
+		return await _rq({
+			method: 'get',
+			endpoint: '/user'
+		});
+	},
 
 	//Client
 	async getClients(id){

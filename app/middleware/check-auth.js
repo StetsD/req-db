@@ -7,7 +7,6 @@ export default async function({store}, next){
 	if(!dataLoc && window.location.pathname !== '/'){
 		await api.logout();
 		store.commit('user/logout');
-		window.location = '/';
 	}
 
 

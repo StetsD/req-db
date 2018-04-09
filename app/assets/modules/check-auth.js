@@ -1,12 +1,9 @@
-const {addLocalData, removeLocalData, getLocalData} = require('./local-store');
-
 module.exports = (err) => {
 	let {data, status} = err;
 	let {$nuxt} = window;
 
 	if(status === 401){
-		removeLocalData();
-		window.location = '/';
+		$nuxt.$store.commit('user/logout');
 	}
 
 	if(status === 400 && data.status === 'not verifyed'){

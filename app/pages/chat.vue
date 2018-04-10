@@ -2,21 +2,16 @@
 	<section>
 		<div class="chat ui container">
 			<div class="chat-inner">
-				<div class="chat__field">
-					<div class="chat__msg">
-						<div class="chat__msg-date"><small>04.03.10<br>12:45</small></div>
-						<div class="chat__msg-name"><strong>Boris</strong></div>
-						<div class="chat__msg-text">Hi everyone i am Boris</div>
-					</div>
-					<div class="chat__msg chat__msg_own">
-						<div class="chat__msg-date"><small>04.03.10<br>12:45</small></div>
-						<div class="chat__msg-name"><strong>You</strong></div>
-						<div class="chat__msg-text">Hi everyone i am Boris</div>
+				<div class="chat__field" ref="chatField">
+					<div class="chat__msg" v-for="(item, i) in messages" :key="i" :class="{chat__msg_own: currentUserName === item.name ? 'chat__msg_own' : ''}">
+						<div class="chat__msg-date"><small>{{item.date}}<br>{{item.time}}</small></div>
+						<div class="chat__msg-name"><strong>{{currentUserName === item.name ? 'You' : item.name}}</strong></div>
+						<div class="chat__msg-text">{{item.msg}}</div>
 					</div>
 				</div>
 				<form class="ui form">
 					<div class="field">
-						<textarea class="chat__input" type="text"></textarea>
+						<textarea @keyup.enter="send" class="chat__input" type="text" v-model="currentMsg"></textarea>
 					</div>
 				</form>
 
@@ -28,7 +23,39 @@
 <script>
 
 export default {
+	data(){
+		return {
+			currentUserName: this.$store.getters['user/getUser'].name,
+			currentMsg: '',
+			messages: [
+				{name: 'Boris', msg: 'Hi everyone i am Boris', date: '04.03.10', time: '12:45'},
+				{name: 'chubaka', msg: 'Hello and die!', date: '04.03.10', time: '13:15'}
+			]
+		}
+	},
+	watch: {
+		messages(){
 
+		}
+	},
+	methods: {
+		send(){
+			let date = new Date();
+			this.messages.push({
+				name: this.currentUserName,
+				msg: this.currentMsg,
+				date: `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`,
+				time: `${date.getHours()}:${date.getMinutes()}`
+			});
+			this.currentMsg = '';
+			this.$nextTick(arg => {
+				let {chatField} = this.$refs;
+				if(chatField.scrollHeight > chatField.offsetHeight){
+					chatField.scrollTop = 100 + chatField.scrollHeight - chatField.offsetHeight;
+				}
+			});
+		}
+	}
 }
 
 </script>
@@ -37,13 +64,13 @@ export default {
 <style lang="scss" scoped>
 	.chat{
 		border: 1px solid #cccccc;
-		border-radius: 4px;
+		border-radius: 6px;
 		padding: 20px;
 
 		&__field{
 			padding: 10px;
 			border: 1px solid #cccccc;
-			border-radius: 4px;
+			border-radius: 6px;
 			height: 500px;
 			overflow: auto;
 			margin: 0 0 20px;
@@ -53,7 +80,7 @@ export default {
 			margin: 0 0 5px;
 			padding: 5px;
 			background-color: #CFD8DC;
-			border-radius: 4px;
+			border-radius: 6px;
 			&_own{
 				background-color: #90CAF9;
 			}

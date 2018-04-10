@@ -284,6 +284,14 @@ const api = {
 			method: 'get',
 			endpoint: `/building-company/${id}/worker`
 		});
+	},
+
+	//chat
+	async getChatHistory(){
+		return await _rq({
+			method: 'get',
+			endpoint: `/chat`
+		});
 	}
 
 }

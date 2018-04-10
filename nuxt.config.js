@@ -31,7 +31,13 @@ module.exports = {
   },
   build: {
 	vendor: [
-	  'jquery', 'semantic-ui-css', 'axios'
+	  'jquery',
+	  'semantic-ui-css',
+	  'axios',
+	  'univalid',
+	  'lodash',
+	  'socket.io-client',
+	  'univalid-strategy-form'
 	],
 	plugins: [
 		new webpack.ProvidePlugin({

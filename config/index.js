@@ -36,5 +36,8 @@ module.exports = {
 			user: '',
 			pass: ''
 		}
+	},
+	io: {
+		'chat:message': 'chat:message'
 	}
 }

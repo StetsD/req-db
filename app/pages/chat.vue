@@ -21,39 +21,65 @@
 </template>
 
 <script>
+const {protocol, host, port, io} = require('../../config');
+const IO = require('socket.io-client')(`${protocol}://${host}:${port}`);
+import api from '~/assets/modules/api';
+
+let chatComp;
+
+IO.connect(function(socket){
+	console.log(io['chat:message'])
+});
+IO.on('disconnect', () => {
+	console.log('disconnect');
+});
+
+IO.on('connect', data => {
+
+});
+
+IO.on(io['chat:message'], msg => {
+	console.log(msg);
+});
 
 export default {
-	data(){
+	async asyncData(){
+
+		let {data} = await api.getChatHistory();
+
 		return {
 			currentUserName: this.$store.getters['user/getUser'].name,
 			currentMsg: '',
-			messages: [
-				{name: 'Boris', msg: 'Hi everyone i am Boris', date: '04.03.10', time: '12:45'},
-				{name: 'chubaka', msg: 'Hello and die!', date: '04.03.10', time: '13:15'}
-			]
+			messages: data || []
 		}
 	},
-	watch: {
-		messages(){
-
-		}
+	mounted(){
+		chatComp = this;
 	},
 	methods: {
 		send(){
+			IO.emit(io['chat:message'], {
+				name: this.currentUserName,
+				msg: this.currentMsg
+			});
+
 			let date = new Date();
 			this.messages.push({
 				name: this.currentUserName,
 				msg: this.currentMsg,
-				date: `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`,
+				date: `${date.getDate()}.0${date.getMonth()}.${date.getFullYear().toString().slice(2)}`,
 				time: `${date.getHours()}:${date.getMinutes()}`
 			});
 			this.currentMsg = '';
-			this.$nextTick(arg => {
-				let {chatField} = this.$refs;
-				if(chatField.scrollHeight > chatField.offsetHeight){
-					chatField.scrollTop = 100 + chatField.scrollHeight - chatField.offsetHeight;
-				}
+			this.$nextTick(() => {
+				this.msgOffsetField();
 			});
+		},
+		msgOffsetField(){
+			let {chatField} = this.$refs;
+			if(chatField.scrollHeight > chatField.offsetHeight){
+				chatField.scrollTop = 100 + chatField.scrollHeight - chatField.offsetHeight;
+			}
 		}
 	}
 }

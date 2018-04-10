@@ -1,11 +1,15 @@
+const {keys, port, io} = require('./config');
+
 const Koa = require('koa');
 const app = new Koa();
-const {keys, port} = require('./config');
+const server = require('http').createServer(app.callback());
+const {init: sioInit} = require('./lib/socket-io');
 const fs = require('fs');
 const db = require('./db');
 const {router} = require('./router');
 const redis = require('./lib/redis');
 
+sioInit(server);
 app.keys = keys;
 
 const middlewares = fs.readdirSync('./middlewares');
@@ -16,7 +20,7 @@ middlewares.forEach(handler => {
 app.use(router.routes());
 
 db.init().then(()=>{
-	app.listen(port);
+	server.listen(port);
 }).catch(err => {
 	throw err;
 });

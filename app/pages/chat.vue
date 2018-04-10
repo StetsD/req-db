@@ -21,65 +21,53 @@
 </template>
 
 <script>
-const {protocol, host, port, io} = require('../../config');
-const IO = require('socket.io-client')(`${protocol}://${host}:${port}`);
-import api from '~/assets/modules/api';
 
-let chatComp;
 
-IO.connect(function(socket){
-	console.log(io['chat:message'])
-});
-IO.on('disconnect', () => {
-	console.log('disconnect');
-});
-
-IO.on('connect', data => {
-
-});
-
-IO.on(io['chat:message'], msg => {
-	console.log(msg);
-});
 
 export default {
-	async asyncData(){
-
-		let {data} = await api.getChatHistory();
-
+	data(){
 		return {
-			currentUserName: this.$store.getters['user/getUser'].name,
+			currentUserName: '',
 			currentMsg: '',
-			messages: data || []
+			messages: []
 		}
 	},
-	mounted(){
-		chatComp = this;
+	async created(){
+		this.currentUserName = this.$store.getters['user/getUser'].name
+		await this.$store.dispatch('chat/fetchHistory');
+		this.messages = this.$store.getters['chat/getHistory'];
 	},
 	methods: {
 		send(){
-			IO.emit(io['chat:message'], {
+			// let date = new Date();
+			// this.messages.push({
+			// 	name: this.currentUserName,
+			// 	msg: this.currentMsg,
+			// 	date: `${date.getDate()}.0${date.getMonth()}.${date.getFullYear().toString().slice(2)}`,
+			// 	time: `${date.getHours()}:${date.getMinutes()}`
+			// });
+
+			this.$store.dispatch('chat/sendMsg', {
 				name: this.currentUserName,
 				msg: this.currentMsg
 			});
 
-			let date = new Date();
-			this.messages.push({
-				name: this.currentUserName,
-				msg: this.currentMsg,
-				date: `${date.getDate()}.0${date.getMonth()}.${date.getFullYear().toString().slice(2)}`,
-				time: `${date.getHours()}:${date.getMinutes()}`
-			});
 			this.currentMsg = '';
-			this.$nextTick(() => {
-				this.msgOffsetField();
-			});
+
 		},
 		msgOffsetField(){
 			let {chatField} = this.$refs;
 			if(chatField.scrollHeight > chatField.offsetHeight){
 				chatField.scrollTop = 100 + chatField.scrollHeight - chatField.offsetHeight;
 			}
+		},
+		addMsg(msg){
+			console.log(msg)
+			this.messages.push(msg);
+
+			this.$nextTick(() => {
+				this.msgOffsetField();
+			});
 		}
 	}
 }

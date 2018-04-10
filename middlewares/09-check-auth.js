@@ -19,7 +19,7 @@ exports.init = app => app.use(async (ctx, next) => {
 	let {path, method} = ctx;
 	let rights = get(ctx, 'session.passport.user.role', 1);
 	let verify = get(ctx, 'session.passport.user.verify', 0);
-	console.log(ctx, method)
+	
 	if(map[`${path}::${method.toUpperCase()}`]){
 		return next();
 	}

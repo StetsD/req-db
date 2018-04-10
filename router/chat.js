@@ -2,23 +2,23 @@ const {router, apiPath} = require('./index');
 const {client: rClient} = require('../lib/redis');
 
 router.get(apiPath('chat'), async(ctx, next) => {
-	let res;
-	var messages = await rClient.lrange('chat-history', 0, 99, function(err, reply) {
-	if (!err) {
+	var messages = await new Promise((res, rej)=>{
+		rClient.lrange('chat-history', 0, 99, (err, reply) => {
+			if (!err) {
+				var result = [];
 
-		  var result = [];
+				for (var msg in reply){
+				  result.push(JSON.parse(reply[msg]));
+				}
 
-		  for (var msg in reply){
-			  result.push(JSON.parse(reply[msg]));
-		  }
 
-		  res = result;
+				return res(result);
 
-		} else {
-			ctx.throw(500);
-		}
+			} else {
+				ctx.throw(500);
+			}
+		});
 	});
-
-	ctx.status = 200;
-	ctx.body = res;
+	
+	ctx.body = messages;
 });

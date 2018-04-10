@@ -1,5 +1,6 @@
 const DB = require('./db');
 const db = DB.instance;
+const {client: rClient} = require('./lib/redis');
 
 //fixtures
 const bossFixtures = require('./src/fixtures/boss').tbody;
@@ -94,6 +95,13 @@ DB.init()
 			user.create(fix);
 		});
 	});
+
+	await rClient.lpush('chat-history', JSON.stringify({
+		name: 'test',
+		msg: 'test',
+		date: '00.00.00',
+		time: '00:00'
+	}));
 
 	process.exit(0);
 

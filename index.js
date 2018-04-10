@@ -4,7 +4,6 @@ const {keys, port} = require('./config');
 const fs = require('fs');
 const db = require('./db');
 const {router} = require('./router');
-
 const redis = require('./lib/redis');
 
 app.keys = keys;

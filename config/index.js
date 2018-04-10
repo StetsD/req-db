@@ -2,7 +2,7 @@ module.exports = {
 	host: 'localhost',
 	protocol: 'http',
 	port: 8000,
-	keys: ['sukablyat', 'mazafaka'],
+	keys: ['sukablyat', 'mazafaka', 'sasasasa'],
 	api: {
 		version: 'v1',
 		name: 'api'

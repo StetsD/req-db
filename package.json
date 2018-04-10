@@ -45,6 +45,7 @@
     "semantic-ui-css": "^2.3.0",
     "semantic-ui-vue": "^0.2.5",
     "sequelize": "^4.36.0",
+    "socket.io": "^2.1.0",
     "univalid": "^1.0.3",
     "univalid-strategy-form": "^1.0.7",
     "vue-style-loader": "^4.0.2"

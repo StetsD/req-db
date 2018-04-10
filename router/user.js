@@ -64,6 +64,7 @@ router.get('/verifying', async (ctx, next) => {
 	let {token} = ctx.request.query;
 	if(token){
 		let {checkStatus, email} = await checkToken(token);
+
 		if(!checkStatus){
 			ctx.status = 400;
 			ctx.body = {status: 'Bad Token'};
@@ -74,6 +75,9 @@ router.get('/verifying', async (ctx, next) => {
 			ctx.status = 301;
 			ctx.redirect('/');
 		}
+	}else{
+		ctx.status = 400;
+		ctx.body = {status: 'Bad Token'};
 	}
 });
 
@@ -81,7 +85,7 @@ router.post(apiPath('verifying'), async (ctx, next) => {
 	let {email} = ctx.request.body;
 	let user = await getUserByEmail(email);
 	let name = get(ctx, 'session.passport.user.login', null);
-
+	
 	if(user && user.dataValues.verify){
 		ctx.status = 400;
 		ctx.body = {status: 'Пользователь уже верефицирован'};

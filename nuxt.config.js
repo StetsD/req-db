@@ -24,7 +24,9 @@ module.exports = {
 	  ['semantic-ui-vue/nuxt', {css: false}],
 	  '@nuxtjs/axios'
   ],
-  plugins: ['~/plugins/semantic-ui.js'],
+  plugins: [
+	  '~/plugins/semantic-ui'
+  ],
   loading: { color: '#3B8070' },
   router: {
 	middleware: ['check-auth']

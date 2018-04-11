@@ -19,7 +19,6 @@ map[`/verifying::GET`] = true;
 exports.init = app => app.use(async (ctx, next) => {
 	let {path, method} = ctx;
 	let user = get(ctx, 'session.passport.user', {});
-	
 	setUserState(user);
 
 	let rights = user.role !== undefined ? user.role : 1;

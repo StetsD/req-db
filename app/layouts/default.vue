@@ -21,6 +21,7 @@
 				@toggleForm="toggleForm"
 				@togglePopupMsg="togglePopupMsg"
 				:visible="vFReg"
+				:regErr="commonRegErr"
 			/>
 		</ModalDefault>
 		<ModalDefaultMsg
@@ -88,6 +89,7 @@ export default {
 			//data
 			headerMsg: 'Вход',
 			commonLogErr: '',
+			commonRegErr: '',
 			crossMsg: ''
 		}
 	},
@@ -100,6 +102,7 @@ export default {
 		togglePopup(type){
 			this.visibleModal = !this.visibleModal;
 			this.commonLogErr = '';
+			this.commonRegErr = '';
 			this.toggleDimmer();
 
 			this.toggleForm(type);
@@ -148,8 +151,16 @@ export default {
 			this.$store.commit('user/logout');
 		},
 		async reg(data){
-			await API.reg(data);
-			this.togglePopup();
+			let res = await API.reg(data);
+			if(res.status === 200){
+				this.togglePopup();
+				setTimeout(()=>{
+					this.togglePopupMsg('На вашу почту отправленно письмо с активацией аккаунта', 5000);
+				}, 1000);
+			}
+			if(res.status === 400){
+				this.commonRegErr = res.data;
+			}
 		}
 	}
 }

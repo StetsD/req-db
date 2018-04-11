@@ -3,8 +3,34 @@ const db = require('../index.js').instance;
 
 const User = db.define('user', {
 	id: {type: Sequelize.INTEGER, autoIncrement: true},
-	login: {type: Sequelize.STRING, primaryKey: true, unique: true, allowNull: false},
-	email: {type: Sequelize.STRING, unique: true, allowNull: false},
+	login:
+		{type: Sequelize.STRING, primaryKey: true,
+			validate: {
+				isUnique: function(login, next){
+					User.find({where: {login}})
+						.done(user => {
+							if(user){
+								return next('Пользователь с таким именем уже существует');
+							}
+							next();
+						});
+				}
+			},
+		allowNull: false},
+	email:
+		{type: Sequelize.STRING,
+			validate: {
+				isUnique: function(email, next){
+					User.find({where: {email}})
+						.done(user => {
+							if(user){
+								return next('Пользователь с таким email уже существует');
+							}
+							next();
+						});
+				}
+			},
+		allowNull: false},
 	password: {type: Sequelize.STRING, allowNull: false},
 	salt: {type: Sequelize.STRING, allowNull: false},
 	role: {type: Sequelize.INTEGER, allowNull: false},

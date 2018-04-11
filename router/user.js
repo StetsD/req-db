@@ -5,7 +5,7 @@ const univalid = require('univalid')();
 const passport = require('../lib/passport');
 const {sendToken, checkToken} = require('../lib/verify');
 const {client: rClient} = require('../lib/redis');
-const {get, set} = require('lodash');
+const {get, set, map} = require('lodash');
 
 router.get(apiPath('user'), async (ctx, next) => {
 	let user = get(ctx, 'session.passport.user', null);
@@ -20,13 +20,30 @@ router.post(apiPath('reg'), async (ctx, next) => {
 		let {salt, passwordHash} = await createHashPass(password);
 		let role = login === 'admin' ? 0 : 1;
 
-		await addUser({
-			login,
-			email,
-			password: passwordHash,
-			salt,
-			role
-		});
+		try{
+			await addUser({
+				login,
+				email,
+				password: passwordHash,
+				salt,
+				role
+			});
+		}catch(err){
+			if(err.errors){
+				let unvalidate = map(err.errors, item => {
+					return {
+						message: item.message,
+						field: item.path
+					}
+				});
+
+				ctx.status = 400;
+				ctx.body = unvalidate;
+				return;
+			}
+			ctx.throw(500);
+		}
+
 
 		await sendToken(login, email);
 
@@ -85,7 +102,7 @@ router.post(apiPath('verifying'), async (ctx, next) => {
 	let {email} = ctx.request.body;
 	let user = await getUserByEmail(email);
 	let name = get(ctx, 'session.passport.user.login', null);
-	
+
 	if(user && user.dataValues.verify){
 		ctx.status = 400;
 		ctx.body = {status: 'Пользователь уже верефицирован'};

@@ -5,7 +5,7 @@
 			<a @click="$emit('toggleForm', 'login')">Выполнить вход</a>
 		</div>
 
-		<div class="field">
+		<div class="field" ref="login">
 			<label>Логин</label>
 			<input
 				type="text"
@@ -15,7 +15,7 @@
 			<div class="field__msg"></div>
 		</div>
 
-		<div class="field">
+		<div class="field" ref="email">
 			<label>Email</label>
 			<input
 				type="email"
@@ -65,7 +65,7 @@ const USF = require('univalid-strategy-form');
 let progress;
 
 export default {
-	props: ['visible'],
+	props: ['visible', 'regErr'],
 	data(){
 		return {
 			login: '',
@@ -88,7 +88,7 @@ export default {
 					cb: val => {
 						progress.progress('set percent', val > 100 ? 100 : val);
 					}
-				}
+				},
 			})
 		);
 		univalid.toggleDefaultMsgConfig();
@@ -101,9 +101,6 @@ export default {
 			if(univalid.getCommonState === 'success'){
 				let {login, password, email} = this;
 				this.$emit('reg', {login, password, email});
-				setTimeout(()=>{
-					this.$emit('togglePopupMsg', 'На вашу почту отправленно письмо с активацией аккаунта', 5000);
-				}, 1000);
 			}
 		}
 	},
@@ -114,6 +111,18 @@ export default {
 			this.password = '';
 			this.password2 = '';
 			progress.progress('set percent', 0);
+		},
+		regErr(val){
+			if(val.length){
+				val.forEach(field => {
+					let refField = this.$refs[field.field];
+					if(refField){
+						refField.classList.add('error');
+						refField.querySelector('.field__msg').innerText = field.message;
+					}
+				});	
+			}
+
 		}
 	}
 }

@@ -29,7 +29,7 @@ module.exports = {
   ],
   loading: { color: '#3B8070' },
   router: {
-	middleware: ['check-auth']
+	middleware: ['check-auth', 'socket-notifier']
   },
   build: {
 	vendor: [

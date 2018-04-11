@@ -51,7 +51,8 @@ import TooltipGlobal from '~/components/TooltipGlobal';
 
 const axios = require('axios');
 const API = require('~/assets/modules/api').default;
-const {port, api, host, protocol} = require('../../config');
+const {port, api, host, protocol, io} = require('../../config');
+const {IO, disconnect, connect} = require('~/assets/modules/socket-io-cli');
 const univalid = require('univalid')();
 univalid.setDefaultMsgConfig({
 	empty: 'Значение не должно быть пустым',
@@ -143,10 +144,11 @@ export default {
 			}
 
 			this.$store.commit('user/login', {name: res.data.login, verify: res.data.verify});
+			connect();
 			this.togglePopup();
-			window.location = '/';
 		},
 		async logout(){
+			disconnect();
 			await API.logout();
 			this.$store.commit('user/logout');
 		},

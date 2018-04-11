@@ -12,7 +12,7 @@ module.exports = {
 		user: 'postgres',
 		password: '987654321Qq',
 		host: 'localhost',
-		port: 5433,
+		port: 5432,
 		dialect: 'postgres'
 	},
 	redis: {
@@ -39,6 +39,8 @@ module.exports = {
 	},
 	io: {
 		'chat:message': 'chat:message',
-		'app:error': 'app:error'
+		'app:error': 'app:error',
+		'app:connect': 'app:connect',
+		'app:disconnect': 'app:disconnect'
 	}
 }

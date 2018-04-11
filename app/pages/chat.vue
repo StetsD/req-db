@@ -3,7 +3,7 @@
 		<div class="chat ui container">
 			<div class="chat-inner">
 				<div class="chat__field" ref="chatField">
-					<div class="chat__msg" v-for="(item, i) in messages" :key="i" :class="{chat__msg_own: currentUserName === item.name ? 'chat__msg_own' : ''}">
+					<div class="chat__msg" v-for="(item, i) in messages" :key="i" :class="[item.type, {chat__msg_own: currentUserName === item.name ? 'chat__msg_own' : ''}]">
 						<div class="chat__msg-date"><small>{{item.date}}<br>{{item.time}}</small></div>
 						<div class="chat__msg-name"><strong>{{currentUserName === item.name ? 'You' : item.name}}</strong></div>
 						<div class="chat__msg-text">{{item.msg}}</div>
@@ -22,7 +22,8 @@
 
 <script>
 
-
+const {IO} = require('~/assets/modules/socket-io-cli');
+const {io} = require('../../config');
 
 export default {
 	data(){
@@ -39,7 +40,7 @@ export default {
 	},
 	methods: {
 		send(){
-			this.$store.dispatch('chat/sendMsg', {
+			IO.emit(io['chat:message'], {
 				name: this.currentUserName,
 				msg: this.currentMsg
 			});
@@ -86,8 +87,27 @@ export default {
 			padding: 5px;
 			background-color: #CFD8DC;
 			border-radius: 6px;
+		    clear: both;
 			&_own{
 				background-color: #90CAF9;
+			}
+			&.disconnect{
+				background-color: #FFAB91;
+
+			}
+			&.connect{
+				background-color: #C5E1A5;
+			}
+			&.disconnect, &.connect{
+				clear: both;
+				float: right;
+				width: 40%;
+
+				&::after, &::before{
+					content: '';
+					display: block;
+					clear: both;
+				}
 			}
 		}
 

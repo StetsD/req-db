@@ -38,6 +38,7 @@ module.exports = {
 		}
 	},
 	io: {
-		'chat:message': 'chat:message'
+		'chat:message': 'chat:message',
+		'app:error': 'app:error'
 	}
 }

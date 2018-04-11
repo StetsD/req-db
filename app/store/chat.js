@@ -1,6 +1,3 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-Vue.use(Vuex);
 const {protocol, host, port, io} = require('../../config');
 const IO = require('socket.io-client')(`${protocol}://${host}:${port}`);
 import api from '../assets/modules/api';
@@ -9,8 +6,18 @@ IO.on('disconnect', () => {
 	console.log('sockets are disconnected');
 });
 
+IO.on(io['app:error'], payload => {
+	if(payload && payload.status === 400){
+		$nuxt.$store.dispatch('tooltip/callChangeState',
+		{msg: 'Вы не можете использовать чат.Пройдите верификацию в личном кабинете',
+		status: 'error'});
+	}
+	if(payload && payload.status === 401){
+		$nuxt.$store.commit('user/logout');
+	}
+});
+
 IO.on(io['chat:message'], msg => {
-	console.log(msg)
 	$nuxt.$store.commit('chat/addMsg', msg);
 });
 
@@ -22,7 +29,6 @@ export const state = () => ({
 export const mutations = {
 	addMsg(state, payload){
 		state.history.push(payload);
-		console.log(state.history)
 	},
 	setHistory(state, payload){
 		state.history = payload;

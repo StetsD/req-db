@@ -1,6 +1,7 @@
 const {api} = require('../config');
 const {apiPath, index} = require('../router');
 const {get} = require('lodash');
+const {setState: setUserState} = require('../lib/userState');
 
 const forbiddenMap = {
 	'patch': true,
@@ -17,9 +18,13 @@ map[`/verifying::GET`] = true;
 
 exports.init = app => app.use(async (ctx, next) => {
 	let {path, method} = ctx;
-	let rights = get(ctx, 'session.passport.user.role', 1);
-	let verify = get(ctx, 'session.passport.user.verify', 0);
+	let user = get(ctx, 'session.passport.user', {});
 	
+	setUserState(user);
+
+	let rights = user.role !== undefined ? user.role : 1;
+	let verify = user.verify !== undefined ? user.verify : 0;
+
 	if(map[`${path}::${method.toUpperCase()}`]){
 		return next();
 	}

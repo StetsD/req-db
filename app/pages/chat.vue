@@ -39,14 +39,6 @@ export default {
 	},
 	methods: {
 		send(){
-			// let date = new Date();
-			// this.messages.push({
-			// 	name: this.currentUserName,
-			// 	msg: this.currentMsg,
-			// 	date: `${date.getDate()}.0${date.getMonth()}.${date.getFullYear().toString().slice(2)}`,
-			// 	time: `${date.getHours()}:${date.getMinutes()}`
-			// });
-
 			this.$store.dispatch('chat/sendMsg', {
 				name: this.currentUserName,
 				msg: this.currentMsg
@@ -60,11 +52,10 @@ export default {
 			if(chatField.scrollHeight > chatField.offsetHeight){
 				chatField.scrollTop = 100 + chatField.scrollHeight - chatField.offsetHeight;
 			}
-		},
-		addMsg(msg){
-			console.log(msg)
-			this.messages.push(msg);
-
+		}
+	},
+	watch: {
+		messages(){
 			this.$nextTick(() => {
 				this.msgOffsetField();
 			});

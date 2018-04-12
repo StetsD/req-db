@@ -19,16 +19,31 @@ IO.on(io['app:error'], payload => {
 // New message
 IO.on(io['chat:message'], payload => {
 	$nuxt.$store.commit('chat/addMsg', payload);
+	if(window.location.pathname !== "/chat"){
+		$nuxt.$store.dispatch('tooltip/callChangeState',
+		{status: 'success', msg: `${payload.name} оставил сообщение`});
+	}
+
 });
 
 // Connected new user
 IO.on(io['app:connect'], payload => {
 	$nuxt.$store.commit('chat/addMsg', payload);
+	if(window.location.pathname !== "/chat"){
+		$nuxt.$store.dispatch('tooltip/callChangeState',
+		{status: 'status', msg: `${payload.name} подключился`});
+	}
+
 });
 
 // Disconnected another user
 IO.on(io['app:disconnect'], payload => {
 	$nuxt.$store.commit('chat/addMsg', payload);
+	if(window.location.pathname !== "/chat"){
+		$nuxt.$store.dispatch('tooltip/callChangeState',
+		{status: 'status', msg: `${payload.name} отключился`});
+	}
+
 });
 
 function connect(){

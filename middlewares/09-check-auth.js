@@ -49,9 +49,9 @@ exports.init = app => app.use(async (ctx, next) => {
 	}
 
 	try{
-		if(!ctx.isAuthenticated()){
-			ctx.throw(401);
-		}
+		// if(!ctx.isAuthenticated()){
+		// 	ctx.throw(401);
+		// }
 
 		await next();
 

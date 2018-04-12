@@ -3,7 +3,7 @@ module.exports = (err) => {
 	let {$nuxt} = window;
 
 	if(status === 401){
-		$nuxt.$store.commit('user/logout');
+		// $nuxt.$store.commit('user/logout');
 	}
 
 	if(status === 400 && data.status === 'not verifyed'){

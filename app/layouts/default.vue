@@ -64,6 +64,10 @@ univalid.setDefaultMsgConfig({
 axios.defaults.baseURL = `${protocol}://${host}:${port}/${api.name}/${api.version}`;
 axios.defaults.headers.common['Data-type'] = 'query';
 
+if($nuxt.$store.getters['user/getUser']){
+	connect();
+}
+
 export default {
 	components: {
 		Menu,

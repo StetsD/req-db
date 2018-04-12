@@ -39,7 +39,8 @@ module.exports = {
 	  'univalid',
 	  'lodash',
 	  'socket.io-client',
-	  'univalid-strategy-form'
+	  'univalid-strategy-form',
+	  'dropzone'
 	],
 	plugins: [
 		new webpack.ProvidePlugin({

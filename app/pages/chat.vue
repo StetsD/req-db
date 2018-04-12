@@ -15,6 +15,10 @@
 					</div>
 				</form>
 
+				<form reg="formUpload" class="form-upload form-dropzone" action="/api/v1/chat" method="post" enctype="multipart/form-data">
+					<input type="file" name="megafile">
+					<input type="submit" value="upload">
+				</form>
 			</div>
 		</div>
 	</section>
@@ -22,7 +26,9 @@
 
 <script>
 
+
 const {IO} = require('~/assets/modules/socket-io-cli');
+const fileUploader = require('~/assets/modules/file-upload');
 const {io} = require('../../config');
 
 export default {

@@ -5,7 +5,6 @@ const univalid = require('univalid')();
 router.get(apiPath('deal'), async (ctx, next) => {
 	ctx.type = "application/json";
 	ctx.body = await getDeals();
-	next();
 });
 
 router.post(apiPath('deal'), async (ctx, next) => {
@@ -13,10 +12,8 @@ router.post(apiPath('deal'), async (ctx, next) => {
 		await addDeal(ctx.request.body);
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.status = 401;
-		ctx.body = univalid.getState;
+		ctx.throw({status: 400, msg: univalid.getState});
 	}
-	next();
 });
 
 router.patch(apiPath('deal'), async (ctx, next) => {
@@ -24,17 +21,14 @@ router.patch(apiPath('deal'), async (ctx, next) => {
 		await editDeal(ctx.request.body);
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.status = 401;
-		ctx.body = univalid.getState;
+		ctx.throw({status: 400, msg: univalid.getState});
 	}
-	next();
 });
 
 router.delete(apiPath('deal/:id'), async (ctx, next) => {
 	await deleteDeal(ctx.params.id);
 	ctx.status = 200;
 	ctx.body = ctx.params;
-	next();
 });
 
 function validate(body){

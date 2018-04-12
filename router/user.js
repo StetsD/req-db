@@ -11,6 +11,8 @@ router.get(apiPath('user'), async (ctx, next) => {
 	let user = get(ctx, 'session.passport.user', null);
 	if(ctx.isAuthenticated() && user){
 		ctx.body = {login: user.login, verify: user.verify};
+	}else{
+		ctx.throw(401);
 	}
 });
 
@@ -50,30 +52,24 @@ router.post(apiPath('reg'), async (ctx, next) => {
 		ctx.status = 200;
 		ctx.body = {status: `User ${login} registered`};
 	}else{
-		ctx.status = 400;
-		ctx.body = univalid.getState;
+		ctx.throw({status: 400, msg: univalid.getState});
 	}
 });
 
 router.post(apiPath('login'), async (ctx, next) => {
 	await passport.authenticate('local', async (err, user, msg) => {
-		if(err) return new Error(msg);
+		if(err){
+			ctx.throw({status: 500, msg});
+		}
+
 		if(!user){
-			ctx.status = 400;
-			ctx.body = msg;
-			return next();
+			ctx.throw({status: 400, msg});
 		}
 
-		try{
-			await ctx.logIn(user);
-			let userData = await getMainInfoUser(user.login);
-			ctx.body = userData[0];
-		}catch(err){
-			ctx.status = 500;
-			ctx.body = err;
-		}
+		await ctx.logIn(user);
+		let userData = await getMainInfoUser(user.login);
+		ctx.body = userData[0];
 
-		next();
 	})(ctx, next);
 });
 

@@ -4,15 +4,11 @@ const univalid = require('univalid')();
 
 //get building
 router.get(apiPath('building'), async (ctx, next) => {
-	ctx.type = "application/json";
-
 	if(ctx.request.query.q){
 		ctx.body = await getBuildingByName(ctx.request.query.q);
 	}else{
 		ctx.body = await getBuildings();
 	}
-
-	next();
 });
 
 //add building
@@ -24,8 +20,7 @@ router.post(apiPath('building'), async (ctx, next) => {
 		await addBuilding({name, price, customer_company_id, building_company_id});
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.status = 400;
-		ctx.body = univalid.getState;
+		ctx.throw({status: 400, msg: univalid.getState});
 	}
 });
 
@@ -35,8 +30,7 @@ router.patch(apiPath('building'), async (ctx, next) => {
 		await editBuilding(ctx.request.body);
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.status = 400;
-		ctx.body = univalid.getState;
+		ctx.throw({status: 400, msg: univalid.getState});
 	}
 });
 
@@ -45,7 +39,6 @@ router.delete(apiPath('building/:id'), async (ctx, next) => {
 	await deleteBuilding(ctx.params.id);
 	ctx.status = 200;
 	ctx.body = ctx.params;
-	next();
 });
 
 function validate(body){

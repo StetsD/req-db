@@ -17,7 +17,6 @@ const {pick} = require('lodash');
 //get workers
 router.get(apiPath('worker'), async (ctx, next) => {
 	ctx.body = await getWorkers();
-	next();
 });
 
 //get worker
@@ -27,7 +26,6 @@ router.get(apiPath('worker/:id'), async (ctx, next) => {
 	let worker = await getWorker(id);
 	worker.dataValues.companies = companies;
 	ctx.body = worker;
-	next();
 });
 
 //add worker
@@ -49,11 +47,8 @@ router.post(apiPath('worker'), async (ctx, next) => {
 
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.status = 400;
-		ctx.body = univalid.getState;
+		ctx.throw({status: 400, msg: univalid.getState});
 	}
-
-	next();
 });
 
 router.patch(apiPath('worker'), async (ctx, next) => {
@@ -77,11 +72,8 @@ router.patch(apiPath('worker'), async (ctx, next) => {
 
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.status = 400;
-		ctx.body = univalid.getState;
+		ctx.throw({status: 400, msg: univalid.getState});
 	}
-
-	next();
 });
 
 //delete worker
@@ -89,7 +81,6 @@ router.delete(apiPath('worker/:id'), async (ctx, next) => {
 	await deleteWorker(ctx.params.id);
 	ctx.status = 200;
 	ctx.body = ctx.params;
-	next();
 });
 
 function _validateWorker(body){

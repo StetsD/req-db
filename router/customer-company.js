@@ -20,8 +20,6 @@ router.get(apiPath('customer-company'), async (ctx, next) => {
 	}else{
 		ctx.body = await getCustomerCompanies();
 	}
-
-	next();
 });
 
 router.get(apiPath('customer-company/:id'), async (ctx, next) => {
@@ -30,7 +28,6 @@ router.get(apiPath('customer-company/:id'), async (ctx, next) => {
 	let company = await getCustomerCompany(id);
 	company.dataValues.sellers = sellers;
 	ctx.body = company;
-	next();
 });
 
 router.post(apiPath('customer-company'), async (ctx, next) => {
@@ -49,11 +46,8 @@ router.post(apiPath('customer-company'), async (ctx, next) => {
 		ctx.status = 200;
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.status = 400;
-		ctx.body = univalid.getState;
+		ctx.throw({status: 400, msg: univalid.getState});
 	}
-
-	next();
 });
 
 router.patch(apiPath('customer-company'), async (ctx, next) => {
@@ -62,37 +56,30 @@ router.patch(apiPath('customer-company'), async (ctx, next) => {
 		ctx.status = 200;
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.status = 400;
-		ctx.body = univalid.getState;
+		ctx.throw({status: 400, msg: univalid.getState});
 	}
-
-	next();
 });
 
 router.delete(apiPath('customer-company/:id'), async (ctx, next) => {
 	await deleteCustomerCompany(ctx.params.id);
 	ctx.status = 200;
 	ctx.body = ctx.params.id;
-	next();
 });
 
 router.get(apiPath('customer-company/:id/sellers'), async (ctx, next) => {
 	let {id} = ctx.params;
 	ctx.body = await getSellersByCompanyId(id);
-	next();
 });
 
 router.post(apiPath('customer-company/:id/sellers'), async (ctx, next) => {
 	let {id} = ctx.params;
 	ctx.body = await addSeller(ctx.request.body);
-	next();
 });
 
 router.delete(apiPath('customer-company/:id/sellers/:sellerId'), async (ctx, next) => {
 	let {sellerId} = ctx.params;
 	await deleteSeller(sellerId);
 	ctx.body = sellerId;
-	next();
 });
 
 function _validate(body){

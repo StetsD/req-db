@@ -1,7 +1,7 @@
 const {api} = require('../config');
 const {apiPath, index} = require('../router');
 const {get} = require('lodash');
-const {setState: setUserState} = require('../lib/userState');
+const clients = require('../lib/socket-io/clients');
 
 const forbiddenMap = {
 	'patch': true,
@@ -19,7 +19,8 @@ map[`/verifying::GET`] = true;
 exports.init = app => app.use(async (ctx, next) => {
 	let {path, method} = ctx;
 	let user = get(ctx, 'session.passport.user', {});
-	setUserState(user);
+
+	clients.addClient(user);
 
 	let rights = user.role !== undefined ? user.role : 1;
 	let verify = user.verify !== undefined ? user.verify : 0;

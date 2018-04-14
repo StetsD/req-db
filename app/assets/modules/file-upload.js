@@ -1,26 +1,22 @@
-module.exports = (form, url, cbs, cbp) => {
-	form.addEventListener('submit', e => {
-		e.preventDefault();
+module.exports = (file, url, cbs, cbp) => {
+	let data = new FormData();
+	data.append('name', $nuxt.$store.getters['user/getUser'].name);
+	data.append('file', file);
 
-		let data = new FormData(form);
-		data.append('name', $nuxt.$store.getters['user/getUser'].name);
-
-		var req = new XMLHttpRequest();
-		req.open('POST', '/api/v1/chat', true);
-		req.onload = function(event){
-			if(req.status == 200){
-				console.log('Uploaded');
-			}else{
-				console.log('Error')
-			}
+	var req = new XMLHttpRequest();
+	req.open('POST', url, true);
+	req.onload = function(event){
+		if(req.status == 200){
+			cbs('Upload Success');
+		}else{
+			console.log('Error upload');
 		}
+	}
 
-		req.upload.onprogress = function(event){
-			console.log(event.loaded, event.total);
-		}
+	req.upload.onprogress = function(event){
+		cbp(event.loaded, event.total);
+		// console.log(event.loaded, event.total);
+	}
 
-		req.send(data);
-	}, false);
+	req.send(data);
 }
-
-//http://mailru.github.io/FileAPI/

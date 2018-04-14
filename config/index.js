@@ -12,7 +12,7 @@ module.exports = {
 		user: 'postgres',
 		password: '987654321Qq',
 		host: 'localhost',
-		port: 5433,
+		port: 5432,
 		dialect: 'postgres'
 	},
 	redis: {
@@ -42,5 +42,12 @@ module.exports = {
 		'app:error': 'app:error',
 		'app:connect': 'app:connect',
 		'app:disconnect': 'app:disconnect'
+	},
+	paths: {
+		assetsChat: '/assets/chat'
+	},
+	limits: {
+		chatFile: 1073741824,
+		minImgWidth: 200
 	}
 }

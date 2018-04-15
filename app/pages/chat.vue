@@ -6,7 +6,9 @@
 					<div class="chat__msg" v-for="(item, i) in messages" :key="i" :class="[item.type, {chat__msg_own: currentUserName === item.name ? 'chat__msg_own' : ''}]">
 						<div class="chat__msg-date"><small>{{item.date}}<br>{{item.time}}</small></div>
 						<div class="chat__msg-name"><strong>{{currentUserName === item.name ? 'You' : item.name}}</strong></div>
-						<div class="chat__msg-text">{{item.msg}}</div>
+						<div class="chat__msg-text" v-if="!item.type">{{item.msg}}</div>
+						<img @click="togglePopup" :data-origin="item.msg" class="chat__asset-img" :src="item.min" v-if="item.type === 'image'">
+						<a :href="item.msg" class="chat__asset-link" v-if="item.type === 'file'"><i class="icon huge file outline"></i></a>
 					</div>
 				</div>
 				<form class="ui form">
@@ -14,14 +16,14 @@
 						<textarea @keyup.enter="send" class="chat__input" type="text" v-model="currentMsg"></textarea>
 					</div>
 				</form>
-
-				<form reg="formUpload" class="form-upload form-dropzone" action="/api/v1/chat" method="post" enctype="multipart/form-data">
-					<input type="file" name="megafile">
-					<input type="submit" value="upload">
-				</form>
-				<img :src="image" alt="">
 			</div>
 		</div>
+		<ModalDefault :visible="visibleModal" @close="togglePopup"  header="Изображение">
+			<div class="" slot="content">
+				<img class="chat__img-popup" :src="image" alt="Изображение">
+			</div>
+		</ModalDefault>
+		<ModalDimmer :visible="visibleDimmer" @close="togglePopup"/>
 	</section>
 </template>
 
@@ -32,9 +34,20 @@ const {IO} = require('~/assets/modules/socket-io-cli');
 const fileUploader = require('~/assets/modules/file-upload');
 const {io, api} = require('../../config');
 
+import ModalDefault from '~/components/modals/ModalDefault';
+import ModalDimmer from '~/components/modals/ModalDimmer';
+
 export default {
+	components: {
+		ModalDefault,
+		ModalDimmer
+	},
 	data(){
 		return {
+			//modal
+			visibleModal: false,
+			visibleDimmer: false,
+
 			currentUserName: '',
 			currentMsg: '',
 			messages: [],
@@ -47,6 +60,19 @@ export default {
 		this.messages = this.$store.getters['chat/getHistory'];
 	},
 	methods: {
+		togglePopup(e){
+			if(!this.visibleModal){
+				this.image = e.target.dataset.origin;
+			}else{
+				this.image = '';
+			}
+
+			this.visibleModal = !this.visibleModal;
+			this.toggleDimmer();
+		},
+		toggleDimmer(){
+			this.visibleDimmer = !this.visibleDimmer;
+		},
 		send(){
 			IO.emit(io['chat:message'], {
 				name: this.currentUserName,
@@ -66,32 +92,11 @@ export default {
 			e.stopPropagation();
 			e.preventDefault();
 			let files = e.dataTransfer.files;
-			// this.createFile(files[0]);
 
 			fileUploader(files[0], `${api.name}/${api.version}/chat`,
 				(string)=> {console.log(string)},
 				(load, total) => {console.log(load, total)}
 			);
-		},
-		addFile(e){
-			let files = e.target.files;
-			// this.createFile(files[0]);
-
-		},
-		createFile(file){
-
-			if(!file.type.match('image.*')){
-				let img = new Image();
-			}
-
-			let reader = new FileReader();
-
-			reader.onload = e => {
-				// this.image = e.target.result;
-
-			}
-
-			reader.readAsDataURL(file);
 		}
 	},
 	watch: {
@@ -148,6 +153,10 @@ export default {
 					clear: both;
 				}
 			}
+			&.image, &.file{
+				width: 40%;
+    			float: right;
+			}
 		}
 
 		&__msg-date{
@@ -165,6 +174,36 @@ export default {
 
 		&__msg-text{
 			margin: 2px 0 0 0;
+		}
+
+		&__asset-img{
+			display: block;
+			margin: 5px 5px;
+		    width: inherit;
+			cursor: pointer;
+			-webkit-user-drag: none;
+			  -khtml-user-drag: none;
+			  -moz-user-drag: none;
+			  -o-user-drag: none;
+			  user-drag: none;
+		}
+
+		&__asset-link{
+			display: block;
+		    margin: 0 auto;
+		    width: 34%;
+
+			& i{
+				display: block;
+				margin: 10px auto;
+				color: #000000;
+			}
+		}
+
+		&__img-popup{
+			max-height: 50vw;
+			display: block;
+			margin: 0 auto;
 		}
 
 		.chat__input{

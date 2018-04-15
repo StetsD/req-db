@@ -44,7 +44,8 @@ module.exports = {
 		'app:disconnect': 'app:disconnect'
 	},
 	paths: {
-		assetsChat: '/assets/chat'
+		static: '/assets',
+		assetsChat: '/chat/assets'
 	},
 	limits: {
 		chatFile: 1073741824,

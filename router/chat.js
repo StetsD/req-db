@@ -22,8 +22,6 @@ router.get(apiPath('chat'), async(ctx, next) => {
 				for (var msg in reply){
 				  result.push(JSON.parse(reply[msg]));
 				}
-
-
 				return res(result);
 
 			} else {
@@ -47,22 +45,36 @@ router.post(apiPath('chat'), async(ctx, next) => {
 	if(!user.login){ctx.throw(401)}
 	if(file.size >= limits.chatFile){ctx.throw({status: 400, msg: 'Размер файла превышает 1Гб'});}
 
-	mkdir(`${paths.assetsChat}/${user.login}`);
+	mkdir(`${paths.static}/${paths.assetsChat}/${user.login}`);
+
+	var type = 'file';
+	var modify = {};
 
 	let ext = file.name.match(/\..{2,4}$/g)[0];
 	let fileP = path.join(`${paths.assetsChat}/${user.login}`, Math.random().toString(36).substr(2, 25));
 	let filePath = fileP + ext;
-	let filePathMin = fileP + '.min' + ext;
-	let filePathFull = path.join(process.cwd(), filePath);
-	let filePathMinFull = path.join(process.cwd(), filePathMin);
-
+	let filePathFull = path.join(process.cwd(), paths.static, filePath);
 	let rStream = fs.createReadStream(file.path);
 	let wStream = fs.createWriteStream(filePathFull);
 	await asyncWrite(rStream.pipe(wStream));
 
-	await console.log(sharp(filePathFull).resize(limits.minImgWidth, limits.minImgWidth).max().toFile(filePathMinFull));
+	if(file.type.match(/image/g)){
+		let filePathMin = fileP + '.min' + ext;
+		let filePathMinFull = path.join(process.cwd(), paths.static, filePathMin);
+		await sharp(filePathFull).resize(limits.minImgWidth, limits.minImgWidth).max().toFile(filePathMinFull);
+		type = 'image';
+		modify.min = filePathMin.replace(/\\/g, '/');
+	}
 
-	let upMsg = Object.assign({}, {name, msg: filePath, type: 'file'}, getDate());
+	let upMsg = Object.assign({},
+		{
+			name,
+			msg: filePath.replace(/\\/g, '/'),
+			type,
+		},
+		modify,
+		getDate()
+	);
 
 	rClient.rpush('chat-history', JSON.stringify(upMsg));
 	rClient.ltrim('chat-history', 0, 99);

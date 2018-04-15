@@ -8,8 +8,11 @@
 						<div class="chat__msg-name"><strong>{{currentUserName === item.name ? 'You' : item.name}}</strong></div>
 						<div class="chat__msg-text" v-if="!item.type">{{item.msg}}</div>
 						<img @click="togglePopup" :data-origin="item.msg" class="chat__asset-img" :src="item.min" v-if="item.type === 'image'">
-						<a :href="item.msg" class="chat__asset-link" v-if="item.type === 'file'"><i class="icon huge file outline"></i></a>
+						<a download :href="item.msg" class="chat__asset-link" v-if="item.type === 'file'"><i class="icon huge file outline"></i></a>
 					</div>
+				</div>
+				<div class="ui indicating success progress tiny chat__progress js-progress-chat-file">
+					<div class="bar"></div>
 				</div>
 				<form class="ui form">
 					<div class="field">
@@ -37,6 +40,8 @@ const {io, api} = require('../../config');
 import ModalDefault from '~/components/modals/ModalDefault';
 import ModalDimmer from '~/components/modals/ModalDimmer';
 
+var progress;
+
 export default {
 	components: {
 		ModalDefault,
@@ -58,6 +63,9 @@ export default {
 		this.currentUserName = this.$store.getters['user/getUser'].name
 		await this.$store.dispatch('chat/fetchHistory');
 		this.messages = this.$store.getters['chat/getHistory'];
+	},
+	mounted(){
+		progress = $('.js-progress-chat-file').progress();
 	},
 	methods: {
 		togglePopup(e){
@@ -94,9 +102,13 @@ export default {
 			let files = e.dataTransfer.files;
 
 			fileUploader(files[0], `${api.name}/${api.version}/chat`,
-				(string)=> {console.log(string)},
-				(load, total) => {console.log(load, total)}
+				(string)=> {progress.removeClass('active')},
+				(load, total) => {
+					progress.progress('set total', total);
+					progress.progress('set progress', load);
+				}
 			);
+			progress.addClass('active');
 		}
 	},
 	watch: {
@@ -204,6 +216,14 @@ export default {
 			max-height: 50vw;
 			display: block;
 			margin: 0 auto;
+		}
+
+		&__progress{
+			margin: 0 0 20px 0;
+			display: none;
+			&.active{
+				display: block;
+			}
 		}
 
 		.chat__input{

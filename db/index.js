@@ -6,7 +6,6 @@ const sequelize = new Sequelize(name, user, password, {
 	host,
 	port,
 	dialect,
-
 	pool: {
 		max: 5,
 		min: 0,

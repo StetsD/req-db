@@ -31,11 +31,7 @@ module.exports = {
 	},
 	mailer: {
 		host: 'smtp.yandex.ru',
-		port: 465,
-		auth: {
-			user: '',
-			pass: ''
-		}
+		port: 465
 	},
 	io: {
 		'chat:message': 'chat:message',

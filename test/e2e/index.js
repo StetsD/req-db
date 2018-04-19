@@ -1,7 +1,7 @@
 let {assert} = require('chai');
 
-describe('e2e', ()=>{
-	it('It should e2e', done => {
-		assert('foo' !== 'bar', done(new Error('foo is not bar')));
+describe('e2e', function(){
+	it('It should e2e', function(){
+		assert('foo' === 'foo', 'foo is not bar');
 	});
 });

@@ -36,3 +36,11 @@ exports.editBoss = async data => {
 				type: db.QueryTypes.SELECT
 			});
 }
+
+exports.deleteBoss = async (id) => {
+	return await Boss.destroy({
+		where: {
+			id
+		}
+	})
+}

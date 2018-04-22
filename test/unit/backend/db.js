@@ -29,7 +29,6 @@ describe('Database test', () => {
 			getBuildingCompany,
 			getBuildingCompanyByName,
 			editBuildingCompany,
-			deleteBuildingCompany,
 			addBuildingCompany} = require(path.resolve(modelsPath, 'building-company'));
 
 		assert.isFunction(buildingCompany);
@@ -38,6 +37,19 @@ describe('Database test', () => {
 			address: 'TestBC'
 		});
 		assert.isObject(rootBC.dataValues);
+		assert.isArray(await getBuildingCompanies());
+
+		await editBuildingCompany({
+			id: rootBC.dataValues.id,
+			name: 'TestBC 2',
+			address: 'TestBC 2'
+		});
+		let editedBc = await getBuildingCompany(rootBC.dataValues.id);
+		assert(editedBc.name === 'TestBC 2', 'Edit BuildingCompany failed');
+
+		let bcByName = await getBuildingCompanyByName('TestBC');
+		assert.isArray(bcByName);
+		assert.isObject(bcByName[0]);
 
 	});
 
@@ -49,11 +61,19 @@ describe('Database test', () => {
 			name: 'TestBoss',
 			age: 99,
 			experience: 99,
-			building_company_id: 999999
+			building_company_id: rootBC.dataValues.id
 		});
 		assert.isObject(rootBoss.dataValues);
-		let returnedBoss = await getBoss(rootBoss.dataValues.id);
-
+		assert.isArray(await getBosses());
+		let lala = await editBoss({
+			building_company_id: rootBC.dataValues.id,
+			name: 'TestBoss 2',
+			age: 99,
+			experience: 99
+		});
+		let returnedBoss = await getBoss(rootBC.dataValues.id);
+		assert.isArray(returnedBoss);
+		assert(returnedBoss[0].dataValues.name === 'TestBoss 2', 'Edit boss failed');
 	});
 
 	it('Deleting models', async () => {

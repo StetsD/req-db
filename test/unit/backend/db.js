@@ -20,6 +20,9 @@ describe('Database test', () => {
 	});
 
 	var rootBC;
+	var rootCC;
+	var rootBuilding;
+	var rootClient;
 	var rootBoss;
 
 
@@ -50,7 +53,95 @@ describe('Database test', () => {
 		let bcByName = await getBuildingCompanyByName('TestBC');
 		assert.isArray(bcByName);
 		assert.isObject(bcByName[0]);
+	});
 
+	it('Customer Company model testing', async () => {
+		const {
+			customerCompany,
+			getCustomerCompanies,
+			addCustomerCompanies,
+			getCustomerCompany,
+			editCustomerCompany,
+			getCustomerCompaniesByName} = require(path.resolve(modelsPath, 'customer-company'));
+
+		assert.isFunction(customerCompany);
+		rootCC = await addCustomerCompanies({
+			name: 'TestСC'
+		});
+		assert.isObject(rootCC.dataValues);
+		assert.isArray(await getCustomerCompanies());
+
+		await editCustomerCompany({
+			id: rootCC.dataValues.id,
+			name: 'TestСC 2'
+		});
+		let editedCc = await getCustomerCompany(rootCC.dataValues.id);
+		assert(editedCc.name === 'TestСC 2', 'Edit CusCompany failed');
+
+		let ccByName = await getCustomerCompaniesByName('TestСC');
+		assert.isArray(ccByName);
+		assert.isObject(ccByName[0]);
+	});
+
+	it('Building model testing', async () => {
+		const {building,
+			getBuildings,
+			editBuilding,
+			addBuilding,
+			getBuildingByName} = require(path.resolve(modelsPath, 'building'));
+
+		assert.isFunction(building);
+		rootBuilding = await addBuilding({
+			name: 'TestBuilding',
+			price: 999999,
+			customer_company_id: rootCC.dataValues.id,
+			building_company_id: rootBC.dataValues.id
+		});
+		assert.isObject(rootBuilding.dataValues);
+		assert.isArray(await getBuildings());
+
+		await editBuilding({
+			id: rootBuilding.dataValues.id,
+			name: 'TestBuilding 2',
+			price: 999999,
+			customer: rootCC.dataValues.id,
+			builder: rootBC.dataValues.id
+		});
+		let buildingByName = await getBuildingByName('TestBuilding');
+		assert.isArray(buildingByName);
+		assert.isObject(buildingByName[0]);
+
+		assert(buildingByName[0].name === 'TestBuilding 2', 'Edit Building failed');
+	});
+
+	it('Client model testing', async () => {
+		const {client,
+			getClients,
+			getClient,
+			addClient,
+			editClient,
+			getClientByName} = require(path.resolve(modelsPath, 'client'));
+
+		assert.isFunction(client);
+		rootClient = await addClient({
+			name: 'TestClient',
+			age: 99
+		});
+		assert.isObject(rootClient.dataValues);
+		assert.isArray(await getClients());
+
+		await editClient({
+			id: rootClient.dataValues.id,
+			name: 'TestClient 2',
+			age: 99
+		});
+
+		let editedClient = await getClient(rootClient.dataValues.id);
+		assert(editedClient.name === 'TestClient 2', 'Edit Client failed');
+
+		let clientByName = await getClientByName('TestClient');
+		assert.isArray(clientByName);
+		assert.isObject(clientByName[0]);
 	});
 
 	it('Boss model testing', async () => {
@@ -78,10 +169,16 @@ describe('Database test', () => {
 
 	it('Deleting models', async () => {
 		let {deleteBuildingCompany} = require(path.resolve(modelsPath, 'building-company'));
+		let {deleteCustomerCompany} = require(path.resolve(modelsPath, 'customer-company'));
+		let {deleteBuilding} = require(path.resolve(modelsPath, 'building'));
 		let {deleteBoss} = require(path.resolve(modelsPath, 'boss'));
+		let {deleteClient} = require(path.resolve(modelsPath, 'client'));
 
 		await deleteBoss(rootBoss.dataValues.id);
 		await deleteBuildingCompany(rootBC.dataValues.id);
+		await deleteCustomerCompany(rootCC.dataValues.id);
+		await deleteBuilding(rootBuilding.dataValues.id);
+		await deleteClient(rootClient.dataValues.id);
 	});
 
 	after(()=>{

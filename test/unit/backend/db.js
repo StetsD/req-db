@@ -1,4 +1,4 @@
-const {assert} = require('chai');
+const {assert, expect} = require('chai');
 const path = require('path');
 let root = process.cwd();
 let dbPath = path.join(root, 'db');
@@ -23,7 +23,10 @@ describe('Database test', () => {
 	var rootCC;
 	var rootBuilding;
 	var rootClient;
+	var rootDeal;
 	var rootBoss;
+	var rootSeller;
+	var rootUser;
 
 
 	it('Building Company model testing', async () => {
@@ -144,6 +147,45 @@ describe('Database test', () => {
 		assert.isObject(clientByName[0]);
 	});
 
+	it('Deal model testing', async () => {
+		const {deal,
+			getDeals,
+			addDeal,
+			editDeal} = require(path.resolve(modelsPath, 'deal'));
+
+		assert.isFunction(deal);
+		rootDeal = await addDeal({
+			client_id: rootClient.dataValues.id,
+			building_id: rootBuilding.dataValues.id
+		});
+		assert.isObject(rootDeal.dataValues);
+		assert.isArray(await getDeals());
+
+		await editDeal({
+			id: rootDeal.dataValues.id,
+			client_id: rootClient.dataValues.id,
+			building_id: rootBuilding.dataValues.id
+		});
+	});
+
+	it('Seller model testing', async () => {
+		const {seller,
+			getSellers,
+			addSellers,
+			getSellersByCompanyId,
+			addSeller} = require(path.resolve(modelsPath, 'seller'));
+
+		assert.isFunction(seller);
+		rootSeller = await addSeller({
+			name: 'TestSeller',
+			age: 99,
+			customer_company_id: rootCC.dataValues.id
+		});
+		assert.isObject(rootSeller.dataValues);
+		assert.isArray(await getSellers());
+		assert.isArray(await getSellersByCompanyId(rootCC.dataValues.id));
+	});
+
 	it('Boss model testing', async () => {
 		let {boss, getBosses, getBoss, addBoss, editBoss} = require(path.resolve(modelsPath, 'boss'));
 
@@ -167,18 +209,51 @@ describe('Database test', () => {
 		assert(returnedBoss[0].dataValues.name === 'TestBoss 2', 'Edit boss failed');
 	});
 
+	it('User model testing', async () => {
+		const {user,
+			getUser,
+			getMainInfoUser,
+			addUser,
+			verifyUser,
+			getUserByEmail} = require(path.resolve(modelsPath, 'user'));
+
+		assert.isFunction(user);
+		rootUser = await addUser({
+			login: 'UserTest',
+			email: 'user-test@mail.ru',
+			password: '987654321Qq@',
+			salt: 'sukablyat',
+			role: 0,
+			verify: 0
+		});
+
+		assert.isObject(await getUser({login: 'UserTest'}));
+		await verifyUser('user-test@mail.ru');
+		let mainInfo = await getMainInfoUser('UserTest');
+		let userByEmail = await getUserByEmail('user-test@mail.ru');
+		assert.hasAllKeys(mainInfo[0], ['login', 'email', 'verify']);
+		assert.equal(mainInfo[0].login, userByEmail.dataValues.login);
+		assert.equal(mainInfo[0].verify, 1);
+	});
+
 	it('Deleting models', async () => {
 		let {deleteBuildingCompany} = require(path.resolve(modelsPath, 'building-company'));
 		let {deleteCustomerCompany} = require(path.resolve(modelsPath, 'customer-company'));
 		let {deleteBuilding} = require(path.resolve(modelsPath, 'building'));
 		let {deleteBoss} = require(path.resolve(modelsPath, 'boss'));
 		let {deleteClient} = require(path.resolve(modelsPath, 'client'));
+		let {deleteDeal} = require(path.resolve(modelsPath, 'deal'));
+		let {deleteSeller} = require(path.resolve(modelsPath, 'seller'));
+		let {deleteUser} = require(path.resolve(modelsPath, 'user'));
 
 		await deleteBoss(rootBoss.dataValues.id);
+		await deleteDeal(rootDeal.dataValues.id);
+		await deleteSeller(rootSeller.dataValues.id);
 		await deleteBuildingCompany(rootBC.dataValues.id);
 		await deleteCustomerCompany(rootCC.dataValues.id);
 		await deleteBuilding(rootBuilding.dataValues.id);
 		await deleteClient(rootClient.dataValues.id);
+		await deleteUser(rootUser.dataValues.id);
 	});
 
 	after(()=>{

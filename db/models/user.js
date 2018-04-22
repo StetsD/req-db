@@ -62,3 +62,11 @@ exports.verifyUser = async email => {
 		type: db.QueryTypes.SELECT
 	});
 }
+
+exports.deleteUser = async (id) => {
+	return await User.destroy({
+		where: {
+			id
+		}
+	})
+}

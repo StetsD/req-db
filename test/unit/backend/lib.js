@@ -14,3 +14,25 @@ describe('Hashing password tests', () => {
 		let result = await checkPass('987654321Qq@', hashPass.passwordHash, hashPass.salt);
 	});
 });
+
+describe('Redis client tests', () => {
+	let redis = require('../../../lib/redis');
+
+	it('Redis client works', () => {
+		assert.isObject(redis);
+	});
+
+	it('Redis has all required methods', () => {
+		assert.hasAllKeys(redis, ['rSet', 'rGet', 'client']);
+	});
+
+	after(()=>{
+		redis.client.end(true);
+	});
+});
+
+describe('Sockets serverside tests', () => {
+	let sio = require('../../../lib/socket-io');
+
+	console.log(sio);
+});

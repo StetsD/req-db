@@ -14,7 +14,7 @@
     "precommit": "npm run lint",
     "app": "npm run generate && node index",
     "dev:server": "nodemon --inspect index",
-    "fixtures": "node fixtures"
+    "fixtures": "node fixtures --exit"
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",
@@ -71,6 +71,8 @@
     "eslint-plugin-vue": "^4.0.0",
     "node-sass": "^4.7.2",
     "nodemon": "^1.17.3",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2",
     "sass-loader": "^6.0.7"
   }
 }

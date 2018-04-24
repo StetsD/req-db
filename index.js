@@ -19,8 +19,12 @@ middlewares.forEach(handler => {
 
 app.use(router.routes());
 
-db.init().then(()=>{
+module.exports = db.init().then(()=>{
 	server.listen(port);
+	console.log('SERVER STARTED')
+	return {
+		server
+	}
 }).catch(err => {
 	throw err;
 });

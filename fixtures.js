@@ -27,7 +27,7 @@ const {workerToCompany} = require('./db/models/worker-to-company');
 const {role} = require('./db/models/role');
 const {user} = require('./db/models/user');
 
-DB.init()
+module.exports = DB.init()
 .then(async ()=> {
 
 	await client.sync({force: true}).then(()=>{
@@ -103,7 +103,7 @@ DB.init()
 		time: '00:00'
 	}));
 
-	process.exit(0);
+	process.argv[2] === '--exit' && process.exit(0);
 
 }).catch(err => {
 	console.error(err);

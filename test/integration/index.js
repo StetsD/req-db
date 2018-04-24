@@ -2,6 +2,11 @@ let {assert} = require('chai');
 let sleep = ms => new Promise(res => setTimeout(res, ms));
 const rq = require('request-promise');
 
+const {port, protocol, host, api} = require('../../config');
+
+let baseURL = `${protocol}://${host}:${port}/${api.name}/${api.version}`;
+let modURL = baseURL + '/client';
+
 var index;
 let root = new Promise((res, rej)=>{
 	(async () => {
@@ -11,16 +16,17 @@ let root = new Promise((res, rej)=>{
 	})();
 });
 
+describe('integration', async () => {
 
-(async () => {
-	await root;
+	before(async () => {
+		await root;
+	});
 
 	require('./api/client');
 
-	// describe('integration', async () => {
-	// 	it('It should integration', function(){
-	//
-	// 	});
-	// });
-
-})();
+	after(() => {
+		index.server.close();
+		index.redis.client.end(true);
+		index.db.instance.close();
+	})
+});

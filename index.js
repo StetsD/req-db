@@ -21,9 +21,8 @@ app.use(router.routes());
 
 module.exports = db.init().then(()=>{
 	server.listen(port);
-	console.log('SERVER STARTED')
 	return {
-		server
+		server, redis, db
 	}
 }).catch(err => {
 	throw err;

@@ -1,6 +1,8 @@
 let {assert} = require('chai');
 let sleep = ms => new Promise(res => setTimeout(res, ms));
 const rq = require('request-promise');
+const Sequelize = require('sequelize');
+
 
 const {port, protocol, host, api} = require('../../config');
 
@@ -27,6 +29,6 @@ describe('integration', async () => {
 	after(() => {
 		index.server.close();
 		index.redis.client.end(true);
-		index.db.instance.close();
-	})
+		index.db.instance.connectionManager.close();
+	});
 });

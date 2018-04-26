@@ -15,7 +15,7 @@ describe('integration', async () => {
 		await root;
 	});
 
-	require('./api/client');
+	require('./api/user');
 
 	after(() => {
 		index.server.close();

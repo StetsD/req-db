@@ -20,7 +20,7 @@ router.post(apiPath('building'), async (ctx, next) => {
 		await addBuilding({name, price, customer_company_id, building_company_id});
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 
@@ -30,7 +30,7 @@ router.patch(apiPath('building'), async (ctx, next) => {
 		await editBuilding(ctx.request.body);
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 

@@ -46,7 +46,7 @@ router.post(apiPath('customer-company'), async (ctx, next) => {
 		ctx.status = 200;
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 
@@ -56,7 +56,7 @@ router.patch(apiPath('customer-company'), async (ctx, next) => {
 		ctx.status = 200;
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 

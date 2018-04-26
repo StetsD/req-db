@@ -47,7 +47,7 @@ router.post(apiPath('worker'), async (ctx, next) => {
 
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 
@@ -72,7 +72,7 @@ router.patch(apiPath('worker'), async (ctx, next) => {
 
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 

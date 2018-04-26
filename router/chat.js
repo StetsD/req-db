@@ -43,7 +43,7 @@ router.post(apiPath('chat'), async(ctx, next) => {
 	let user = get(ctx, 'session.passport.user', {});
 	if(!file || !name){ctx.throw(400)}
 	if(!user.login){ctx.throw(401)}
-	if(file.size >= limits.chatFile){ctx.throw({status: 400, msg: 'Размер файла превышает 1Гб'});}
+	if(file.size >= limits.chatFile){ctx.throw(400, {status: 400, msg: 'Размер файла превышает 1Гб'});}
 
 	mkdir(`${paths.static}/${paths.assetsChat}/${user.login}`);
 

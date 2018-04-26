@@ -22,7 +22,7 @@ router.post(apiPath('client'), async (ctx, next) => {
 		await addClient(ctx.request.body);
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 
@@ -39,7 +39,7 @@ router.patch(apiPath('client/:id'), async (ctx, next) => {
 		await editClient({id: ctx.params.id, ...ctx.request.body});
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 

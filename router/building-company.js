@@ -40,13 +40,13 @@ router.post(apiPath('building-company'), async (ctx, next) => {
 		var newComp = await addBuildingCompany({name, address});
 		boss.building_company_id = newComp.id;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 
 	if(_validateBoss(boss)){
 		await addBoss(boss);
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 
 	ctx.body = ctx.request.body;
@@ -57,7 +57,7 @@ router.patch(apiPath('building-company'), async (ctx, next) => {
 		await editBuildingCompany(ctx.request.body);
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 
@@ -66,7 +66,7 @@ router.patch(apiPath('building-company/:id/boss'), async (ctx, next) => {
 		await editBoss(ctx.request.body);
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 

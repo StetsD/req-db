@@ -52,18 +52,18 @@ router.post(apiPath('reg'), async (ctx, next) => {
 		ctx.status = 200;
 		ctx.body = {status: `User ${login} registered`};
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 
 router.post(apiPath('login'), async (ctx, next) => {
 	await passport.authenticate('local', async (err, user, msg) => {
 		if(err){
-			ctx.throw({status: 500, msg});
+			ctx.throw(500, {status: 500, msg});
 		}
 
 		if(!user){
-			ctx.throw({status: 400, msg});
+			ctx.throw(400, {status: 400, msg});
 		}
 
 		await ctx.logIn(user);

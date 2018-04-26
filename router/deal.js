@@ -12,7 +12,7 @@ router.post(apiPath('deal'), async (ctx, next) => {
 		await addDeal(ctx.request.body);
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 
@@ -21,7 +21,7 @@ router.patch(apiPath('deal'), async (ctx, next) => {
 		await editDeal(ctx.request.body);
 		ctx.body = ctx.request.body;
 	}else{
-		ctx.throw({status: 400, msg: univalid.getState});
+		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}
 });
 

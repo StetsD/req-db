@@ -1,4 +1,4 @@
-const {api} = require('../config');
+const {api, client} = require('../config');
 const {apiPath, index} = require('../router');
 const {get} = require('lodash');
 const clients = require('../lib/socket-io/clients');
@@ -29,7 +29,7 @@ exports.init = app => app.use(async (ctx, next) => {
 		return next();
 	}
 
-	if(ctx.method === 'GET' && !ctx.headers['data-type']){
+	if(ctx.method === 'GET' && !ctx.headers[client.headers['get-api'][0]]){
 		ctx.status = 200;
 		ctx.type = 'text/html';
 		ctx.body = index;

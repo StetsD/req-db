@@ -3,16 +3,16 @@ const rq = require('request-promise');
 const {port, protocol, host, api, client} = require('../../../config');
 
 let baseURL = `${protocol}://${host}:${port}/${api.name}/${api.version}`;
-let modURL = baseURL + '/client';
+let url = baseURL + '/user';
 
 let headers = {client.headers['get-api'][0]: client.headers['get-api'][1]};
 
 describe('Test API / client', () => {
 
-	it('Get client', async () => {
+	it('Login from admin', async () => {
 		let res = await rq({
 			method: 'GET',
-			url: modURL,
+			url: baseURL + '/user/login',
 			timeout: 500,
 			headers
 		});

@@ -51,7 +51,7 @@ import TooltipGlobal from '~/components/TooltipGlobal';
 
 const axios = require('axios');
 const API = require('~/assets/modules/api').default;
-const {port, api, host, protocol, io} = require('../../config');
+const {port, api, host, protocol, io, client} = require('../../config');
 const {IO, disconnect, connect} = require('~/assets/modules/socket-io-cli');
 const univalid = require('univalid')();
 univalid.setDefaultMsgConfig({
@@ -62,7 +62,7 @@ univalid.setDefaultMsgConfig({
 });
 
 axios.defaults.baseURL = `${protocol}://${host}:${port}/${api.name}/${api.version}`;
-axios.defaults.headers.common['Data-type'] = 'query';
+axios.defaults.headers.common[client.headers['get-api'][0]] = client.headers['get-api'][1];
 
 if($nuxt.$store.getters['user/getUser']){
 	connect();

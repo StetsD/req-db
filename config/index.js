@@ -46,5 +46,10 @@ module.exports = {
 	limits: {
 		chatFile: 1073741824,
 		minImgWidth: 200
+	},
+	client: {
+		headers: {
+			'get-api': ['data-type', 'query']
+		}
 	}
 }

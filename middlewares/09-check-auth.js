@@ -36,22 +36,22 @@ exports.init = app => app.use(async (ctx, next) => {
 		return;
 	}
 
-	// if(!verify && method !== 'GET'){
-	// 	ctx.status = 400;
-	// 	ctx.body = {status: 'not verifyed'};
-	// 	return;
-	// }
-	//
-	// if(rights && forbiddenMap[method.toLowerCase()]){
-	// 	ctx.status = 403;
-	// 	ctx.body = {status: 'forbidden'};
-	// 	return;
-	// }
+	if(!verify && method !== 'GET'){
+		ctx.status = 400;
+		ctx.body = {status: 'not verifyed'};
+		return;
+	}
+
+	if(rights && forbiddenMap[method.toLowerCase()]){
+		ctx.status = 403;
+		ctx.body = {status: 'forbidden'};
+		return;
+	}
 
 	try{
-		// if(!ctx.isAuthenticated()){
-		// 	ctx.throw(401);
-		// }
+		if(!ctx.isAuthenticated()){
+			ctx.throw(401);
+		}
 
 		await next();
 

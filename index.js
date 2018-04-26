@@ -19,11 +19,11 @@ middlewares.forEach(handler => {
 
 app.use(router.routes());
 
-module.exports = db.init().then(()=>{
+var rootModule;
+
+module.exports = !rootModule ? (async () => {
 	server.listen(port);
-	return {
-		server, redis, db
-	}
-}).catch(err => {
-	throw err;
-});
+	await db.init();
+
+	return {server, db, redis};
+})() : rootModule;

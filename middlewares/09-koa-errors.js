@@ -12,7 +12,7 @@ exports.init = app => app.use(async (ctx, next) => {
 				ctx.body = 'unauthorized';
 				break;
 			case 404:
-				ctx.body = 'Not found';
+				ctx.body = 'Not found 666';
 				break;
 			default:
 				ctx.body = err;

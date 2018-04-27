@@ -29,6 +29,10 @@ exports.init = app => app.use(async (ctx, next) => {
 		return next();
 	}
 
+	if(!ctx.isAuthenticated()){
+		ctx.throw(401);
+	}
+
 	if(ctx.method === 'GET' && !ctx.headers[client.headers['get-api'][0]]){
 		ctx.status = 200;
 		ctx.type = 'text/html';
@@ -48,15 +52,13 @@ exports.init = app => app.use(async (ctx, next) => {
 		return;
 	}
 
-	if(!ctx.isAuthenticated()){
-		ctx.throw(401);
-	}
+
+
+	await next();
 
 	const status = ctx.status || 404;
 	if(status === 404){
 		ctx.throw(404);
 	}
-
-	await next();
 
 });

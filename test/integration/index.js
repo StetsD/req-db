@@ -13,9 +13,11 @@ describe('integration', async () => {
 
 	before(async () => {
 		await root;
+		await index.redis.client.flushdb();
 	});
 
 	require('./api/user');
+	require('./api/client')
 
 	after(() => {
 		index.server.close();

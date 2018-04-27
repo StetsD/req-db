@@ -4,7 +4,7 @@ let config = require('../../../config');
 describe('Config test', () => {
 	it('Required properties of config', () => {
 		assert.isObject(config, 'Config is not an object type');
-		assert.hasAllKeys(config, ['api', 'crypto', 'database', 'host', 'io', 'keys', 'limits', 'mailer', 'paths', 'port', 'protocol', 'redis'], 'Required key of config is not found');
+		assert.hasAllKeys(config, ['api', 'crypto', 'database', 'host', 'io', 'keys', 'limits', 'mailer', 'paths', 'port', 'protocol', 'redis', 'client'], 'Required key of config is not found');
 		assert.hasAllKeys(config.api, ['version', 'name'], 'Required key of config is not found');
 		assert.hasAllKeys(config.database, ['name', 'user', 'password', 'host', 'port', 'dialect'], 'Required key of config is not found');
 		assert.hasAllKeys(config.redis, ['host', 'port', 'expireCookie', 'expireTTL', 'expireVerify'], 'Required key of config is not found');

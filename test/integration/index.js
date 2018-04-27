@@ -4,8 +4,8 @@ const rStore = require('../../lib/redis/redis-store');
 
 var index;
 let root = (async () => {
-	// await require('../../fixtures');
-	// console.log('Fixtures added');
+	await require('../../fixtures');
+	console.log('Fixtures added');
 	index = await require('../../index');
 })();
 

@@ -19,8 +19,8 @@ router.get(apiPath('client/:id'), async (ctx, next) => {
 //add client
 router.post(apiPath('client'), async (ctx, next) => {
 	if(validateClient(ctx.request.body)){
-		await addClient(ctx.request.body);
-		ctx.body = ctx.request.body;
+		let newClient = await addClient(ctx.request.body);
+		ctx.body = newClient.dataValues;
 	}else{
 		ctx.throw(400, {status: 400, msg: univalid.getState});
 	}

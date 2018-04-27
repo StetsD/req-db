@@ -5,7 +5,7 @@
   "author": "chortstd@gmail.com",
   "private": true,
   "scripts": {
-    "test": "mocha",
+    "test": "set TESTING=true && cross-env-shell TESTING=true && mocha",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
@@ -59,12 +59,13 @@
     "socket.io": "^2.1.0",
     "socket.io-client": "^2.1.0",
     "socket.io-emitter": "^3.1.1",
-    "univalid": "^1.0.3",
-    "univalid-strategy-form": "^1.0.7",
+    "univalid": "^1.0.4",
+    "univalid-strategy-form": "^1.0.8",
     "vue-style-loader": "^4.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
+    "cross-env": "^5.1.4",
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",

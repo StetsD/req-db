@@ -1,3 +1,3 @@
 require('./integration');
 require('./unit');
-require('./e2e');
+// require('./e2e');

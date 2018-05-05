@@ -1,4 +1,4 @@
-const Sequelize = require('Sequelize');
+const Sequelize = require('sequelize');
 const db = require('../index.js').instance;
 
 const WorkerToCompany = db.define('worker_to_company', {

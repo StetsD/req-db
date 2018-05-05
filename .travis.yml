@@ -1,9 +1,13 @@
 language: node_js
 node_js:
     - "iojs"
-    - "8"
+    - "9"
 services:
     - postgresql
     - redis-server
 before_script:
     - psql -c 'create database building;' -U postgres
+sudo: false
+cache:
+    directories:
+        - node_modules

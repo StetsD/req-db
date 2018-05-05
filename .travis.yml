@@ -5,3 +5,5 @@ node_js:
 services:
     - postgresql
     - redis-server
+before_script:
+    - psql -c 'create database building;' -U postgres

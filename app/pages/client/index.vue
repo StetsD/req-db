@@ -30,7 +30,7 @@
 	import Header from '~/components/Header';
 	import TableClients from '~/components/tables/TableClients';
 	import ModalDefault from '~/components/modals/ModalDefault';
-	import FormClientAdd from '~/components/forms/FormCLientAdd';
+	import FormClientAdd from '~/components/forms/FormClientAdd';
 	import FormClientEdit from '~/components/forms/FormClientEdit';
 	import ModalDimmer from '~/components/modals/ModalDimmer';
 

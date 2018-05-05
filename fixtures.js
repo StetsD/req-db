@@ -36,12 +36,6 @@ module.exports = DB.init()
 		});
 	});
 
-	await deal.sync({force: true}).then(()=>{
-		dealFixtures.forEach(fix => {
-			deal.create(fix);
-		});
-	});
-
 	await buildingCompany.sync({force: true}).then(()=>{
 		buildingCompanyFixtures.forEach(fix => {
 			buildingCompany.create(fix);
@@ -57,6 +51,12 @@ module.exports = DB.init()
 	await building.sync({force: true}).then(()=>{
 		buildingFixtures.forEach(fix => {
 			building.create(fix);
+		});
+	});
+
+	await deal.sync({force: true}).then(()=>{
+		dealFixtures.forEach(fix => {
+			deal.create(fix);
 		});
 	});
 

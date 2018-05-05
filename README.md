@@ -1,5 +1,7 @@
 # req-db
 
+[![Build Status](https://travis-ci.org/StetsD/req-db.svg?branch=master)](https://travis-ci.org/StetsD/req-db)
+
 +koa
 
 +postgresql

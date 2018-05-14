@@ -12,7 +12,7 @@
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
-    "app": "npm run generate && nodemon --inspect index",
+    "app": "npm run fixtures && nodemon --inspect index",
     "dev:server": "nodemon --inspect index",
     "fixtures": "node fixtures --exit"
   },

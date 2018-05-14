@@ -11,12 +11,12 @@ module.exports = {
 		name: 'building',
 		user: 'postgres',
 		password: '987654321Qq',
-		host: 'localhost',
+		host: 'postgres' /*'127.0.0.1'*/,
 		port: 5432,
 		dialect: 'postgres'
 	},
 	redis: {
-		host: '127.0.0.1',
+		host: 'redis' /*'127.0.0.1'*/,
 		port: 6379,
 		expireCookie: (60 * 60 * 24) * 1000,
 		expireTTL: (60 * 60 * 24) * 1000,

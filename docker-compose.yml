@@ -1,12 +1,11 @@
-version: '1'
+version: '3.1'
 services:
-    app:
+    web:
         image: building
         command: ["npm", "run", "app"]
+        build: .
         ports:
-            - 8000:8000
-        networks:
-            - building_app
+            - 6666:6666
         depends_on:
             - redis
             - postgres
@@ -15,24 +14,15 @@ services:
         image: redis:4.0.5-alpine
         command: ["redis-server", "--appendonly", "yes"]
         hostname: redis
-        networks:
-            - building_app
-        volumes:
-            - redis-data:/data
 
     postgres:
+        image: postgres:10
         restart: always
-        image: latest
-        networks:
-            - building_app
-        environment:
-            - DEBUG=false
-
-            - DB_USER=postgres
-            - DB_PASS=987654321Qq
-            - DB_NAME=building
         volumes:
-            - /srv/docker/postgresql:/var/lib/postgresql
-
-    networks:
-        - building_app
+            - ./init-db.sql
+        # ports:
+        #     - "1112:1112"
+        # environment:
+        #     - POSTGRES_USER=postgres
+        #     - POSTGRES_PASSWORD=987654321Qq
+        #     - POSTGRES_DB=building

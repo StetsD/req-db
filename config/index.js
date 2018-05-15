@@ -11,12 +11,14 @@ module.exports = {
 		name: 'building',
 		user: 'postgres',
 		password: '987654321Qq',
-		host: 'postgres' /*'127.0.0.1'*/,
+		// host: 'postgres', //docker-compose
+		host: '127.0.0.1', //local
 		port: 5432,
 		dialect: 'postgres'
 	},
 	redis: {
-		host: 'redis' /*'127.0.0.1'*/,
+		// host: 'redis', //docker-compose
+		host: '127.0.0.1', //local
 		port: 6379,
 		expireCookie: (60 * 60 * 24) * 1000,
 		expireTTL: (60 * 60 * 24) * 1000,

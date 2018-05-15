@@ -1,14 +1,6 @@
 const DB = require('./db');
 const db = DB.instance;
 const {client: rClient} = require('./lib/redis');
-const {Client} = require('pg');
-const {database} = require('config');
-const pgClient = new Client({
-	user: database.user,
-	host: database.host,
-	password: database.password,
-	port: database.port,
-});
 
 //fixtures
 const bossFixtures = require('./src/fixtures/boss').tbody;
@@ -37,8 +29,6 @@ const {user} = require('./db/models/user');
 
 module.exports = DB.init()
 .then(async ()=> {
-
-
 
 	await client.sync({force: true}).then(()=>{
 		clientFixtures.forEach(fix => {

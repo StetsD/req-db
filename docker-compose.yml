@@ -2,10 +2,10 @@ version: '3.1'
 services:
     web:
         image: building
-        command: ["npm", "run", "app"]
+        command: bash -c "npm run app"
         build: .
         ports:
-            - 6666:6666
+            - 8000:8000
         depends_on:
             - redis
             - postgres
@@ -19,10 +19,4 @@ services:
         image: postgres:10
         restart: always
         volumes:
-            - ./init-db.sql
-        # ports:
-        #     - "1112:1112"
-        # environment:
-        #     - POSTGRES_USER=postgres
-        #     - POSTGRES_PASSWORD=987654321Qq
-        #     - POSTGRES_DB=building
+            - ./init-db.sh
